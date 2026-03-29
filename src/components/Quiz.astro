@@ -1,0 +1,123 @@
+<div class="quiz-container reveal" id="quizApp">
+    <h3>Digital Needs Assessment</h3>
+    <p>Answer 3 quick questions to get a personalized service recommendation.</p>
+    <div id="quizQuestion" style="font-size: 1.4rem; font-weight: 600; margin-bottom: 2rem; min-height: 80px;"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+</div>
+
+<div class="ai-tool-container reveal" id="quizResult" style="display: none;">
+    <h3 id="recTitle">Recommendation</h3>
+    <div class="ai-result-box" id="recDesc"></div>
+    <button class="btn btn-primary" id="retakeQuiz" style="margin-top: 2rem;">Retake Assessment</button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "What is the biggest roadblock for your business currently?",
+            options: [
+                { text: "We aren't getting enough website traffic.", score: "seo" },
+                { text: "We get traffic, but they don't buy or contact us.", score: "web" },
+                { text: "Our internal processes are slow and manual.", score: "consult" }
+            ]
+        },
+        {
+            question: "How would you describe your current digital presence?",
+            options: [
+                { text: "Outdated. We need a modern look and better technology.", score: "web" },
+                { text: "Okay, but our competitors are outranking us.", score: "seo" },
+                { text: "Messy. We use too many disconnected tools.", score: "consult" }
+            ]
+        },
+        {
+            question: "What is your primary goal for the next 6 months?",
+            options: [
+                { text: "Increase organic leads and dominate search.", score: "seo" },
+                { text: "Launch a high-converting, fast new website.", score: "web" },
+                { text: "Streamline operations and map out a long-term strategy.", score: "consult" }
+            ]
+        }
+    ];
+
+    let currentQuizQuestion = 0;
+    let quizScores = { seo: 0, web: 0, consult: 0 };
+
+    function renderQuiz() {
+        const qData = quizData[currentQuizQuestion];
+        const questionEl = document.getElementById('quizQuestion');
+        const optionsEl = document.getElementById('quizOptions');
+        if (!questionEl || !optionsEl) return;
+
+        questionEl.innerText = qData.question;
+        optionsEl.innerHTML = '';
+
+        qData.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-btn';
+            btn.innerText = opt.text;
+            btn.onclick = () => answerQuiz(opt.score as 'seo' | 'web' | 'consult');
+            optionsEl.appendChild(btn);
+        });
+    }
+
+    function answerQuiz(scoreType: 'seo' | 'web' | 'consult') {
+        if (quizScores[scoreType] !== undefined) {
+             quizScores[scoreType]++;
+        }
+        currentQuizQuestion++;
+
+        if(currentQuizQuestion < quizData.length) {
+            renderQuiz();
+        } else {
+            showQuizResult();
+        }
+    }
+
+    function showQuizResult() {
+        const quizApp = document.getElementById('quizApp');
+        const quizResult = document.getElementById('quizResult');
+        if(quizApp) quizApp.style.display = 'none';
+
+        let maxCategory = 'seo';
+        let maxScore = -1;
+        for (const [key, value] of Object.entries(quizScores)) {
+            if (value > maxScore) {
+                maxScore = value;
+                maxCategory = key;
+            }
+        }
+
+        const resultsMap = {
+            'seo': { title: "SEO & Digital Marketing Push", desc: "Based on your answers, your primary bottleneck is visibility. We recommend our Organic SEO and Paid Media services to drive high-intent traffic to your business." },
+            'web': { title: "Web Development & CRO", desc: "Your current platform is holding you back. We recommend a full website redesign focusing on Conversion Rate Optimization (CRO) and modern web technologies." },
+            'consult': { title: "Growth Roadmap Consultancy", desc: "You need strategic alignment. We recommend our Growth Roadmap package to audit your current tech stack, streamline operations, and build a cohesive digital strategy." }
+        };
+
+        const recTitle = document.getElementById('recTitle');
+        const recDesc = document.getElementById('recDesc');
+        if(recTitle) recTitle.innerText = resultsMap[maxCategory as 'seo' | 'web' | 'consult'].title;
+        if(recDesc) recDesc.innerText = resultsMap[maxCategory as 'seo' | 'web' | 'consult'].desc;
+        if(quizResult) quizResult.style.display = 'block';
+    }
+
+    function resetQuiz() {
+        currentQuizQuestion = 0;
+        quizScores = { seo: 0, web: 0, consult: 0 };
+        const quizApp = document.getElementById('quizApp');
+        const quizResult = document.getElementById('quizResult');
+        if(quizResult) quizResult.style.display = 'none';
+        if(quizApp) quizApp.style.display = 'block';
+        renderQuiz();
+    }
+
+    // Initialize
+    const quizApp = document.getElementById('quizApp');
+    if (quizApp) {
+        renderQuiz();
+    }
+
+    const retakeBtn = document.getElementById('retakeQuiz');
+    if (retakeBtn) {
+        retakeBtn.addEventListener('click', resetQuiz);
+    }
+</script>

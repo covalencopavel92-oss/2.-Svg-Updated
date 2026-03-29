@@ -1,0 +1,157 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import Footer from '../components/Footer.astro';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+const validLanguages = ['en', 'ro', 'es'] as const;
+const lang = (validLanguages.includes(Astro.params.lang as never) ? Astro.params.lang : 'en') as 'en' | 'ro' | 'es';
+const t = useTranslations(lang);
+const metaDesc = description || t('home.desc').substring(0, 160);
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} | Scale Automata</title>
+    
+    <meta name="description" content={metaDesc}>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com blob:; connect-src 'self' https://cdnjs.cloudflare.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" media="print" onload="this.media='all'">
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap" media="print" onload="this.media='all'">
+
+    <script is:inline>
+        // Theme init
+        const savedTheme = localStorage.getItem('siteTheme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>
+
+   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
+
+    <script is:inline>
+        // Scroll Reveal Logic
+        document.addEventListener('astro:page-load', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.1 });
+
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
+    </script>
+    
+    <style is:global>
+      html.is-animating .reveal { opacity: 1 !important; transform: none !important; }
+      .reveal { opacity: 1 !important; transform: translateY(0) !important; }
+      .lang-btn { color: var(--neon-blue) !important; opacity: 0.6 !important; }
+      .lang-btn.active { opacity: 1 !important; }
+      footer a, .footer-area a { color: var(--neon-blue) !important; }
+    </style>
+</head>
+<body>
+
+<div id="vanta-bg" transition:persist style="position: fixed; z-index: -1; top: 0; left: 0; width: 100vw; height: 100vh;"></div>
+
+<div class="app-container" id="app">
+    <Sidebar transition:persist />
+    <main class="main-content" id="main-content">
+        <slot />
+        <Footer transition:persist />
+    </main>
+</div>
+
+<script is:inline>
+    // Bulletproof Vanta Init (Birds Effect)
+    const startVanta = () => {
+        // If it's already running, don't restart it
+        if (window.vantaEffect) return;
+
+        // Loop until the deferred CDNs finish loading
+        if (typeof window.VANTA === 'undefined' || typeof window.VANTA.BIRDS === 'undefined') {
+            requestAnimationFrame(startVanta);
+            return;
+        }
+
+        // Define our theme colors
+        // Dark Mode: Black background, Neon Blue Birds (from your custom link)
+        const darkBg = 0x000000;
+        const darkColor1 = 0x00e3ff; // Equivalent to your 58367
+        const darkColor2 = 0x00d1ff; // Equivalent to your 53759
+        
+        // Light Mode: White background, Deep Ocean Blue Birds (for high contrast)
+        const lightBg = 0xffffff;
+        const lightColor1 = 0x0056b3; 
+        const lightColor2 = 0x003d82;
+
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+        window.vantaEffect = window.VANTA.BIRDS({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: isDark ? darkBg : lightBg,
+            color1: isDark ? darkColor1 : lightColor1,
+            color2: isDark ? darkColor2 : lightColor2,
+            colorMode: "varianceGradient",
+            birdSize: 0.50,
+            wingSpan: 39.00,
+            speedLimit: 4.00,
+            separation: 97.00,
+            alignment: 1.00,
+            cohesion: 100.00,
+            quantity: 5.00
+        });
+
+        // Handle Theme Toggle smoothly without reloading the canvas
+        const themeObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-theme' && window.vantaEffect) {
+                    const darkNow = document.documentElement.getAttribute('data-theme') === 'dark';
+                    window.vantaEffect.setOptions({ 
+                        backgroundColor: darkNow ? darkBg : lightBg, 
+                        color1: darkNow ? darkColor1 : lightColor1,
+                        color2: darkNow ? darkColor2 : lightColor2 
+                    });
+                }
+            });
+        });
+        themeObserver.observe(document.documentElement, { attributes: true });
+    };
+
+    // Fire on standard load and Astro view transitions
+    document.addEventListener('DOMContentLoaded', startVanta);
+    document.addEventListener('astro:page-load', startVanta);
+</script>
+
+</body>
+</html>

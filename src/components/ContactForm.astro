@@ -1,0 +1,72 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+const lang = (Astro.params.lang || 'en') as 'en' | 'ro' | 'es';
+const t = useTranslations(lang);
+---
+<div class="contact-wrapper reveal">
+    <form id="contactForm">
+        <!-- Honeypot -->
+        <div style="display:none;">
+            <label for="honeypot">Leave this field empty</label>
+            <input type="text" id="honeypot" name="honeypot">
+        </div>
+
+        <div class="floating-group">
+            <input type="text" class="floating-input" id="name" required>
+            <label class="floating-label">{t('contact.name')}</label>
+        </div>
+        <div class="floating-group">
+            <input type="email" class="floating-input" id="email" required>
+            <label class="floating-label">{t('contact.email')}</label>
+        </div>
+        <div class="floating-group">
+            <input type="text" class="floating-input" id="subject" required>
+            <label class="floating-label">{t('contact.subject')}</label>
+        </div>
+        <div class="floating-group">
+            <textarea class="floating-input" id="message" required></textarea>
+            <label class="floating-label">{t('contact.message')}</label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">{t('contact.send')}</button>
+        <div class="form-message" id="formMessage">{t('contact.success')}</div>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('contactForm');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Check honeypot
+            const honeypot = (document.getElementById('honeypot') as HTMLInputElement).value;
+            if (honeypot) {
+                console.log('Bot detected');
+                return; // Silently fail
+            }
+
+            const btn = form.querySelector('button');
+            if (!btn) return;
+            
+            const originalText = btn.innerText;
+
+            btn.innerText = 'Sending...';
+            btn.style.opacity = '0.8';
+            btn.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                const msg = document.getElementById('formMessage');
+                if(msg) msg.style.display = 'block';
+                (form as HTMLFormElement).reset();
+                btn.innerText = originalText;
+                btn.style.opacity = '1';
+                btn.style.transform = 'none';
+
+                setTimeout(() => {
+                    if(msg) msg.style.display = 'none';
+                }, 5000);
+            }, 1500);
+        });
+    }
+</script>

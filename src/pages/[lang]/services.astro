@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { languages } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof languages);
+---
+<Layout title={t('nav.services')}>
+    <section class="page-view" style="display: block; flex-grow: 1;">
+        <div class="section-header reveal">
+            <h2>{t('services.title')}</h2>
+            <p>{t('services.subtitle')}</p>
+        </div>
+
+        <div class="services-grid reveal">
+            <div class="service-card">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <h3>Search Engine Optimization</h3>
+                <p>Dominate search results and drive organic traffic.</p>
+                <div class="service-desc-overlay">
+                    <h3>Technical & Content SEO</h3>
+                    <p>We execute deep technical audits, build high-authority backlinks, and craft optimized content that ranks.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-ad"></i>
+                <h3>PPC & Paid Media</h3>
+                <p>Maximize ROI with targeted advertising campaigns.</p>
+                <div class="service-desc-overlay">
+                    <h3>Google & Social Ads</h3>
+                    <p>Data-backed campaign management across Google Ads, Meta, LinkedIn, and TikTok to acquire high-intent leads.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line></svg>
+                <h3>Web Development</h3>
+                <p>High-performance, conversion-optimized websites.</p>
+                <div class="service-desc-overlay">
+                    <h3>Modern Web Apps</h3>
+                    <p>Custom development using React, Angular, or headless CMS solutions tailored for speed and scalability.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <h3>Social Media Strategy</h3>
+                <p>Build community and brand loyalty.</p>
+                <div class="service-desc-overlay">
+                    <h3>Organic & Viral Growth</h3>
+                    <p>Content calendars, community management, and trend-jacking strategies to amplify your brand voice.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-envelope-open-text"></i>
+                <h3>Email Marketing</h3>
+                <p>Automate nurturing and boost customer retention.</p>
+                <div class="service-desc-overlay">
+                    <h3>Lifecycle Automation</h3>
+                    <p>Advanced segmentation, drip campaigns, and engaging newsletters that turn subscribers into buyers.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                <h3>Data Analytics</h3>
+                <p>Make informed decisions with custom dashboards.</p>
+                <div class="service-desc-overlay">
+                    <h3>Business Intelligence</h3>
+                    <p>Implementation of GA4, Tag Manager, and Looker Studio for real-time visibility into your KPIs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>

@@ -1,0 +1,23 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0;url=/en/">
+    <script>
+        const userLang = navigator.language || 'en';
+        if (userLang.startsWith('ro')) {
+            window.location.href = '/ro/';
+        } else if (userLang.startsWith('es')) {
+            window.location.href = '/es/';
+        } else {
+            window.location.href = '/en/';
+        }
+    </script>
+    <title>Redirecting...</title>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>

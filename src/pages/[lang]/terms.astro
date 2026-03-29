@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { languages } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as 'en' | 'ro' | 'es');
+---
+<Layout title={t('footer.terms')}>
+    <section class="page-view" style="display: block; flex-grow: 1;">
+        <div class="section-header reveal">
+            <h2>{t('footer.terms')}</h2>
+            <p>Last Updated: February 24, 2026</p>
+        </div>
+        <div class="legal-content reveal">
+            <p>These terms and conditions outline the rules and regulations for the use of Scale Automata's Website.</p>
+            <h2>1. Introduction</h2>
+            <p>By accessing this website we assume you accept these terms and conditions. Do not continue to use Scale Automata if you do not agree to take all of the terms and conditions stated on this page.</p>
+            <h2>2. Intellectual Property Rights</h2>
+            <p>Other than the content you own, under these Terms, Scale Automata and/or its licensors own all the intellectual property rights and materials contained in this Website. You are granted limited license only for purposes of viewing the material contained on this Website.</p>
+            <h2>3. Restrictions</h2>
+            <p>You are specifically restricted from all of the following:</p>
+            <ul>
+                <li>Publishing any Website material in any other media without credit.</li>
+                <li>Selling, sublicensing and/or otherwise commercializing any Website material.</li>
+                <li>Using this Website in any way that is or may be damaging to this Website.</li>
+                <li>Using this Website contrary to applicable laws and regulations.</li>
+            </ul>
+            <h2>4. Limitation of liability</h2>
+            <p>In no event shall Scale Automata, nor any of its officers, directors and employees, be held liable for anything arising out of or in any way connected with your use of this Website.</p>
+            <h2>5. Governing Law & Jurisdiction</h2>
+            <p>These Terms will be governed by and interpreted in accordance with the laws of Romania, and you submit to the non-exclusive jurisdiction of the state and federal courts located in Romania for the resolution of any disputes.</p>
+        </div>
+    </section>
+</Layout>
