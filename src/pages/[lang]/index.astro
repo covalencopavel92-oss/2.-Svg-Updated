@@ -23,7 +23,12 @@ const t = useTranslations(lang as "en" | "ro" | "es");
                     <a href={`/${lang}/services/`} class="btn btn-primary">{t('home.explore')}</a>
                     <a href={`/${lang}/consultancy/`} class="btn btn-neon dark-bg">{t('home.assessment')}</a>
                 </div>
-            </div>
+        
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href={`/${lang}/services/`} class="btn btn-primary">{t('home.explore')}</a>
+            <a href={`/${lang}/consultancy/`} class="btn btn-neon dark-bg">{t('home.assessment')}</a>
         </div>
+    </div>
+    </div>
     </section>
 </Layout>
