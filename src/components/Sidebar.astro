@@ -1,4 +1,3 @@
-
 ---
 import { ui } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
@@ -8,30 +7,34 @@ const lang = (Astro.params.lang as 'en' | 'ro' | 'es') || 'en';
 const t = useTranslations(lang);
 
 const navLinks = [
-    { href: `/${lang}/`, label: t('nav.home') },
-    { href: `/${lang}/consultancy/`, label: t('nav.consultancy') },
-    { href: `/${lang}/services/`, label: t('nav.services') },
-    { href: `/${lang}/reviews/`, label: t('nav.reviews') },
-    { href: `/${lang}/blog/`, label: t('nav.blog') },
-    { href: `/${lang}/contact/`, label: t('nav.contact') },
+    { href: `/${lang}/`, label: t('nav.home'), icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>' },
+    { href: `/${lang}/consultancy/`, label: t('nav.consultancy'), icon: '<circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path>' },
+    { href: `/${lang}/services/`, label: t('nav.services'), icon: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>' },
+    { href: `/${lang}/reviews/`, label: t('nav.reviews'), icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>' },
+    { href: `/${lang}/blog/`, label: t('nav.blog'), icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline>' },
+    { href: `/${lang}/contact/`, label: t('nav.contact'), icon: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>' },
 ];
 ---
 
 <nav class="sidebar" id="sidebar-nav">
-    <LanguageSwitcher />
+    <div class="sidebar-header-top">
+        <LanguageSwitcher />
+    </div>
 
     <a class="brand-logo" href={`/${lang}/`} aria-label="Scale Automata Homepage">
-    <svg width="48" height="48" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 10px var(--neon-blue-dim));">
-        <path d="m0 0h31.984v32h-31.984z" fill="#080606"/>
-        <g>
-            <path d="m14.866 4.2722 2.1721-0.019801c1.0717 3.6717 2.0476 7.4502 3.1428 11.107 0.31614 1.0553 0.64974 2.2112 0.90769 3.3072-0.86425-1.0785-2.328-3.4253-3.2022-4.7404-1.326-1.9085-1.1957-1.834-1.9248-4.5402-0.98459 3.1959-1.9752 7.0839-2.9449 10.417-0.37836 1.2892-0.76332 2.5723-1.1547 3.8493-0.09591 0.31648-0.53507 1.7229-0.56358 1.9626-0.11196 0.94004 0.14355 5.6084-0.0947 6.2802-0.49234 0.16914-2.8929 0.10438-3.5316 0.10472l-7.7093-6.94e-4 5.5041e-4 -7.9329 2.2706 9.58e-4 0.00884 4.0589c2.2198 0.0099 4.5844-0.08655 6.7892 0.04263-0.044248-2.6441-0.030871-5.391-0.035514-8.0455l-9.034-0.0198c-0.0014854-5.2242-0.034587-10.571 0.0072297-15.785l11.395-0.034039 0.0072 7.9144-2.2487-0.0066-0.00879-3.9885-6.8814 1.66e-4 0.00442 8.0032 5.4275-0.0066c0.65955-0.0012 2.8267-0.08259 3.3016 0.15526 0.14931 0.1675 0.18163 0.46241 0.23831 0.76205 0.36132-0.9563 0.84218-2.8728 1.1527-3.967z" fill="#1eeaff"/>
-            <path d="m31.933 0 0.11684 0.061776c-0.010446 0.67625-0.15727 2.2021-0.2153 2.9246-0.14343 1.8433-0.2958 3.6846-0.45721 5.5233-0.43673-0.52934-0.90479-1.2678-1.3078-1.8894-2.9907 6.0689-5.9043 12.301-8.9513 18.312-1.3376-2.0714-2.6862-4.1204-4.0457-6.1469-1.645 3.3764-3.4121 7.5314-5.1199 10.716-0.01587-1.3511-0.02215-2.7023-0.01807-4.0536 0.23251-0.59861 0.4083-1.1587 0.61-1.7908 0.41284-1.5215 1.5075-3.6207 2.1601-4.9816 0.74203-1.5237 1.4658-3.0748 2.1709-4.6525 0.49894 0.84854 1.2048 1.8533 1.7438 2.663 0.79356 1.2071 1.5919 2.4044 2.395 3.5917 0.52964-1.1705 1.1989-2.4754 1.7596-3.625l-1.0837-2.5287c-0.69694 0.41391-1.5032 0.26462-1.589-1.2962-0.02822-0.54751 0.07094-1.0917 0.27485-1.5069 0.48771-1.006 1.0905-0.67691 1.5921 0.06772 0.68147-1.0561 1.5379-2.6272 2.1902-3.7843-0.08775-0.32309-0.1419-0.67067-0.20242-1.0132 0.3047-2.0737 1.2918-2.6211 2.0396-0.79664 0.8901-0.39462 1.7928-0.73734 2.6902-1.1378-0.36618-0.5861-0.77754-1.1576-1.1629-1.7107z" fill="#04fb01"/>
-            <path d="m28.108 5.7885c-0.03653 0.22564-4.5858 9.327-5.0352 10.27l-0.4299-0.9817c-0.23918-0.54599-0.39878-0.91342-0.60144-1.504 0.04825-0.4896 0.06518-0.88395 0.08669-1.3754 0.75107-1.1677 1.6511-2.8291 2.3771-4.0916 1.0166 0.72541 1.2692-0.16618 1.5541-1.3634 0.10141-0.42574 1.6967-0.84048 2.0486-0.95409z" fill="#070707"/>
-            <path d="m24.857 5.6215c0.28222-0.17576 0.59193 0.08226 0.69515 0.57889 0.10316 0.49657-0.03844 1.0477-0.31788 1.2368-0.1842 0.12454-0.39203 0.064419-0.54403-0.15758-0.15206-0.22233-0.22473-0.57182-0.19014-0.91507 0.03458-0.34325 0.17088-0.62723 0.3569-0.74302z" fill="#050505"/>
-            <path d="m20.953 11.628c0.1839-0.11034 0.38716-0.03668 0.5317 0.1926 0.14457 0.22927 0.20798 0.57863 0.16588 0.91382-0.04218 0.33522-0.18326 0.60417-0.3691 0.70374-0.28081 0.15032-0.57795-0.12519-0.66757-0.61943-0.08966-0.49393 0.0613-1.0238 0.33909-1.1906z" fill="#070707"/>
-            <path d="m22.482 24.034c0.12274 0.12092 2.0277 7.11 2.2625 7.9448-0.748 0.0099-1.6933 0.04988-2.4559-0.0166-0.11758-0.0099-0.12945-0.11134-0.18121-0.26297-0.56248-2.0983-1.27-4.4793-1.8876-6.527 0.31711 0.41477 0.66019 0.91742 0.97265 1.3546 0.43501-0.75858 0.8795-1.6785 1.2896-2.4921z" fill="#1ee7ff"/>
-        </g>
-    </svg>
+        <img 
+            src="/SAlogo.svg" 
+            alt="Scale Automata Logo" 
+            class="logo-svg" 
+            width="48" 
+            height="48" 
+            style="filter: drop-shadow(0 0 10px var(--neon-blue-dim)); flex-shrink: 0;" 
+        />
+        
+        <span class="brand-text">
+            Scale<br>
+            <span style="color: var(--gif-green);">Automata</span>
+        </span>
     </a>
 
     <button class="hamburger" aria-label="Toggle Menu" id="hamburgerBtn">
@@ -44,36 +47,50 @@ const navLinks = [
 
     <div class="nav-links" id="navLinks">
         {navLinks.map((link) => (
-            <a class="nav-link" href={link.href}>{link.label}</a>
+            <a class="nav-link" href={link.href}>
+                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={link.icon}></svg>
+                <span class="nav-text">{link.label}</span>
+            </a>
         ))}
 
-        <div class="theme-switch-wrapper">
-             <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600; margin-right: auto; color: var(--text-light);">{t('nav.theme')}</span>
-             <label class="theme-switch" for="themeToggle">
-                 <input type="checkbox" id="themeToggle" />
-                 <div class="slider round">
-                     <svg class="fas fa-sun" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                     <svg class="fas fa-moon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                 </div>
-             </label>
-         </div>
+        <div class="sidebar-bottom">
+            <div class="search-wrapper">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search..." autocomplete="off" aria-label="Search" />
+                <div id="searchResults" class="search-results"></div>
+            </div>
+
+            <div class="theme-switch-wrapper">
+                 <span class="theme-text" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600; margin-right: auto; color: var(--text-light);">{t('nav.theme') || 'Theme'}</span>
+                 <label class="theme-switch" for="themeToggle">
+                     <input type="checkbox" id="themeToggle" />
+                     <div class="slider round">
+                         <svg class="fas fa-sun" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                         <svg class="fas fa-moon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                     </div>
+                 </label>
+             </div>
+        </div>
     </div>
 </nav>
 
 <script>
-    // Toggle Menu Logic
+    // --- Mobile Menu Logic ---
     const btn = document.getElementById('hamburgerBtn');
     const nav = document.getElementById('navLinks');
     if (btn && nav) {
@@ -82,19 +99,69 @@ const navLinks = [
         });
     }
 
-    // Theme logic (Client side)
-    const toggle = document.getElementById('themeToggle') as HTMLInputElement;
+    // --- Search Filtering Logic ---
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    const searchResults = document.getElementById('searchResults');
+    
+    // Create a simple index of your site for the search to filter through
+    const currentLang = document.documentElement.lang || 'en';
+    const siteIndex = [
+        { title: 'Home', url: `/${currentLang}/`, keywords: 'home strategy rank higher customers assessment agency' },
+        { title: 'Consultancy', url: `/${currentLang}/consultancy/`, keywords: 'consultancy advice assessment audit strategy roadmap' },
+        { title: 'Services', url: `/${currentLang}/services/`, keywords: 'services web development marketing seo geo cro design online growth' },
+        { title: 'Reviews', url: `/${currentLang}/reviews/`, keywords: 'reviews testimonials clients feedback success stories' },
+        { title: 'Blog', url: `/${currentLang}/blog/`, keywords: 'blog articles news insights tips learning' },
+        { title: 'Contact', url: `/${currentLang}/contact/`, keywords: 'contact message email reach us form help' }
+    ];
 
-    // Function to set theme
+    if (searchInput && searchResults) {
+        searchInput.addEventListener('input', (e) => {
+            const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+            searchResults.innerHTML = '';
+            
+            if (query.length > 0) {
+                const matches = siteIndex.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.keywords.includes(query)
+                );
+
+                if (matches.length > 0) {
+                    matches.forEach(match => {
+                        const a = document.createElement('a');
+                        a.href = match.url;
+                        a.className = 'search-result-item';
+                        a.textContent = match.title;
+                        searchResults.appendChild(a);
+                    });
+                    searchResults.style.display = 'flex';
+                } else {
+                    const div = document.createElement('div');
+                    div.className = 'search-result-none';
+                    div.textContent = 'No results found';
+                    searchResults.appendChild(div);
+                    searchResults.style.display = 'flex';
+                }
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Hide search results if user clicks outside the search box
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target as Node) && !searchResults.contains(e.target as Node)) {
+                searchResults.style.display = 'none';
+            }
+        });
+    }
+
+    // --- Theme Logic ---
+    const toggle = document.getElementById('themeToggle') as HTMLInputElement;
     function setTheme(theme: string) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('siteTheme', theme);
-        if (toggle) {
-            toggle.checked = theme === 'dark';
-        }
+        if (toggle) toggle.checked = theme === 'dark';
     }
 
-    // Initialize theme from localStorage on load (also handled in Layout head to prevent flash)
     const savedTheme = localStorage.getItem('siteTheme');
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -104,7 +171,6 @@ const navLinks = [
         if(toggle) toggle.checked = false;
     }
 
-    // Event listener
     if (toggle) {
         toggle.addEventListener('change', (e) => {
             const newTheme = (e.target as HTMLInputElement).checked ? 'dark' : 'light';
@@ -112,12 +178,10 @@ const navLinks = [
         });
     }
 
-    // Highlight Active Nav
+    // --- Active Link Logic ---
     const currentPath = window.location.pathname;
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
-        // Simple check: if href matches current path.
-        // Needs adjustment for trailing slashes potentially.
         const href = link.getAttribute('href');
         if (href === currentPath || href === currentPath + '/' || href + '/' === currentPath) {
              link.classList.add('active');

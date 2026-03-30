@@ -48,8 +48,8 @@ const metaDesc = description || t('home.desc').substring(0, 160);
         }
     </script>
 
-   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
+     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" transition:persist></script>
+     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js" transition:persist></script>
 
     <script is:inline>
         // Scroll Reveal Logic
@@ -85,7 +85,7 @@ const metaDesc = description || t('home.desc').substring(0, 160);
     </main>
 </div>
 
-<script is:inline>
+<script is:inline transition:persist>
     // Bulletproof Vanta Init (Birds Effect)
     const startVanta = () => {
         // If it's already running, don't restart it
@@ -98,12 +98,10 @@ const metaDesc = description || t('home.desc').substring(0, 160);
         }
 
         // Define our theme colors
-        // Dark Mode: Black background, Neon Blue Birds (from your custom link)
         const darkBg = 0x000000;
-        const darkColor1 = 0x00e3ff; // Equivalent to your 58367
-        const darkColor2 = 0x00d1ff; // Equivalent to your 53759
+        const darkColor1 = 0x00e3ff; 
+        const darkColor2 = 0x00d1ff;
         
-        // Light Mode: White background, Deep Ocean Blue Birds (for high contrast)
         const lightBg = 0xffffff;
         const lightColor1 = 0x0056b3; 
         const lightColor2 = 0x003d82;
@@ -118,7 +116,7 @@ const metaDesc = description || t('home.desc').substring(0, 160);
             minHeight: 200.00,
             minWidth: 200.00,
             scale: 1.00,
-            scaleMobile: 1.00,
+            scaleMobile: 1.00, // Tip: Change to 0.50 if mobile frame rates drop
             backgroundColor: isDark ? darkBg : lightBg,
             color1: isDark ? darkColor1 : lightColor1,
             color2: isDark ? darkColor2 : lightColor2,
@@ -145,12 +143,23 @@ const metaDesc = description || t('home.desc').substring(0, 160);
                 }
             });
         });
+
         themeObserver.observe(document.documentElement, { attributes: true });
     };
 
-    // Fire on standard load and Astro view transitions
+    // Fire on standard load
     document.addEventListener('DOMContentLoaded', startVanta);
-    document.addEventListener('astro:page-load', startVanta);
+    
+    // The secret to silky smooth Astro view transitions with WebGL:
+    document.addEventListener('astro:page-load', () => {
+        if (window.vantaEffect) {
+            // Tell Vanta the page layout just updated so it recalculates boundaries,
+            // entirely bypassing the heavy process of recreating the WebGL context.
+            window.vantaEffect.resize();
+        } else {
+            startVanta();
+        }
+    });
 </script>
 
 </body>
