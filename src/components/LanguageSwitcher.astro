@@ -1,29 +1,19 @@
 ---
-import { languages } from '../i18n/ui';
-
-const lang = Astro.params.lang || 'en';
-const currentPath = Astro.url.pathname;
-
-function getPathForLang(l: string) {
-  const segments = currentPath.split('/').filter(Boolean);
-  // Ensure we don't duplicate the lang if we are at root (e.g. redirected)
-  // But usually we are at /lang/...
-  if (segments.length > 0 && Object.keys(languages).includes(segments[0])) {
-      segments[0] = l;
-  } else {
-      segments.unshift(l);
-  }
-  return '/' + segments.join('/');
-}
+const { lang } = Astro.params;
+const currentLang = lang || 'en';
+const languages = ['en', 'ro', 'es'];
 ---
-
-<div class="sidebar-lang">
-    {Object.keys(languages).map((l, index) => (
-        <>
-            <a href={getPathForLang(l)} class={`lang-btn ${l === lang ? 'active' : ''}`} id={`btn-lang-${l}`} data-astro-prefetch> 
-                {l.toUpperCase()}
-                </a>
-            {index < Object.keys(languages).length - 1 && <span class="lang-separator">|</span>}
-        </>
-    ))}
+<div class="lang-switcher-container">
+    <div class="lang-collapsed" aria-label="Current Language">
+        <span>{currentLang}</span>
+    </div>
+    
+    <div class="lang-expanded">
+        {languages.map((l, index) => (
+            <>
+                <a href={`/${l}/`} class={`lang-btn ${currentLang === l ? 'active' : ''}`}>{l.toUpperCase()}</a>
+                {index < languages.length - 1 && <span class="lang-separator">|</span>}
+            </>
+        ))}
+    </div>
 </div>

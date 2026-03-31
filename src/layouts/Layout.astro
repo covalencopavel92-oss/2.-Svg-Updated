@@ -3,6 +3,8 @@ import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
 import { useTranslations } from '../i18n/utils';
+// --- NEW: Import the Astro Router ---
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title: string;
@@ -26,48 +28,33 @@ const metaDesc = description || t('home.desc').substring(0, 160);
     <meta name="description" content={metaDesc}>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com blob:; connect-src 'self' https://cdnjs.cloudflare.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=swap">
+    </noscript>
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" media="print" onload="this.media='all'">
+    <ClientRouter />
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap" media="print" onload="this.media='all'">
-    
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" media="print" onload="this.media='all'">
-    
     <script is:inline>
-        // Theme init
-        const savedTheme = localStorage.getItem('siteTheme');
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
+        function initTheme() {
+            const savedTheme = localStorage.getItem('siteTheme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
         }
+        initTheme(); 
+        document.addEventListener('astro:after-swap', initTheme); 
     </script>
 
-     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" transition:persist></script>
-     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js" transition:persist></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
 
-    <script is:inline>
-        // Scroll Reveal Logic
-        document.addEventListener('astro:page-load', () => {
-            const reveals = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting) entry.target.classList.add('active');
-                });
-            }, { threshold: 0.1 });
-
-            reveals.forEach(reveal => observer.observe(reveal));
-        });
-    </script>
-    
     <style is:global>
       html.is-animating .reveal { opacity: 1 !important; transform: none !important; }
       .reveal { opacity: 1 !important; transform: translateY(0) !important; }
@@ -88,11 +75,13 @@ const metaDesc = description || t('home.desc').substring(0, 160);
     </main>
 </div>
 
-<script is:inline transition:persist>
-    // Bulletproof Vanta Init (Birds Effect)
+<script is:inline>
+    // ==========================================
+    // UNIFIED APP LOGIC (Vanta + Scroll Reveal)
+    // ==========================================
+
     const startVanta = () => {
         if (window.vantaEffect) return;
-
         if (typeof window.VANTA === 'undefined' || typeof window.VANTA.BIRDS === 'undefined') {
             requestAnimationFrame(startVanta);
             return;
@@ -102,7 +91,6 @@ const metaDesc = description || t('home.desc').substring(0, 160);
         const darkBg = 0x000000;
         const lightBg = 0xffffff;
 
-        // Start with Base Neon Cyan
         window.vantaEffect = window.VANTA.BIRDS({
             el: "#vanta-bg",
             mouseControls: true,
@@ -113,7 +101,7 @@ const metaDesc = description || t('home.desc').substring(0, 160);
             scale: 1.00,
             scaleMobile: 1.00,
             backgroundColor: isDark ? darkBg : lightBg,
-            color1: 0x00f6ff, // Base Neon Cyan
+            color1: 0x00f6ff, 
             color2: 0x00d1ff,
             colorMode: "varianceGradient",
             birdSize: 0.50,
@@ -125,36 +113,27 @@ const metaDesc = description || t('home.desc').substring(0, 160);
             quantity: 5.00
         });
 
-        // --- NEW: Zero-CPU CSS Hue Rotation Logic ---
         const bgElement = document.getElementById('vanta-bg');
         if (bgElement) {
-            // Apply a gorgeous 3-second smooth crossfade to the color shift
             bgElement.style.transition = 'filter 3s ease-in-out';
         }
 
-        // 0 = Cyan, -65 = Neon Green, 60 = Dark Blue
-        const hueRotations = [0, -65, 60]; 
+        const hueRotations = [0, -65, 60];
         let hueIndex = 0;
 
         const changeColors = () => {
             if (bgElement) {
                 hueIndex = (hueIndex + 1) % hueRotations.length;
-                // Rotates the color of the birds mathematically without touching WebGL
                 bgElement.style.filter = `hue-rotate(${hueRotations[hueIndex]}deg)`;
             }
-            
-            // Random interval between 15s (15000ms) and 20s (20000ms)
             const randomInterval = Math.floor(Math.random() * (20000 - 15000 + 1)) + 15000;
-            
             clearTimeout(window.vantaColorTimer);
             window.vantaColorTimer = setTimeout(changeColors, randomInterval);
         };
 
-        // Clear any old timers to prevent ghost-loops, then start the first cycle
         clearTimeout(window.vantaColorTimer);
         window.vantaColorTimer = setTimeout(changeColors, 15000);
 
-        // --- Handle Theme Toggle ---
         const themeObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.attributeName === 'data-theme' && window.vantaEffect) {
@@ -165,19 +144,33 @@ const metaDesc = description || t('home.desc').substring(0, 160);
                 }
             });
         });
-
         themeObserver.observe(document.documentElement, { attributes: true });
     };
 
-    document.addEventListener('DOMContentLoaded', startVanta);
-    
-    document.addEventListener('astro:page-load', () => {
+    const initScrollReveal = () => {
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(reveal => observer.observe(reveal));
+    };
+
+    // Master Initialization Function
+    const initApp = () => {
+        initScrollReveal();
         if (window.vantaEffect) {
             window.vantaEffect.resize();
         } else {
             startVanta();
         }
-    });
+    };
+
+    // Hook into Astro's router lifecycle
+    document.addEventListener('DOMContentLoaded', startVanta); // First ever paint
+    document.addEventListener('astro:page-load', initApp);     // Every navigation afterwards
 </script>
 
 </body>

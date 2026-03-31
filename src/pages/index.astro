@@ -4,20 +4,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scale Automata | Select Language</title>
+    <meta name="description" content="Scale Automata - Select your preferred language to continue.">
+    
+    <link rel="alternate" hreflang="en" href="/en/" />
+    <link rel="alternate" hreflang="ro" href="/ro/" />
+    <link rel="alternate" hreflang="es" href="/es/" />
+    <link rel="alternate" hreflang="x-default" href="/en/" />
+    
     <meta http-equiv="refresh" content="0;url=/en/">
+    
     <script>
         const userLang = navigator.language || 'en';
+        // Use replace() instead of href so we don't trap users in a back-button loop
         if (userLang.startsWith('ro')) {
-            window.location.href = '/ro/';
+            window.location.replace('/ro/');
         } else if (userLang.startsWith('es')) {
-            window.location.href = '/es/';
+            window.location.replace('/es/');
         } else {
-            window.location.href = '/en/';
+            window.location.replace('/en/');
         }
     </script>
-    <title>Redirecting...</title>
 </head>
-<body>
-    <p>Redirecting...</p>
+<body style="background-color: #000; color: #00f6ff; font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+    <div style="text-align: center;">
+        <p>Redirecting to your language...</p>
+        <noscript>
+            <p>Please select your language:</p>
+            <a href="/en/" style="color: #00f6ff; margin: 0 10px; text-decoration: none; font-weight: 600;">English</a>
+            <a href="/ro/" style="color: #00f6ff; margin: 0 10px; text-decoration: none; font-weight: 600;">Română</a>
+            <a href="/es/" style="color: #00f6ff; margin: 0 10px; text-decoration: none; font-weight: 600;">Español</a>
+        </noscript>
+    </div>
 </body>
 </html>
