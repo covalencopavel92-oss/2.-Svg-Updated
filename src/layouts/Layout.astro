@@ -36,7 +36,10 @@ const metaDesc = description || t('home.desc').substring(0, 160);
 
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap" media="print" onload="this.media='all'">
-
+    
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" media="print" onload="this.media='all'">
+    
     <script is:inline>
         // Theme init
         const savedTheme = localStorage.getItem('siteTheme');
@@ -88,26 +91,18 @@ const metaDesc = description || t('home.desc').substring(0, 160);
 <script is:inline transition:persist>
     // Bulletproof Vanta Init (Birds Effect)
     const startVanta = () => {
-        // If it's already running, don't restart it
         if (window.vantaEffect) return;
 
-        // Loop until the deferred CDNs finish loading
         if (typeof window.VANTA === 'undefined' || typeof window.VANTA.BIRDS === 'undefined') {
             requestAnimationFrame(startVanta);
             return;
         }
 
-        // Define our theme colors
-        const darkBg = 0x000000;
-        const darkColor1 = 0x00e3ff; 
-        const darkColor2 = 0x00d1ff;
-        
-        const lightBg = 0xffffff;
-        const lightColor1 = 0x0056b3; 
-        const lightColor2 = 0x003d82;
-
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const darkBg = 0x000000;
+        const lightBg = 0xffffff;
 
+        // Start with Base Neon Cyan
         window.vantaEffect = window.VANTA.BIRDS({
             el: "#vanta-bg",
             mouseControls: true,
@@ -116,10 +111,10 @@ const metaDesc = description || t('home.desc').substring(0, 160);
             minHeight: 200.00,
             minWidth: 200.00,
             scale: 1.00,
-            scaleMobile: 1.00, // Tip: Change to 0.50 if mobile frame rates drop
+            scaleMobile: 1.00,
             backgroundColor: isDark ? darkBg : lightBg,
-            color1: isDark ? darkColor1 : lightColor1,
-            color2: isDark ? darkColor2 : lightColor2,
+            color1: 0x00f6ff, // Base Neon Cyan
+            color2: 0x00d1ff,
             colorMode: "varianceGradient",
             birdSize: 0.50,
             wingSpan: 39.00,
@@ -130,15 +125,42 @@ const metaDesc = description || t('home.desc').substring(0, 160);
             quantity: 5.00
         });
 
-        // Handle Theme Toggle smoothly without reloading the canvas
+        // --- NEW: Zero-CPU CSS Hue Rotation Logic ---
+        const bgElement = document.getElementById('vanta-bg');
+        if (bgElement) {
+            // Apply a gorgeous 3-second smooth crossfade to the color shift
+            bgElement.style.transition = 'filter 3s ease-in-out';
+        }
+
+        // 0 = Cyan, -65 = Neon Green, 60 = Dark Blue
+        const hueRotations = [0, -65, 60]; 
+        let hueIndex = 0;
+
+        const changeColors = () => {
+            if (bgElement) {
+                hueIndex = (hueIndex + 1) % hueRotations.length;
+                // Rotates the color of the birds mathematically without touching WebGL
+                bgElement.style.filter = `hue-rotate(${hueRotations[hueIndex]}deg)`;
+            }
+            
+            // Random interval between 15s (15000ms) and 20s (20000ms)
+            const randomInterval = Math.floor(Math.random() * (20000 - 15000 + 1)) + 15000;
+            
+            clearTimeout(window.vantaColorTimer);
+            window.vantaColorTimer = setTimeout(changeColors, randomInterval);
+        };
+
+        // Clear any old timers to prevent ghost-loops, then start the first cycle
+        clearTimeout(window.vantaColorTimer);
+        window.vantaColorTimer = setTimeout(changeColors, 15000);
+
+        // --- Handle Theme Toggle ---
         const themeObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.attributeName === 'data-theme' && window.vantaEffect) {
                     const darkNow = document.documentElement.getAttribute('data-theme') === 'dark';
                     window.vantaEffect.setOptions({ 
-                        backgroundColor: darkNow ? darkBg : lightBg, 
-                        color1: darkNow ? darkColor1 : lightColor1,
-                        color2: darkNow ? darkColor2 : lightColor2 
+                        backgroundColor: darkNow ? darkBg : lightBg
                     });
                 }
             });
@@ -147,14 +169,10 @@ const metaDesc = description || t('home.desc').substring(0, 160);
         themeObserver.observe(document.documentElement, { attributes: true });
     };
 
-    // Fire on standard load
     document.addEventListener('DOMContentLoaded', startVanta);
     
-    // The secret to silky smooth Astro view transitions with WebGL:
     document.addEventListener('astro:page-load', () => {
         if (window.vantaEffect) {
-            // Tell Vanta the page layout just updated so it recalculates boundaries,
-            // entirely bypassing the heavy process of recreating the WebGL context.
             window.vantaEffect.resize();
         } else {
             startVanta();

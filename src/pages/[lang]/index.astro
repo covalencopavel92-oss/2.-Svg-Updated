@@ -11,51 +11,52 @@ const { lang } = Astro.params;
 const t = useTranslations(lang as "en" | "ro" | "es");
 ---
 <Layout title={t('nav.home')}>
-    <section class="page-view" style="display: block; flex-grow: 1;">
-        <div class="hero-section">
-    <div class="hero-section">
-    <div class="reveal">
-        <h1 class="hero-title" style="overflow: hidden;">
-            <span class="pan-wrapper">
-                <span class="wave-word" style="--d:0.1s">Enhance </span>
-                <span class="wave-word" style="--d:0.2s">your </span>
-                <span class="wave-word" style="--d:0.3s">strategy.</span><br/>
-                <span class="wave-word" style="--d:0.4s">Rank </span>
-                <span class="wave-word" style="--d:0.5s">higher. </span>
-                <span class="wave-word" style="--d:0.6s">Get </span>
-                <span class="wave-word" style="--d:0.7s">more </span>
-                <span class="wave-word" style="--d:0.8s">customers.</span>
-            </span>
-        </h1>
+    <section class="page-view" style="display: flex; flex-direction: column; flex-grow: 1; min-height: calc(100vh - 8rem);">
         
-        <h2 class="hero-subtitle">
-            Unlock your business potential with our advanced digital marketing and web development services.
-            We craft bespoke strategies designed to elevate your brand and drive measurable results.
-            From innovative web design to comprehensive digital campaigns, we are dedicated to achieving your goals.
-        </h2>
-        
-        <p class="hero-description">
-            Your small business deserves top-tier digital marketing without the bloated price tag.
-            We build custom website development solutions and budget-efficient marketing campaigns designed to generate real revenue, not just vanity metrics.
-            To consistently rank higher and dominate online search, your marketing strategy needs more than basic SEO.
-            We utilize advanced Generative Engine Optimization (GEO), targeted social media ads, and data-driven web design to maximize your brand visibility and website traffic.
-            Every landing page, email marketing campaign, and SEO optimization tactic we deploy is engineered for maximum conversion rate optimization (CRO) and direct online growth.
-            Whether it's driving local SEO foot traffic or boosting ecommerce sales, our transparent performance tracking ensures you know exactly where your investment goes.
-            We don't hide behind industry buzzwords; we deliver practical, results-oriented web development and search engine marketing that scales efficiently.
-            Ready to stop losing customers to your competitors? Take Assessment to get a clear, no-nonsense roadmap for your success, or Explore Services to find the exact digital solutions you need to dominate your market.
-        </p>
-        
-        <div style="display: flex; gap: 3.5rem; flex-wrap: wrap; justify-content: center; overflow: hidden; padding: 10rem;">
-            <a href={`/${lang}/services/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.explore')}</a>
-            <a href={`/${lang}/consultancy/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.3s;">{t('home.assessment')}</a>
+        <div class="hero-section" style="margin-bottom: auto;">
+            <div class="reveal">
+                <h1 class="hero-title" style="overflow: hidden;">
+                    <span class="pan-wrapper">
+                        <span class="wave-word" style="--d:0.1s">Enhance </span>
+                        <span class="wave-word" style="--d:0.2s">your </span>
+                        <span class="wave-word" style="--d:0.3s">strategy.</span><br/>
+                        <span class="wave-word" style="--d:0.4s">Rank </span>
+                        <span class="wave-word" style="--d:0.5s">higher. </span>
+                        <span class="wave-word" style="--d:0.6s">Get </span>
+                        <span class="wave-word" style="--d:0.7s">more </span>
+                        <span class="wave-word" style="--d:0.8s">customers.</span>
+                    </span>
+                </h1>
+                
+                <h2 class="hero-subtitle">
+                    Unlock your business potential with our advanced digital marketing and web development services.
+                    We craft bespoke strategies designed to elevate your brand and drive measurable results.
+                    From innovative web design to comprehensive digital campaigns, we are dedicated to achieving your goals.
+                </h2>
+                
+                <p class="hero-description">
+                    Your small business deserves top-tier digital marketing without the bloated price tag.
+                    We build custom website development solutions and budget-efficient marketing campaigns designed to generate real revenue, not just vanity metrics.
+                    To consistently rank higher and dominate online search, your marketing strategy needs more than basic SEO.
+                    We utilize advanced Generative Engine Optimization (GEO), targeted social media ads, and data-driven web design to maximize your brand visibility and website traffic.
+                    Every landing page, email marketing campaign, and SEO optimization tactic we deploy is engineered for maximum conversion rate optimization (CRO) and direct online growth.
+                    Whether it's driving local SEO foot traffic or boosting ecommerce sales, our transparent performance tracking ensures you know exactly where your investment goes.
+                    We don't hide behind industry buzzwords; we deliver practical, results-oriented web development and search engine marketing that scales efficiently.
+                    Ready to stop losing customers to your competitors? Take Assessment to get a clear, no-nonsense roadmap for your success, or Explore Services to find the exact digital solutions you need to dominate your market.
+                </p>
+                
+                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; overflow: hidden; padding-top: 2rem;">
+                    <a href={`/${lang}/services/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.explore')}</a>
+                    <a href={`/${lang}/consultancy/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.assessment')}</a>
+                </div>
+            </div>
         </div>
 
-        <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="text-align: center; margin-top: auto; padding-top: 3rem; padding-bottom: 1rem;" class="reveal">
             <a href={`/${lang}/consultancy/`} style="display: inline-block; transition: transform 0.3s ease;" class="hover-scale">
-                <img src="/Logogif.gif" alt="Scale Automata Interactive Process" style="max-width: 250px; border-radius: 70%; box-shadow: none;" />
+                <img src="/Logogif.gif" alt="Scale Automata Interactive Process" width="150" height="150" style="max-width: 150px; border-radius: 60%; box-shadow: none;" />
             </a>
         </div>
-    </div>
-    </div>
+
     </section>
 </Layout>

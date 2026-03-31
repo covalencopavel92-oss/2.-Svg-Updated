@@ -767,6 +767,29 @@
 /* --- NEW SIDEBAR UPGRADES (Search, Lang, Hover Logic) --- */
 /* ======================================================= */
 
+/* --- Dynamic Logo Sizing & Alignment Check --- */
+.logo-svg {
+    border-radius: 50% !important; /* Forces a perfect circle shape */
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    
+    /* Adds the cyan edge to check alignment */
+    border: 1px solid var(--neon-blue);
+    padding: 2px; /* Gives the logo a tiny bit of breathing room inside the ring */
+}
+
+@media (min-width: 769px) {
+    /* Shrink the logo to exactly match the 20x20 navigation icons when collapsed */
+    .sidebar:not(:hover) .logo-svg {
+        width: 20px !important;
+        height: 20px !important;
+        padding: 0; /* Removes padding so the 20px matches the icons perfectly */
+        border: 1px solid var(--neon-blue);
+    }
+}
+
 /* 1. Make Nav Links push the search/theme to the bottom */
 .nav-links {
     flex-grow: 1;
@@ -913,46 +936,58 @@
             .reviews-masonry { column-count: 1; }
             .quiz-container { padding: 2rem 1rem; }
         }
-        /* --- Hero Text & Spacing --- */
-        .hero-title {
-            text-align: center; 
-            max-width: 100%; 
-            word-wrap: break-word; 
-            color: var(--neon-blue);
-            margin-bottom: 7rem; /* Increased from 1rem */
-            font-family: "Times New Roman", serif;
-            font-weight: 900;
-            transition: color 0.2s ease;
-        }
+        /* --- Hero Text & Spacing (Desktop) --- */
+.hero-title {
+    text-align: center; 
+    max-width: 100%; 
+    word-wrap: break-word; 
+    color: rgb(255, 255, 255);
+    margin-bottom: 7rem;
+    font-family: "Russo One", serif;
+    font-weight: 900;
+    color: var(--text-dark);
+    transition: color 0.3s ease;
+}
 
-        .hero-subtitle {
-            font-size: 23px;
-            line-height: 1.4;
-            max-width: 70%; /* Makes the subtitle 30% narrower than the title */
-            margin: 0 auto 5.5rem auto; /* Centers the block on the page and keeps the bottom spacing */
-            text-align: center;
-            color: var(--text-dark) !important;
-            font-family: "Times New Roman", serif;
-            font-weight: 800;
-            transition: color 0.2s ease;
-       }
+.hero-subtitle {
+    font-size: 23px;
+    line-height: 1.4;
+    max-width: 70%;
+    margin: 0 auto 5.5rem auto;
+    text-align: center;
+    color: var(--text-dark) !important;
+    font-family: "Russo One", serif;
+    font-weight: 800;
+    transition: color 0.2s ease;
+}
 
-        .hero-description {
-            max-width: 60%; /* Makes the paragraph 40% narrower */
-            margin: 0 auto 1.5rem auto; /* Centers the block on the page and keeps the bottom spacing */
-            text-align: center; /* Centers the text to align with the H1 and H2 */
-            font-size: 17px;
-            color: var(--text-dark) !important;
-            line-height: 1.8;
-            font-family: "Times New Roman", serif;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        /* ======================================================= */
+.hero-description {
+    /* Glassmorphism Navy Background */
+    background: rgba(10, 20, 45, 0.1); /* Deep navy blue with 10% opacity */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 247, 255, 0.689); /* Subtle neon blue glow border */
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    
+    /* Layout & Spacing */
+    padding: 2.5rem 3rem;
+    max-width: 55%;
+    margin: 0 auto 2.5rem auto;
+    text-align: center;
+    
+    /* Typography */
+    font-size: 19px;
+    color: #ffffff !important; /* Forced to white for perfect contrast against navy */
+    line-height: 1.8;
+    font-family: "Russo One", serif;
+    font-weight: 550;
+    transition: all 0.3s ease;
+}
+
+/* ======================================================= */
 /* --- NEW: HEADLINE ANIMATIONS & EFFECTS --- */
 /* ======================================================= */
-
-/* 1. Pan From Right */
 .pan-wrapper {
     display: inline-block;
     animation: panRightToCenter 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
@@ -963,79 +998,61 @@
     100% { transform: translateX(0); opacity: 1; }
 }
 
-/* 2. Wavy Text (Starts after pan) */
 .wave-word {
     display: inline-block;
-    white-space: pre; /* Preserves spaces between words */
-    /* 1s delay waits for pan, then adds custom word delay */
+    white-space: pre;
     animation: waveText 2.5s ease-in-out infinite;
     animation-delay: calc(1s + var(--d)); 
 }
 
 @keyframes waveText {
     0%, 100% { transform: translateY(0); }
-    20% { transform: translateY(-8px); } /* Quick jump */
-    40% { transform: translateY(0); } /* Settle down */
+    20% { transform: translateY(-8px); }
+    40% { transform: translateY(0); }
 }
 
-/* Optional: Slight hover scale for GIF */
 .hover-scale:hover {
     transform: scale(1.05);
 }
 
 /* ======================================================= */
-/* --- NEW: COLLAPSED THEME TOGGLE LOGIC (Desktop Only) --- */
+/* --- COLLAPSED THEME TOGGLE LOGIC (Desktop Only) --- */
 /* ======================================================= */
-
 @media (min-width: 769px) {
-    /* Smooth out the border appearing */
     .theme-switch-wrapper {
         transition: padding 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease;
     }
-
     .sidebar:not(:hover) .theme-switch-wrapper {
         border-top-color: transparent;
         padding-top: 0.5rem;
     }
-
     .theme-switch {
         display: flex;
         justify-content: center;
         width: 100%;
     }
-
-    /* 1. Animate the Slider container smoothly */
     .slider {
         transition: background-color 0.4s ease, width 0.4s cubic-bezier(0.25, 1, 0.5, 1), padding 0.4s ease !important;
-        width: 50px; /* Explicit expanded width */
+        width: 50px;
         overflow: hidden;
     }
-
     .sidebar:not(:hover) .slider {
         background-color: transparent !important;
-        width: 20px; /* Shrink to just the icon */
+        width: 20px;
         padding: 0;
     }
-
-    /* 2. Animate the white pill circle (Fade instead of instantly appearing) */
     .slider:before {
         transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease !important;
         opacity: 1;
     }
-
     .sidebar:not(:hover) .slider:before {
         opacity: 0;
-        /* Delay fading out so it doesn't instantly vanish on collapse */
         transition-delay: 0s !important; 
     }
-
-    /* 3. Animate the SVGs (fade and shrink instead of display: none) */
     .slider svg {
         transition: opacity 0.3s ease, width 0.4s cubic-bezier(0.25, 1, 0.5, 1), margin 0.4s ease !important;
         opacity: 1;
     }
-
-    /* Smoothly hide the inactive mode icon by collapsing its width */
     html[data-theme="light"] .sidebar:not(:hover) .slider svg.fa-moon,
     html[data-theme="dark"] .sidebar:not(:hover) .slider svg.fa-sun {
         opacity: 0;
@@ -1043,116 +1060,127 @@
         margin: 0;
         pointer-events: none;
     }
-
-    /* Keep the active mode icon centered and sized */
     .sidebar:not(:hover) .slider svg {
         width: 18px;
         height: 18px;
         margin: auto;
     }
 }
-        /* Ensure mobile screens remain 100% friendly */
-        @media (max-width: 768px) {
-            .hero-title {
-                margin-bottom: 1.5rem;
-            }
-            .hero-subtitle {
-                margin-bottom: 2rem;
-            }
-            .hero-description {
-                max-width: 100%; /* Returns to full width on small screens */
-                margin-bottom: 2.5rem;
-                text-align: left; /* Optional: Left-aligning large blocks of text on mobile is often easier to read */
-        }
-        /* Replace your mobile sidebar & nav-links code inside @media (max-width: 768px) with this: */
-        
-        .sidebar {
-            width: 100% !important;
-            height: 80px;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.5);
-            border-right: none;
-            transition: none; /* Disables hover expansion on mobile */
-        }
 
-        .sidebar-header-top { display: none; /* Hides language block on the top mobile bar */ }
-        
-        .brand-logo { margin-bottom: 0; width: auto; justify-content: flex-start; }
-        .brand-text { display: none; } /* Hides Text to save space for Hamburger */
-        
-        .hamburger { display: block; }
-        
-        .nav-links {
-            position: absolute;
-            top: 80px;
-            left: 0;
-            width: 100%;
-            background-color: var(--sidebar-bg);
-            padding: 2rem;
-            flex-direction: column;
-            align-items: center; /* Centers links, search, and theme */
-            gap: 1.5rem;
-            transform: translateY(-150%);
-            opacity: 0;
-            transition: all 0.4s ease-in-out;
-            z-index: 999;
-            border-top: 1px solid rgba(0, 246, 255, 0.1);
-        }
+/* --- Universal Catch-All for Invisible Text --- */
+.hero-section h2, .hero-section h3, .hero-section p,
+.main-content h2, .main-content h3, .main-content p,
+.section-header h2, .section-header p {
+    color: var(--text-dark) !important;
+    transition: color 0.2s ease;
+}
+.service-desc-overlay h2, .service-desc-overlay h3, .service-desc-overlay p {
+    color: var(--main-bg) !important;
+}
+.btn-neon {
+    color: var(--neon-blue) !important;
+    border-color: var(--neon-blue) !important;
+}
+.btn-neon:hover {
+    color: var(--main-bg) !important;
+    background-color: var(--neon-blue) !important;
+    box-shadow: none;
+}   
 
-        /* Forces text and search to show inside the mobile dropdown */
-        .nav-links .nav-text,
-        .nav-links .theme-text,
-        .nav-links .search-input {
-            opacity: 1 !important;
-            width: auto !important;
-            pointer-events: auto !important;
-        }
+/* ======================================================= */
+/* --- UNIFIED MOBILE RESPONSIVENESS (Max 768px) --- */
+/* ======================================================= */
+@media (max-width: 768px) {
+    .app-container { flex-direction: column; }
+    
+    /* Sidebar to Top Navbar */
+    .sidebar {
+        width: 100% !important;
+        height: 80px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+        border-right: none;
+        transition: none;
+    }
 
-        .search-wrapper {
-            width: 100%;
-            max-width: 300px;
-            justify-content: flex-start;
-            padding: 0.8rem 1rem;
-            border-color: var(--neon-blue-dim);
-        }
+    .sidebar-header-top { display: none; }
+    .brand-logo { margin-bottom: 0; width: auto; justify-content: flex-start; }
+    .brand-text { display: none; }
+    .hamburger { display: block; }
 
-        .main-content {
-            margin-left: 0 !important;
-            width: 100% !important;
-            padding: 7rem 1.5rem 3rem 1.5rem;
-        }
-        /* --- Universal Catch-All for Invisible Text --- */
-        /* Targets standard text tags directly in case they lack specific class names */
-        .hero-section h2, 
-        .hero-section h3, 
-        .hero-section p,
-        .main-content h2, 
-        .main-content h3,
-        .main-content p,
-        .section-header h2,
-        .section-header p {
-            color: var(--text-dark) !important;
-            transition: color 0.2s ease;
-        }
+    .nav-links {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: var(--sidebar-bg);
+        padding: 2rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        transform: translateY(-150%);
+        opacity: 0;
+        transition: all 0.4s ease-in-out;
+        z-index: 999;
+        border-top: 1px solid rgba(0, 246, 255, 0.1);
+    }
 
-        /* Failsafe: Protects the dark hover overlays on your service cards from turning white in dark mode */
-        .service-desc-overlay h2,
-        .service-desc-overlay h3,
-        .service-desc-overlay p {
-            color: var(--main-bg) !important;
-        }
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+    }
 
-        /* Failsafe: Ensures neon buttons keep their brand color */
-        .btn-neon {
-            color: var(--neon-blue) !important;
-            border-color: var(--neon-blue) !important;
-        }
-        .btn-neon:hover {
-            color: var(--main-bg) !important;
-            background-color: var(--neon-blue) !important;
-            box-shadow: none;
-        }   
-        }               
+    .nav-link {
+        width: 100%;
+        text-align: center;
+        border-radius: 0;
+        font-size: 1.1rem;
+        white-space: normal;
+        overflow: visible;
+    }
+    
+    .nav-link:hover, .nav-link.active { transform: none; background-color: transparent; }
+    .nav-link::before { display: none; }
+    
+    .nav-links .nav-text,
+    .nav-links .theme-text,
+    .nav-links .search-input {
+        opacity: 1 !important;
+        width: auto !important;
+        pointer-events: auto !important;
+    }
+
+    .search-wrapper {
+        width: 100%;
+        max-width: 300px;
+        justify-content: flex-start;
+        padding: 0.8rem 1rem;
+        border-color: var(--neon-blue-dim);
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 7rem 1.5rem 3rem 1.5rem;
+    }
+
+    .sidebar-lang {
+        position: absolute;
+        right: 4.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-bottom: 0;
+    }
+
+    /* Hero Mobile Fixes */
+    .hero-section { height: auto; min-height: 80vh; padding-top: 2rem; }
+    .hero-title { margin-bottom: 1.5rem; font-size: 2.2rem; line-height: 1.3; max-width: 100%; word-wrap: break-word; }
+    .hero-subtitle { margin-bottom: 2rem; font-size: 23px !important; max-width: 100%; }
+    .hero-description { max-width: 95%; margin-bottom: 2.5rem; text-align: left; font-size: 18px !important; }
+    
+    .reviews-masonry { column-count: 1; }
+    .quiz-container { padding: 2rem 1rem; }
+}
