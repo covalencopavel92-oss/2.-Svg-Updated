@@ -168,7 +168,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 0; /* FIX: Prevents icon from shifting left when text is hidden */
     width: 100%;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -177,6 +177,7 @@ body {
 
 .sidebar:hover .brand-logo {
     justify-content: flex-start;
+    gap: 1rem; /* Restore gap when expanded */
 }
 
 .logo-svg {
@@ -220,13 +221,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 0; /* FIX: Prevents icon from shifting left when text is hidden */
     white-space: nowrap;
 }
 
 .sidebar:hover .nav-link {
     justify-content: flex-start;
     padding: 0.8rem 1rem;
+    gap: 1rem; /* Restore gap when expanded */
 }
 
 .brand-text,
@@ -335,7 +337,7 @@ body {
 }
 
 .search-icon {
-    color: var(--text-light);
+    color: var(--neon-blue);
     flex-shrink: 0;
     transition: color 0.3s;
 }
@@ -886,9 +888,13 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
 @media (min-width: 769px) {
     .theme-switch-wrapper { transition: padding 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease; }
     .sidebar:not(:hover) .theme-switch-wrapper { border-top-color: transparent; padding-top: 0.5rem; }
-    .theme-switch { display: flex; justify-content: center; width: 100%; }
+    
+    /* FIX: Prevents 100% width from squishing text on hover */
+    .sidebar:not(:hover) .theme-switch { display: flex; justify-content: center; width: 100%; }
+    .sidebar:hover .theme-switch { display: flex; justify-content: flex-end; width: 50px; }
+    
     .slider { transition: background-color 0.4s ease, width 0.4s cubic-bezier(0.25, 1, 0.5, 1), padding 0.4s ease !important; width: 50px; overflow: hidden; }
-    .sidebar:not(:hover) .slider { background-color: transparent !important; width: 20px; padding: 0; }
+    .sidebar:not(:hover) .slider { background-color: transparent !important; width: 20px; padding: 0; margin:0 auto; }
     .slider:before { transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease !important; opacity: 1; }
     .sidebar:not(:hover) .slider:before { opacity: 0; transition-delay: 0s !important; }
     .slider svg { transition: opacity 0.3s ease, width 0.4s cubic-bezier(0.25, 1, 0.5, 1), margin 0.4s ease !important; opacity: 1; }
