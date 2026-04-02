@@ -19,16 +19,28 @@ const navLinks = [
 <nav class="sidebar" id="sidebar-nav">
     <div class="sidebar-header-top">
         <LanguageSwitcher />
+        <button class="sidebar-lock-btn" id="sidebarLockBtn" aria-label="Lock/Unlock Sidebar" title="Lock sidebar to keep expanded">
+            <svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <svg class="unlock-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 9.2 1"></path>
+            </svg>
+        </button>
     </div>
 
     <a class="brand-logo" href={`/${lang}/`} aria-label="Scale Automata Homepage">
-        <svg class="logo-svg" width="48" height="48" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 10px var(--neon-blue-dim)); flex-shrink: 0;">
-            <path d="m0 0h31.984v32h-31.984z" fill="#080606"/>
-            <g>
-                <path d="m14.866 4.2722 2.1721-0.019801c1.0717 3.6717 2.0476 7.4502 3.1428 11.107 0.31614 1.0553 0.64974 2.2112 0.90769 3.3072-0.86425-1.0785-2.328-3.4253-3.2022-4.7404-1.326-1.9085-1.1957-1.834-1.9248-4.5402-0.98459 3.1959-1.9752 7.0839-2.9449 10.417-0.37836 1.2892-0.76332 2.5723-1.1547 3.8493-0.09591 0.31648-0.53507 1.7229-0.56358 1.9626-0.11196 0.94004 0.14355 5.6084-0.0947 6.2802-0.49234 0.16914-2.8929 0.10438-3.5316 0.10472l-7.7093-6.94e-4 5.5041e-4 -7.9329 2.2706 9.58e-4 0.00884 4.0589c2.2198 0.0099 4.5844-0.08655 6.7892 0.04263-0.044248-2.6441-0.030871-5.391-0.035514-8.0455l-9.034-0.0198c-0.0014854-5.2242-0.034587-10.571 0.0072297-15.785l11.395-0.034039 0.0072 7.9144-2.2487-0.0066-0.00879-3.9885-6.8814 1.66e-4 0.00442 8.0032 5.4275-0.0066c0.65955-0.0012 2.8267-0.08259 3.3016 0.15526 0.14931 0.1675 0.18163 0.46241 0.23831 0.76205 0.36132-0.9563 0.84218-2.8728 1.1527-3.967z" fill="#1eeaff"/>
-                <path d="m31.933 0 0.11684 0.061776c-0.010446 0.67625-0.15727 2.2021-0.2153 2.9246-0.14343 1.8433-0.2958 3.6846-0.45721 5.5233-0.43673-0.52934-0.90479-1.2678-1.3078-1.8894-2.9907 6.0689-5.9043 12.301-8.9513 18.312-1.3376-2.0714-2.6862-4.1204-4.0457-6.1469-1.645 3.3764-3.4121 7.5314-5.1199 10.716-0.01587-1.3511-0.02215-2.7023-0.01807-4.0536 0.23251-0.59861 0.4083-1.1587 0.61-1.7908 0.41284-1.5215 1.5075-3.6207 2.1601-4.9816 0.74203-1.5237 1.4658-3.0748 2.1709-4.6525 0.49894 0.84854 1.2048 1.8533 1.7438 2.663 0.79356 1.2071 1.5919 2.4044 2.395 3.5917 0.52964-1.1705 1.1989-2.4754 1.7596-3.625l-1.0837-2.5287c-0.69694 0.41391-1.5032 0.26462-1.589-1.2962-0.02822-0.54751 0.07094-1.0917 0.27485-1.5069 0.48771-1.006 1.0905-0.67691 1.5921 0.06772 0.68147-1.0561 1.5379-2.6272 2.1902-3.7843-0.08775-0.32309-0.1419-0.67067-0.20242-1.0132 0.3047-2.0737 1.2918-2.6211 2.0396-0.79664 0.8901-0.39462 1.7928-0.73734 2.6902-1.1378-0.36618-0.5861-0.77754-1.1576-1.1629-1.7107z" fill="#04fb01"/>
-            </g>
-        </svg>
+        <img 
+            src="/SAlogo.svg" 
+            alt="Scale Automata Logo" 
+            class="logo-svg" 
+            width="48" 
+            height="48" 
+            style="filter: drop-shadow(0 0 10px var(--neon-blue-dim)); flex-shrink: 0;"
+            decoding="async"
+        />
         <span class="brand-text">Scale<br>Automata</span>
     </a>
 
@@ -86,21 +98,174 @@ const navLinks = [
 </nav>
 
 <script>
-    // Wrap all sidebar logic in page-load so it survives View Transitions
-    document.addEventListener('astro:page-load', () => {
+    // 1. Global tracker for physical hover state and lock state
+    let isSidebarHovered = false;
+    const SIDEBAR_EXPANDED_KEY = 'sidebarExpanded';
+    const SIDEBAR_LOCKED_KEY = 'sidebarLocked';
+    const LANG_EXPANDED_KEY = 'langSwitcherExpanded';
+
+   // 2. Intercept Astro's DOM swap BEFORE it happens
+    document.addEventListener('astro:before-swap', (e) => {
+        // --- NEW: Preserve Theme Attribute to prevent background flashes ---
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme) {
+            e.newDocument.documentElement.setAttribute('data-theme', currentTheme);
+        }
+
+        // --- NEW: Preserve Checkbox State to stop slider glitches ---
+        const incomingToggle = e.newDocument.getElementById('themeToggle') as HTMLInputElement;
+        const currentToggle = document.getElementById('themeToggle') as HTMLInputElement;
+        
+        if (incomingToggle && currentToggle) {
+            incomingToggle.checked = currentToggle.checked;
+            if (currentToggle.checked) {
+                incomingToggle.setAttribute('checked', 'true');
+            }
+        }
+
+        // --- EXISTING: Sidebar Lock Logic ---
+        // Check if sidebar is locked (always expand) or hover state (expand when hovered)
+        const isLocked = localStorage.getItem(SIDEBAR_LOCKED_KEY) === 'true';
+        const shouldExpand = isLocked || isSidebarHovered;
+        
+        if (shouldExpand) {
+            // Find the sidebar in the incoming HTML from the next page
+            const incomingSidebar = e.newDocument.getElementById('sidebar-nav');
+            if (incomingSidebar) {
+                // Add the class to the incoming HTML so Astro doesn't strip it during the morph
+                incomingSidebar.classList.add('force-expanded');
+                // Mark the sidebar as locked so styles apply correctly
+                if (isLocked) {
+                    incomingSidebar.dataset.sidebarLocked = 'true';
+                }
+            }
+        }
+        
+        // --- EXISTING: Language Switcher Logic ---
+        // Preserve language switcher expanded state during page transitions
+        const isLangExpanded = localStorage.getItem(LANG_EXPANDED_KEY) === 'true';
+        if (isLangExpanded) {
+            const incomingLangSwitcher = e.newDocument.querySelector('.lang-switcher-container') as HTMLElement;
+            if (incomingLangSwitcher) {
+                incomingLangSwitcher.dataset.langExpanded = 'true';
+            }
+        }
+    });
+
+    // 3. Initialize Sidebar Logic
+    function initSidebar() {
+        const sidebar = document.getElementById('sidebar-nav');
+        if (!sidebar || sidebar.dataset.initialized === 'true') return;
+        sidebar.dataset.initialized = 'true';
+
+        // Check if sidebar is locked and restore state
+        const isLocked = localStorage.getItem(SIDEBAR_LOCKED_KEY) === 'true';
+        if (isLocked) {
+            sidebar.classList.add('force-expanded');
+            sidebar.dataset.sidebarLocked = 'true';
+        } else if (localStorage.getItem(SIDEBAR_EXPANDED_KEY) === 'true') {
+            sidebar.classList.add('force-expanded');
+        }
+
+        // Update lock button visual state
+        const lockBtn = document.getElementById('sidebarLockBtn');
+        if (lockBtn) {
+            updateLockButtonState(lockBtn, isLocked);
+            
+            // --- Lock/Unlock Button Logic ---
+            lockBtn.addEventListener('click', () => {
+                const isCurrentlyLocked = localStorage.getItem(SIDEBAR_LOCKED_KEY) === 'true';
+                const newLockedState = !isCurrentlyLocked;
+                
+                if (newLockedState) {
+                    // Lock the sidebar
+                    localStorage.setItem(SIDEBAR_LOCKED_KEY, 'true');
+                    sidebar.classList.add('force-expanded');
+                    sidebar.dataset.sidebarLocked = 'true';
+                } else {
+                    // Unlock the sidebar
+                    localStorage.removeItem(SIDEBAR_LOCKED_KEY);
+                    localStorage.removeItem(SIDEBAR_EXPANDED_KEY);
+                    sidebar.classList.remove('force-expanded');
+                    sidebar.dataset.sidebarLocked = 'false';
+                }
+                
+                updateLockButtonState(lockBtn, newLockedState);
+            });
+        }
+
+        // --- Language Switcher State Persistence ---
+        const langSwitcher = document.querySelector('.lang-switcher-container') as HTMLElement;
+        if (langSwitcher) {
+            const langCollapsed = langSwitcher.querySelector('.lang-collapsed') as HTMLElement;
+            const langExpandedLinks = langSwitcher.querySelector('.lang-expanded') as HTMLElement;
+            
+            // Click handler to toggle expanded state
+            if (langCollapsed) {
+                langCollapsed.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Toggle expanded state
+                    const isExpanded = localStorage.getItem(LANG_EXPANDED_KEY) === 'true';
+                    if (isExpanded) {
+                        localStorage.removeItem(LANG_EXPANDED_KEY);
+                        langSwitcher.dataset.langExpanded = 'false';
+                    } else {
+                        localStorage.setItem(LANG_EXPANDED_KEY, 'true');
+                        langSwitcher.dataset.langExpanded = 'true';
+                    }
+                });
+            }
+            
+            // Set up click handlers for language links to navigate and persist expanded state
+            if (langExpandedLinks) {
+                const langLinks = langExpandedLinks.querySelectorAll('a.lang-btn');
+                langLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        // Keep the expanded state when navigating
+                        localStorage.setItem(LANG_EXPANDED_KEY, 'true');
+                        langSwitcher.dataset.langExpanded = 'true';
+                    });
+                });
+            }
+            
+            // Restore expanded state if it was saved
+            const isLangExpanded = localStorage.getItem(LANG_EXPANDED_KEY) === 'true';
+            if (isLangExpanded) {
+                langSwitcher.dataset.langExpanded = 'true';
+            } else {
+                langSwitcher.dataset.langExpanded = 'false';
+            }
+        }
+
+        // Track real mouse presence
+        sidebar.addEventListener('mouseenter', () => {
+            isSidebarHovered = true;
+            sidebar.classList.add('force-expanded');
+            // Only persist hover if NOT locked
+            if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
+                localStorage.setItem(SIDEBAR_EXPANDED_KEY, 'true');
+            }
+        });
+        
+        sidebar.addEventListener('mouseleave', () => {
+            isSidebarHovered = false;
+            // Only collapse if NOT locked
+            if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
+                sidebar.classList.remove('force-expanded');
+                localStorage.removeItem(SIDEBAR_EXPANDED_KEY);
+            }
+        });
+
         // --- Mobile Menu Logic ---
         const btn = document.getElementById('hamburgerBtn');
         const nav = document.getElementById('navLinks');
         if (btn && nav) {
-            btn.addEventListener('click', () => {
-                nav.classList.toggle('active');
-            });
+            btn.addEventListener('click', () => nav.classList.toggle('active'));
         }
 
         // --- Search Filtering Logic ---
         const searchInput = document.getElementById('searchInput') as HTMLInputElement;
         const searchResults = document.getElementById('searchResults');
-        
         const currentLang = document.documentElement.lang || 'en';
         const siteIndex = [
             { title: 'Home', url: `/${currentLang}/`, keywords: 'home strategy rank higher customers assessment agency' },
@@ -118,8 +283,7 @@ const navLinks = [
                 
                 if (query.length > 0) {
                     const matches = siteIndex.filter(item => 
-                        item.title.toLowerCase().includes(query) || 
-                        item.keywords.includes(query)
+                        item.title.toLowerCase().includes(query) || item.keywords.includes(query)
                     );
 
                     if (matches.length > 0) {
@@ -152,33 +316,44 @@ const navLinks = [
 
         // --- Theme Logic ---
         const toggle = document.getElementById('themeToggle') as HTMLInputElement;
-        function setTheme(theme: string) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('siteTheme', theme);
-            if (toggle) toggle.checked = theme === 'dark';
-        }
-
-        const savedTheme = localStorage.getItem('siteTheme');
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            if(toggle) toggle.checked = true;
-        } else {
-            if(toggle) toggle.checked = false;
-        }
-
         if (toggle) {
-            // Remove old listeners to prevent duplicate triggers on page swap
-            const newToggle = toggle.cloneNode(true) as HTMLInputElement;
-            toggle.parentNode?.replaceChild(newToggle, toggle);
-            
-            newToggle.addEventListener('change', (e) => {
+            const savedTheme = localStorage.getItem('siteTheme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            toggle.checked = savedTheme === 'dark' || (!savedTheme && prefersDark);
+
+            toggle.addEventListener('change', (e) => {
                 const newTheme = (e.target as HTMLInputElement).checked ? 'dark' : 'light';
-                setTheme(newTheme);
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('siteTheme', newTheme);
             });
         }
+    }
 
-        // --- Active Link Logic ---
+    // Update lock button visual state (locked vs unlocked icons)
+    function updateLockButtonState(btn: HTMLElement, isLocked: boolean) {
+        const lockIcon = btn.querySelector('.lock-icon') as SVGSVGElement;
+        const unlockIcon = btn.querySelector('.unlock-icon') as SVGSVGElement;
+        
+        if (lockIcon && unlockIcon) {
+            if (isLocked) {
+                lockIcon.style.display = 'none';
+                unlockIcon.style.display = 'block';
+                btn.classList.add('locked');
+                btn.title = 'Unlock sidebar to use hover-based expansion';
+            } else {
+                lockIcon.style.display = 'block';
+                unlockIcon.style.display = 'none';
+                btn.classList.remove('locked');
+                btn.title = 'Lock sidebar to keep expanded';
+            }
+        }
+    }
+
+    // 4. Run on every page load
+    document.addEventListener('astro:page-load', () => {
+        initSidebar();
+
+        // Highlight Active Link
         const currentPath = window.location.pathname;
         document.querySelectorAll('.nav-link').forEach(link => {
             link.classList.remove('active');

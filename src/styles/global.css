@@ -98,28 +98,83 @@ body {
     flex-direction: column;
     padding: 1.5rem 1rem;
     z-index: 1000;
-    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1) 0.3s;
     border-right: 1px solid var(--neon-blue-dim);
     box-shadow: 2px 0 20px rgba(0,0,0,0.05);
     overflow-x: hidden;
 }
 
-.sidebar:hover {
+.sidebar:hover,
+.sidebar.force-expanded {
     width: var(--sidebar-expanded);
+    transition: width 0.3s ease-in-out 0s; 
 }
 
 .sidebar-header-top {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Center the lang icon when collapsed */
     align-items: center;
+    position: relative; /* Crucial: Allows absolute positioning of the lock button */
     margin-bottom: 2rem;
     width: 100%;
     min-height: 24px;
+    padding: 0; /* Remove padding to ensure perfect centering */
 }
 
-.sidebar:hover .sidebar-header-top {
+.sidebar-header-top .lang-switcher-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    flex-shrink: 0;
+}
+
+.sidebar:hover .sidebar-header-top,
+.sidebar.force-expanded .sidebar-header-top {
+    justify-content: flex-start; /* Pushes the lang switcher left */
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+}
+
+.sidebar:hover .sidebar-header-top .lang-switcher-container,
+.sidebar.force-expanded .sidebar-header-top .lang-switcher-container {
+    width: auto;
     justify-content: flex-start;
-    padding-left: 1rem; /* Aligns with expanded nav links */
+}
+
+.sidebar-lock-btn {
+    position: absolute; /* Takes it out of flex flow so it doesn't break centering */
+    right: 0.5rem;      /* Keeps it perfectly pinned to the right edge */
+    background: none;
+    border: none;
+    color: var(--neon-blue);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar:hover .sidebar-lock-btn,
+.sidebar.force-expanded .sidebar-lock-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar-lock-btn:hover {
+    background-color: rgba(0, 246, 255, 0.1);
+}
+
+.sidebar-lock-btn.locked {
+    color: var(--gif-green);
+}
+
+.sidebar-lock-btn.locked:hover {
+    background-color: rgba(4, 251, 1, 0.1);
 }
 
 .lang-switcher-container {
@@ -132,34 +187,50 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     border: 1.5px solid var(--neon-blue);
     border-radius: 50%;
     color: var(--neon-blue);
     font-size: 0.6rem;
     font-weight: 800;
     text-transform: uppercase;
-    margin: 0 auto; /* Forces perfect centering with the 20px icons */
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
+    cursor: pointer;
 }
 
 .lang-expanded {
     display: none;
     align-items: center;
     gap: 0.5rem;
+    white-space: nowrap;
 }
 
-.sidebar:hover .lang-collapsed {
+/* Only show expanded when data attribute is set AND sidebar is expanded */
+.sidebar:not(:hover):not(.force-expanded) .lang-expanded {
+    display: none !important;
+}
+
+.sidebar:not(:hover):not(.force-expanded) .lang-collapsed {
+    display: flex !important;
+}
+
+/* When sidebar is expanded, use data attribute to control display */
+.sidebar:hover .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed,
+.sidebar.force-expanded .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed {
     display: none;
 }
 
-.sidebar:hover .lang-expanded {
+.sidebar:hover .lang-switcher-container[data-lang-expanded="true"] .lang-expanded,
+.sidebar.force-expanded .lang-switcher-container[data-lang-expanded="true"] .lang-expanded {
     display: flex;
 }
 
-.sidebar:not(:hover) .lang-separator {
-    display: none;
-    opacity: 0;
+/* Prevent separator from showing when collapsed */
+.lang-separator {
+    transition: opacity 0.3s ease;
 }
 
 .brand-logo {
@@ -175,7 +246,8 @@ body {
     padding: 0 0.5rem;
 }
 
-.sidebar:hover .brand-logo {
+.sidebar:hover .brand-logo,
+.sidebar.force-expanded .brand-logo {
     justify-content: flex-start;
     gap: 1rem; /* Restore gap when expanded */
 }
@@ -191,11 +263,17 @@ body {
 }
 
 @media (min-width: 769px) {
-    .sidebar:not(:hover) .logo-svg {
+    .sidebar:not(:hover):not(.force-expanded) .logo-svg {
         width: 20px !important;
         height: 20px !important;
         padding: 0;
         border: 1px solid var(--neon-blue);
+    }
+    
+    .sidebar.force-expanded .logo-svg {
+        width: 48px !important;
+        height: 48px !important;
+        padding: 2px;
     }
 }
 
@@ -225,7 +303,8 @@ body {
     white-space: nowrap;
 }
 
-.sidebar:hover .nav-link {
+.sidebar:hover .nav-link,
+.sidebar.force-expanded .nav-link {
     justify-content: flex-start;
     padding: 0.8rem 1rem;
     gap: 1rem; /* Restore gap when expanded */
@@ -245,7 +324,10 @@ body {
 
 .sidebar:hover .brand-text,
 .sidebar:hover .nav-text,
-.sidebar:hover .theme-text {
+.sidebar:hover .theme-text,
+.sidebar.force-expanded .brand-text,
+.sidebar.force-expanded .nav-text,
+.sidebar.force-expanded .theme-text {
     opacity: 1;
     width: auto;
     pointer-events: auto;
@@ -279,7 +361,9 @@ body {
 }
 
 .sidebar:hover .nav-link:hover, 
-.sidebar:hover .nav-link.active {
+.sidebar:hover .nav-link.active, 
+.sidebar.force-expanded .nav-link:hover,
+.sidebar.force-expanded .nav-link.active {
     transform: translateX(5px);
 }
 
@@ -313,7 +397,7 @@ body {
     position: relative;
 }
 
-.sidebar:not(:hover) .search-input {
+.sidebar:not(:hover):not(.force-expanded) .search-input {
     /* Absolute positioning removes it from the document flow, ensuring the icon perfectly centers */
     position: absolute;
     visibility: hidden;
@@ -321,13 +405,15 @@ body {
     padding: 0;
 }
 
-.sidebar:hover .search-wrapper {
+.sidebar:hover .search-wrapper,
+.sidebar.force-expanded .search-wrapper {
     justify-content: flex-start;
     padding: 0.8rem 1rem; /* Matches expanded .nav-link padding */
     border-color: var(--neon-blue-dim);
 }
 
-.sidebar:hover .search-input {
+.sidebar:hover .search-input,
+.sidebar.force-expanded .search-input {
     position: relative;
     visibility: visible;
     opacity: 1;
@@ -357,7 +443,8 @@ body {
 
 .search-input::placeholder { color: var(--text-light); }
 
-.sidebar:hover .search-input {
+.sidebar:hover .search-input,
+.sidebar.force-expanded .search-input {
     opacity: 1;
     width: 100%;
     pointer-events: auto;
@@ -435,10 +522,6 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 .section-header h2, .section-header p {
     color: var(--text-dark) !important;
     transition: color 0.2s ease;
-}
-
-.service-desc-overlay h2, .service-desc-overlay h3, .service-desc-overlay p {
-    color: var(--main-bg) !important;
 }
 
 /* Buttons */
@@ -583,7 +666,7 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
     transform: scale(1.05);
 }
 
-/* Services Grid */
+/* --- Services Grid & Cards (Glassmorphism Update) --- */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -591,39 +674,40 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 }
 
 .service-card {
-    background: var(--card-bg);
-    border-radius: 8px;
+    /* Glassmorphism styling pulled from your hero-description */
+    background: rgba(10, 20, 45, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 247, 255, 0.689);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    
+    /* Layout & dimensions preserved from your original card */
     height: 320px;
-    position: relative;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
+    padding: 2.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-card:hover { transform: translateY(-5px); }
-.service-card i { font-size: 3.5rem; color: var(--text-dark); margin-bottom: 1.5rem; }
-
-.service-desc-overlay {
-    position: absolute;
-    bottom: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--text-dark);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+/* Added a subtle neon glow to the hover effect to match your branding */
+.service-card:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 12px 40px rgba(0, 247, 255, 0.15);
 }
-.service-card:hover .service-desc-overlay { bottom: 0; }
+
+.service-card h3 {
+    margin-bottom: 1rem;
+    font-weight: 800; /* Keeps the title bolded */
+}
+
+/* Ensure the text inside the glass card stays legible in all themes */
+.service-card h3, .service-card p {
+    color: var(--text-dark) !important; 
+}
 
 
 /* Consultancy & Quiz */
@@ -860,7 +944,7 @@ textarea.floating-input {
     width: 100%;
 }
 
-.sidebar:hover .theme-switch-wrapper {
+.sidebar:hover .theme-switch-wrapper, .sidebar.force-expanded .theme-switch-wrapper {
     /* Locks text to the left and toggle to the right */
     justify-content: space-between; 
     padding: 1rem 1rem 0 1rem; /* Aligns with expanded nav links */
@@ -887,23 +971,30 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
 
 @media (min-width: 769px) {
     .theme-switch-wrapper { transition: padding 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease; }
-    .sidebar:not(:hover) .theme-switch-wrapper { border-top-color: transparent; padding-top: 0.5rem; }
+    .sidebar:not(:hover):not(.force-expanded) .theme-switch-wrapper { border-top-color: transparent; padding-top: 0.5rem; }
     
     /* FIX: Prevents 100% width from squishing text on hover */
-    .sidebar:not(:hover) .theme-switch { display: flex; justify-content: center; width: 100%; }
-    .sidebar:hover .theme-switch { display: flex; justify-content: flex-end; width: 50px; }
+    .sidebar:not(:hover):not(.force-expanded) .theme-switch { display: flex; justify-content: center; width: 100%; }
+    .sidebar:hover .theme-switch, .sidebar.force-expanded .theme-switch { display: flex; justify-content: flex-end; width: 50px; }
     
     .slider { transition: background-color 0.4s ease, width 0.4s cubic-bezier(0.25, 1, 0.5, 1), padding 0.4s ease !important; width: 50px; overflow: hidden; }
-    .sidebar:not(:hover) .slider { background-color: transparent !important; width: 20px; padding: 0; margin:0 auto; }
+    .sidebar:not(:hover):not(.force-expanded) .slider { background-color: transparent !important; width: 20px; padding: 0; margin:0 auto; }
     .slider:before { transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.4s ease !important; opacity: 1; }
-    .sidebar:not(:hover) .slider:before { opacity: 0; transition-delay: 0s !important; }
+    .sidebar:not(:hover):not(.force-expanded) .slider:before { opacity: 0; transition-delay: 0s !important; }
     .slider svg { transition: opacity 0.3s ease, width 0.4s cubic-bezier(0.25, 1, 0.5, 1), margin 0.4s ease !important; opacity: 1; }
     
-    html[data-theme="light"] .sidebar:not(:hover) .slider svg.fa-moon,
-    html[data-theme="dark"] .sidebar:not(:hover) .slider svg.fa-sun {
+    /* FIX: Freeze the theme slider during Astro View Transitions to prevent phantom movements */
+    html[data-astro-transition] .slider,
+    html[data-astro-transition] .slider:before,
+    html[data-astro-transition] .slider svg {
+    transition: none !important;
+    }
+
+    html[data-theme="light"] .sidebar:not(:hover):not(.force-expanded) .slider svg.fa-moon,
+    html[data-theme="dark"] .sidebar:not(:hover):not(.force-expanded) .slider svg.fa-sun {
         opacity: 0; width: 0; margin: 0; pointer-events: none;
     }
-    .sidebar:not(:hover) .slider svg { width: 18px; height: 18px; margin: auto; }
+    .sidebar:not(:hover):not(.force-expanded) .slider svg { width: 18px; height: 18px; margin: auto; }
 }
 
 /* AI Tools Container */
