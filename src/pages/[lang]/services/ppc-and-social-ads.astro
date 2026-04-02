@@ -1,0 +1,76 @@
+---
+// Note the extra '../' in the import paths because we are one folder deeper now!
+import Layout from '../../../layouts/Layout.astro';
+import { languages } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof languages);
+---
+
+<Layout title="Google & Social Ads | Scale Automata">
+    <section class="page-view page-view-layout">
+        
+        <div class="hero-section hero-section-wrapper">
+            <div class="reveal">
+                <h1 class="hero-title title-overflow">
+                    <span class="pan-wrapper">
+                        Google & Social Ads
+                    </span>
+                </h1>
+                
+                <h2 class="hero-subtitle">
+                    Data-backed campaign management across Google Ads, Meta, LinkedIn, and TikTok to acquire high-intent leads and maximize your return on ad spend.
+                </h2>
+                
+                <div class="hero-description text-left-indented">
+                    <p>Your business offers real value, and there are countless people out there looking for exactly what you provide. The true power of digital marketing is simply bridging that gap. We understand that navigating paid advertisement online can feel overwhelming, especially with a careful budget. That is where we step in as your respectful partner.</p>
+                    
+                    <p>Utilizing PPC (Pay per Click) is an indispensable tool to reach the right audience at the exact moment they need you. We focus on a pay-per-customer model that honors your investment, maximizing your Return on ad spend (ROAS). To truly elevate your online presence and increase sales, we strategically utilize social media. We connect you with your community through authentic Facebook ads and inspiring Instagram Ads. We also help you share your story through impactful video ads on platforms like TikTok and X.</p>
+                    
+                    <p>This isn't just about gaining more followers; it's about building meaningful relationships that sustain your business. By managing your campaigns with deep care, we ensure every euro helps you grow confidently.</p>
+                </div>
+                
+                <div class="action-buttons-wrapper">
+                    <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
+                        Ready to Grow?
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</Layout>
+
+<style>
+    /* Scoped styles specifically for the SEO & GEO glass panel text formatting */
+    .text-left-indented {
+        text-align: left;
+        padding: 3.5rem 4rem; /* Adds nice breathing room around the paragraphs */
+    }
+
+    .text-left-indented p {
+        text-indent: 2.5rem; /* Indents the first line of each paragraph */
+        margin-bottom: 1.5rem; /* Spaces out the paragraphs */
+        line-height: 1.8;
+    }
+
+    .text-left-indented p:last-child {
+        margin-bottom: 0; /* Prevents extra space at the bottom of the card */
+    }
+    
+    /* Ensures it still looks great on mobile phones */
+    @media (max-width: 768px) {
+        .text-left-indented {
+            padding: 2rem 1.5rem;
+        }
+        .text-left-indented p {
+            text-indent: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+</style>

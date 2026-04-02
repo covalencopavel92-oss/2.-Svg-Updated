@@ -1,0 +1,76 @@
+---
+// Note the extra '../' in the import paths because we are one folder deeper now!
+import Layout from '../../../layouts/Layout.astro';
+import { languages } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof languages);
+---
+
+<Layout title="Google & Social Ads | Scale Automata">
+    <section class="page-view page-view-layout">
+        
+        <div class="hero-section hero-section-wrapper">
+            <div class="reveal">
+                <h1 class="hero-title title-overflow">
+                    <span class="pan-wrapper">
+                        KEEP YOUR CUSTOMERS COMING BACK WITH EMAIL MARKETING
+                    </span>
+                </h1>
+                
+                <h2 class="hero-subtitle">
+                    Advanced segmentation, drip campaigns, and engaging newsletters that turn subscribers into buyers and keep your audience connected to your brand. 
+                </h2>
+                
+                <div class="hero-description text-left-indented">
+                    <p>Sustainable growth comes from treating your audience with genuine respect and delivering consistent value. A thoughtfully managed email marketing campaign is an indispensable asset for nurturing those vital relationships safely. We empower you to deeply know your customers and serve them better through highly personalized email marketing. By implementing intelligent email automation, we ensure you reliably reach the right audience at the right time.</p>
+                    
+                    <p>Our team crafts compelling email marketing content, from informative, engaging newsletters that share your expertise, to tasteful promotional emails designed to naturally increase conversions. We also focus heavily on the post-purchase journey, utilizing targeted retention email strategies to solidify long-term customer loyalty. To keep your brand fresh, we carefully leverage the latest trends to create visually appealing and engaging content. </p>
+                    
+                    <p>Most importantly, we protect the trust you have built with your community by guaranteeing total data safety, strict GDPR standards, and absolute compliance in every send. Partner with us to comfortably reach your goals while respecting your subscribers.</p>
+                </div>
+                
+                <div class="action-buttons-wrapper">
+                    <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
+                        Personalyze Your Email Marketing Strategy Today!
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</Layout>
+
+<style>
+    /* Scoped styles specifically for the SEO & GEO glass panel text formatting */
+    .text-left-indented {
+        text-align: left;
+        padding: 3.5rem 4rem; /* Adds nice breathing room around the paragraphs */
+    }
+
+    .text-left-indented p {
+        text-indent: 2.5rem; /* Indents the first line of each paragraph */
+        margin-bottom: 1.5rem; /* Spaces out the paragraphs */
+        line-height: 1.8;
+    }
+
+    .text-left-indented p:last-child {
+        margin-bottom: 0; /* Prevents extra space at the bottom of the card */
+    }
+    
+    /* Ensures it still looks great on mobile phones */
+    @media (max-width: 768px) {
+        .text-left-indented {
+            padding: 2rem 1.5rem;
+        }
+        .text-left-indented p {
+            text-indent: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+</style>

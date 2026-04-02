@@ -1,7 +1,7 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { languages } from '../../i18n/ui';
-import { useTranslations } from '../../i18n/utils';
+import Layout from '../../../layouts/Layout.astro';
+import { languages } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
 
 export function getStaticPaths() {
   return Object.keys(languages).map(lang => ({ params: { lang } }));
@@ -19,35 +19,35 @@ const t = useTranslations(lang as keyof typeof languages);
 
         <div class="services-grid reveal">
             
-            <div class="service-card glass-panel">
+            <a href={`/${lang}/services/seo-geo/`} class="service-card glass-panel" style="text-decoration: none;">
                 <h3>SEO & GEO</h3>
                 <p>Dominate search results and local rankings.</p>
-            </div>
+            </a>
             
-            <div class="service-card glass-panel">
+            <a href={`/${lang}/services/ppc-and-social-ads/`} class="service-card glass-panel" style="text-decoration: none;">
                 <h3>PPC & Social Ads</h3>
                 <p>Maximize your return on ad spend with data-driven campaigns across Google Ads, Meta, LinkedIn, and TikTok.</p>
-            </div>
+            </a>
             
-            <div class="service-card glass-panel">
+            <a href={`/${lang}/services/web-and-mobile-development/`} class="service-card glass-panel" style="text-decoration: none;">
                 <h3>Web & Mobile Development</h3>
                 <p>High performance, conversion-optimized websites and mobile applications.</p>
-            </div>
+            </a>
             
-            <div class="service-card glass-panel">
+            <a href={`/${lang}/services/social-media-marketing/`} class="service-card glass-panel" style="text-decoration: none;">
                 <h3>Social Media Marketing</h3>
                 <p>Build community and engage with your audience across all major social platforms.</p>
-            </div>
+            </a>
             
-            <div class="service-card glass-panel">
+            <a href={`/${lang}/services/email-marketing/`} class="service-card glass-panel" style="text-decoration: none;">
                 <h3>Email Marketing</h3>
                 <p>Personalized email campaigns that drive engagement and conversions.</p>
-            </div>
+            </a>
             
-            <div class="service-card glass-panel">
+            <a href={`/${lang}/services/data-analytics/`} class="service-card glass-panel" style="text-decoration: none;">
                 <h3>Data Analytics</h3>
                 <p>Make data-driven decisions with actionable insights from your marketing efforts.</p>
-            </div>
+            </a>
 
         </div>
     </section>

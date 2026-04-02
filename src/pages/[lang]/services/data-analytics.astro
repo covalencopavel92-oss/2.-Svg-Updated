@@ -1,0 +1,76 @@
+---
+// Note the extra '../' in the import paths because we are one folder deeper now!
+import Layout from '../../../layouts/Layout.astro';
+import { languages } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof languages);
+---
+
+<Layout title="Google & Social Ads | Scale Automata">
+    <section class="page-view page-view-layout">
+        
+        <div class="hero-section hero-section-wrapper">
+            <div class="reveal">
+                <h1 class="hero-title title-overflow">
+                    <span class="pan-wrapper">
+                        Business Intelligence & Data Analytics
+                    </span>
+                </h1>
+                
+                <h2 class="hero-subtitle">
+                    Implementation of GA4, Tag Manager, and Looker Studio for real-time visibility into your KPIs. 
+                </h2>
+                
+                <div class="hero-description text-left-indented">
+                    <p>Why Data Analytics Matters?</p>
+                    
+                    <p>Behind every number is a real person interacting with your brand, and understanding data is simply learning how to serve them better. We use compassionate data analysis to help you listen to your community. By tracking your key performance indicators, we discover exactly what your audience values most. We implement secure G4A and Google Analytics to monitor performance metrics across all your touchpoints—from social media interactions and Google Ads to the engagement of your email list.</p>
+                    
+                    <p>Your community's trust is paramount, which is why we guarantee complete GDPR alignment and flawless data safety. Rather than obsessing over the competition, we use market research and thoughtful competition research to find unique ways your business can shine. We rely on authentic data storytelling to translate complex metrics and trends into actionable advice. By keeping a close eye on every vital KPI, we empower you to create performance-driven marketing campaign strategies that resonate deeply with your customers and foster sustainable, long-term success.</p>
+                </div>
+                
+                <div class="action-buttons-wrapper">
+                    <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
+                        Check new ways to grow your business with data analytics!
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</Layout>
+
+<style>
+    /* Scoped styles specifically for the SEO & GEO glass panel text formatting */
+    .text-left-indented {
+        text-align: left;
+        padding: 3.5rem 4rem; /* Adds nice breathing room around the paragraphs */
+    }
+
+    .text-left-indented p {
+        text-indent: 2.5rem; /* Indents the first line of each paragraph */
+        margin-bottom: 1.5rem; /* Spaces out the paragraphs */
+        line-height: 1.8;
+    }
+
+    .text-left-indented p:last-child {
+        margin-bottom: 0; /* Prevents extra space at the bottom of the card */
+    }
+    
+    /* Ensures it still looks great on mobile phones */
+    @media (max-width: 768px) {
+        .text-left-indented {
+            padding: 2rem 1.5rem;
+        }
+        .text-left-indented p {
+            text-indent: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+</style>

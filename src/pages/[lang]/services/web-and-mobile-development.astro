@@ -1,0 +1,76 @@
+---
+// Note the extra '../' in the import paths because we are one folder deeper now!
+import Layout from '../../../layouts/Layout.astro';
+import { languages } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof languages);
+---
+
+<Layout title="Technical & Content SEO & GEO | Scale Automata">
+    <section class="page-view page-view-layout">
+        
+        <div class="hero-section hero-section-wrapper">
+            <div class="reveal">
+                <h1 class="hero-title title-overflow">
+                    <span class="pan-wrapper">
+                        Modern Web & Mobile Development
+                    </span>
+                </h1>
+                
+                <h2 class="hero-subtitle">
+                    Build high-performance, conversion-optimized websites and mobile applications.
+                </h2>
+                
+                <div class="hero-description text-left-indented">
+                    <p>Every business has a unique story, and sharing it clearly with your customers is essential. A thoughtfully crafted website acts as your most welcoming digital storefront. Investing in quality web development is indispensable because it creates a comfortable space where people can easily connect with the value you provide.</p>
+                    
+                    <p>When your audience clicks through from thoughtful ads or search results, they expect a smooth, fast loading journey. Partnering with an empathetic developer ensures your vision comes to life exactly as you imagine. Through careful website optimization and robust security, we protect your audience while helping you organically increase traffic and secure a valuable spot on the first page. A clean, modern looking digital presence builds immediate trust.</p>
+                    
+                    <p>Whether your brand calls for a minimalist, simple design to highlight your core message, or engaging, complicated designs, animations, and immersive layouts to captivate attention, we build exactly what you need. Every site is deeply interactive and entirely responsive, guaranteeing that every visitor feels valued.</p>
+                </div>
+                
+                <div class="action-buttons-wrapper">
+                    <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
+                        Build Your Story
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</Layout>
+
+<style>
+    /* Scoped styles specifically for the SEO & GEO glass panel text formatting */
+    .text-left-indented {
+        text-align: left;
+        padding: 3.5rem 4rem; /* Adds nice breathing room around the paragraphs */
+    }
+
+    .text-left-indented p {
+        text-indent: 2.5rem; /* Indents the first line of each paragraph */
+        margin-bottom: 1.5rem; /* Spaces out the paragraphs */
+        line-height: 1.8;
+    }
+
+    .text-left-indented p:last-child {
+        margin-bottom: 0; /* Prevents extra space at the bottom of the card */
+    }
+    
+    /* Ensures it still looks great on mobile phones */
+    @media (max-width: 768px) {
+        .text-left-indented {
+            padding: 2rem 1.5rem;
+        }
+        .text-left-indented p {
+            text-indent: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+</style>
