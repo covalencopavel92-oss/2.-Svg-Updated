@@ -620,9 +620,9 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 }
 
 .hero-description {
-    background: rgba(10, 20, 45, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 20, 45, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border: 1px solid rgba(0, 247, 255, 0.689);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -663,7 +663,7 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 }
 
 .hover-scale:hover {
-    transform: scale(1.05);
+    transform: scale(1.05)
 }
 
 /* --- Services Grid & Cards (Glassmorphism Update) --- */
@@ -676,26 +676,26 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 .service-card {
     /* Glassmorphism styling pulled from your hero-description */
     background: rgba(10, 20, 45, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(0, 247, 255, 0.689);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     
     /* Layout & dimensions preserved from your original card */
-    height: 320px;
+    min-height: 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: center;
     padding: 2.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Added a subtle neon glow to the hover effect to match your branding */
-.service-card:hover { 
-    transform: translateY(-5px); 
+.service-card:hover {
+    transform: translateY(-5x); 
     box-shadow: 0 12px 40px rgba(0, 247, 255, 0.15);
 }
 
@@ -708,7 +708,6 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 .service-card h3, .service-card p {
     color: var(--text-dark) !important; 
 }
-
 
 /* Consultancy & Quiz */
 .packages-grid {
