@@ -55,8 +55,8 @@ const t = useTranslations(lang as "en" | "ro" | "es");
                 </p>
                 
                 <div class="action-buttons-wrapper">
-                    <a href={`/${lang}/services/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.explore')}</a>
-                    <a href={`/${lang}/consultancy/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.assessment')}</a>
+                    <a href={`${import.meta.env.BASE_URL}/${lang}/services/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.explore')}</a>
+                    <a href={`${import.meta.env.BASE_URL}/${lang}/consultancy/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.assessment')}</a>
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         </div>
 
         <div class="bottom-cta-wrapper reveal">
-            <a href={`/${lang}/consultancy/`} class="hover-scale inline-block-transform">
+            <a href={`${import.meta.env.BASE_URL}/${lang}/consultancy/`} class="hover-scale inline-block-transform">
                 <img src="/Logogif.gif" alt="Scale Automata Interactive Process" width="150" height="150" class="process-gif" />
             </a>
         </div>
