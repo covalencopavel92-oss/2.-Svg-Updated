@@ -267,15 +267,14 @@ const navLinks = [
         const searchInput = document.getElementById('searchInput') as HTMLInputElement;
         const searchResults = document.getElementById('searchResults');
         const currentLang = document.documentElement.lang || 'en';
-        const base = import.meta.env.BASE_URL; 
         
         const siteIndex = [
-            { title: 'Home', url: `${base}${currentLang}/`, keywords: 'home strategy rank higher customers assessment agency' },
-            { title: 'Consultancy', url: `${base}${currentLang}/consultancy/`, keywords: 'consultancy advice assessment audit strategy roadmap' },
-            { title: 'Services', url: `${base}${currentLang}/services/`, keywords: 'services web development marketing seo geo cro design online growth' },
-            { title: 'Reviews', url: `${base}${currentLang}/reviews/`, keywords: 'reviews testimonials clients feedback success stories' },
-            { title: 'Blog', url: `${base}${currentLang}/blog/`, keywords: 'blog articles news insights tips learning' },
-            { title: 'Contact', url: `${base}${currentLang}/contact/`, keywords: 'contact message email reach us form help' }
+            { title: 'Home', url: `${import.meta.env.BASE_URL}/${currentLang}/`, keywords: 'home strategy rank higher customers assessment agency' },
+            { title: 'Consultancy', url: `${import.meta.env.BASE_URL}/${currentLang}/consultancy/`, keywords: 'consultancy advice assessment audit strategy roadmap' },
+            { title: 'Services', url: `${import.meta.env.BASE_URL}/${currentLang}/services/`, keywords: 'services web development marketing seo geo cro design online growth' },
+            { title: 'Reviews', url: `${import.meta.env.BASE_URL}/${currentLang}/reviews/`, keywords: 'reviews testimonials clients feedback success stories' },
+            { title: 'Blog', url: `${import.meta.env.BASE_URL}/${currentLang}/blog/`, keywords: 'blog articles news insights tips learning' },
+            { title: 'Contact', url: `${import.meta.env.BASE_URL}/${currentLang}/contact/`, keywords: 'contact message email reach us form help' }
         ];
 
         if (searchInput && searchResults) {
