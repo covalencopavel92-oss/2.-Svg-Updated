@@ -8,7 +8,4 @@ export default defineConfig({
     // Removed prefetchAll: true to save bandwidth and speed up initial load
     defaultStrategy: 'hover'
   },
-  devToolbar: {
-    enabled: false
-  }
 });
