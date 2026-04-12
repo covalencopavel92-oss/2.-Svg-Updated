@@ -23,7 +23,7 @@ const t = useTranslations(lang as keyof typeof languages);
                 <div class="card-particle-canvas" id="tsparticles-seo"></div>
                 <div style="height: 140px; flex-shrink: 0; width: 100%; margin-bottom: 1rem; pointer-events: none;">
                     <model-viewer 
-                        src="/1earth.glb"
+                        src={`${import.meta.env.BASE_URL}/1earth.glb`}
                         alt="Globe 3D model" 
                         auto-rotate 
                         rotation-per-second="50deg"
