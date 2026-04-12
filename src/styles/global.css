@@ -675,10 +675,10 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 
 .service-card {
     /* Glassmorphism styling pulled from your hero-description */
-    background: rgba(10, 20, 45, 0.1);
-    backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(0, 247, 255, 0.689);
+    background: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.7)), rgba(0, 0, 0, 0.232), url('/b-marble.jpg');       
+    backdrop-filter: blur(3px); 
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 208, 0.578);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     
@@ -1114,4 +1114,21 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
         transform: none !important;
         opacity: 1 !important;
     }
+}
+/* --- Card Particle Canvas Constraints --- */
+.service-card {
+    position: relative; /* Keeps the canvas trapped inside */
+    overflow: hidden;   /* Chops off particles trying to leave the card */
+    z-index: 1;         /* Establishes a 3D stacking context */
+}
+
+.card-particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Pushes the particles behind your text and 3D models */
+    pointer-events: none; /* Ensures users can still click the links */
+    border-radius: 16px;
 }
