@@ -11,7 +11,7 @@ const languages = ['en', 'ro', 'es'];
     <div class="lang-expanded">
         {languages.map((l, index) => (
             <>
-                <a href={`/${l}/`} class={`lang-btn ${currentLang === l ? 'active' : ''}`}>{l.toUpperCase()}</a>
+                <a href={`${import.meta.env.BASE_URL}/${l}/`} class={`lang-btn ${currentLang === l ? 'active' : ''}`}>{l.toUpperCase()}</a>
                 {index < languages.length - 1 && <span class="lang-separator">|</span>}
             </>
         ))}
