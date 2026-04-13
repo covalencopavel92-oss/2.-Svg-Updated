@@ -14,68 +14,36 @@ const t = useTranslations(lang as "en" | "ro" | "es");
     <section class="page-view page-view-layout">
         
         <div class="hero-section hero-section-wrapper">
-            <div class="reveal">
-                
-                <div class="footer-wrapper" style="display: flex; justify-content: center; width: 100%; height: 320px; margin-bottom: 1rem;">
-                    <model-viewer
-                        id="footer-robot"
-                        src="/robot.glb"
-                        alt="Rusty Robot"
-                        auto-rotate
-                        autoplay
-                        animation-name="Dance"
-                        rotation-per-second="36deg"
-                        camera-controls
-                        disable-zoom
-                        disable-pan
-                        shadow-intensity="0"
-                        style="width: 100%; height: 100%; background-color: transparent; cursor: grab;">
-                    </model-viewer>
-                </div>
-
+            <div class="reveal">            
                 <h1 class="hero-title title-overflow">
                     <span class="pan-wrapper">
-                        <span class="wave-word" style="--d:0.1s">Enhance </span>
-                        <span class="wave-word" style="--d:0.2s">your </span>
-                        <span class="wave-word" style="--d:0.3s">strategy.</span><br/>
-                        <span class="wave-word" style="--d:0.4s">Rank </span>
-                        <span class="wave-word" style="--d:0.5s">higher. </span>
-                        <span class="wave-word" style="--d:0.6s">Get </span>
-                        <span class="wave-word" style="--d:0.7s">more </span>
-                        <span class="wave-word" style="--d:0.8s">customers.</span>
+                        <span class="wave-word" style="--d:0.2s">Enhance </span>
+                        <span class="wave-word" style="--d:0.4s">your </span>
+                        <span class="wave-word" style="--d:0.6s">strategy.</span><br/>
+                        <span class="wave-word" style="--d:0.8s">Rank </span>
+                        <span class="wave-word" style="--d:1s">higher. </span>
+                        <span class="wave-word" style="--d:1.2s">Get </span>
+                        <span class="wave-word" style="--d:1.4s">more </span>
+                        <span class="wave-word" style="--d:1.6s">customers.</span>
                     </span>
                 </h1>
                 
                 <h2 class="hero-subtitle">
-                    Unlock your business potential with our advanced digital marketing and web development services. We craft bespoke strategies designed to elevate your brand and drive measurable results. From innovative web design to comprehensive digital campaigns, we are dedicated to achieving your goals.
+                    We craft bespoke strategies designed to elevate your brand and drive measurable results. From innovative web design to comprehensive digital campaigns, we are dedicated to achieving your goals.
                 </h2>
                 
-                <p class="hero-description">
-                    Your small business deserves top-tier digital marketing without the bloated price tag. We build custom website development solutions and budget-efficient marketing campaigns designed to generate real revenue, not just vanity metrics. To consistently rank higher and dominate online search, your marketing strategy needs more than basic SEO. We utilize advanced Generative Engine Optimization (GEO), targeted social media ads, and data-driven web design to maximize your brand visibility and website traffic. Every landing page, email marketing campaign, and SEO optimization tactic we deploy is engineered for maximum conversion rate optimization (CRO) and direct online growth. Whether it's driving local SEO foot traffic or boosting ecommerce sales, our transparent performance tracking ensures you know exactly where your investment goes. We don't hide behind industry buzzwords; we deliver practical, results-oriented web development and search engine marketing that scales efficiently. Ready to stop losing customers to your competitors? Take Assessment to get a clear, no-nonsense roadmap for your success, or Explore Services to find the exact digital solutions you need to dominate your market.
-                </p>
+                <div class="hero-description text-left-indented">
+                    <p>Unlock your business potential with our advanced digital marketing and web development services. We build custom website development solutions and budget-efficient marketing campaigns designed to generate real revenue, not just vanity metrics. To consistently rank higher and dominate online search, your marketing strategy needs more than basic SEO.</p>
+                    <p> We utilize advanced Generative Engine Optimization (GEO), targeted social media ads, and data-driven web design to maximize your brand visibility and website traffic. Every landing page, email marketing campaign, and SEO optimization tactic we deploy is engineered for maximum conversion rate optimization (CRO) and direct online growth.</p> 
+                    <p>Whether it's driving local SEO foot traffic or boosting ecommerce sales, our transparent performance tracking ensures you know exactly where your investment goes. We don't hide behind industry buzzwords; we deliver practical, results-oriented web development and search engine marketing that scales efficiently.<p/>
+                    <p>Ready to stop losing customers to your competitors? Take Assessment to get a clear, no-nonsense roadmap for your success, or Explore Services to find the exact digital solutions you need to dominate your market.</p>
+                <div/>
                 
                 <div class="action-buttons-wrapper">
                     <a href={`/${lang}/services/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.explore')}</a>
                     <a href={`/${lang}/consultancy/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">{t('home.assessment')}</a>
                 </div>
             </div>
-        </div>
-
-        <div class="footer-wrapper" style="display: flex; justify-content: center; width: 100%; height: 320px; margin-bottom: 1rem;">
-                    <model-viewer
-                        id="footer-robot"
-                        src="/2earth.glb"
-                        alt="3D globe Model"
-                        auto-rotate
-                        autoplay
-                        animation-name="Dance"
-                        rotation-per-second="36deg"
-                        camera-controls
-                        disable-zoom
-                        disable-pan
-                        shadow-intensity="0"
-                        style="width: 100%; height: 100%; background-color: transparent; cursor: grab;">
-                    </model-viewer>
         </div>
 
         <div class="bottom-cta-wrapper reveal">
@@ -85,26 +53,4 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         </div>
 
     </section>
-    <script>
-    document.addEventListener('astro:page-load', () => {
-        const robotModel = document.getElementById('footer-robot') as any;
-
-        if (robotModel) {
-            // Set the default animation
-            robotModel.animationName = "Hello"; // Replace with your idle animation name
-
-            // When the user hovers over the robot
-            robotModel.addEventListener('mouseenter', () => {
-                robotModel.animationName = "Dance"; // Replace with your action animation name
-                robotModel.play();
-            });
-
-            // When the user moves their mouse away
-            robotModel.addEventListener('mouseleave', () => {
-                robotModel.animationName = "Hello"; // Switch back to idle animation
-                robotModel.play();
-            });
-        }
-    });
-</script>
 </Layout>

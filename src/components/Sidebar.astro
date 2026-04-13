@@ -259,8 +259,27 @@ const navLinks = [
         // --- Mobile Menu Logic ---
         const btn = document.getElementById('hamburgerBtn');
         const nav = document.getElementById('navLinks');
+        
         if (btn && nav) {
-            btn.addEventListener('click', () => nav.classList.toggle('active'));
+            // 1. Toggle menu on button tap
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevents the click from immediately triggering the document listener below
+                nav.classList.toggle('active');
+            });
+
+            // 2. Automatically close the menu when a link is tapped
+            nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    nav.classList.remove('active');
+                });
+            });
+
+            // 3. Automatically close the menu if the user taps outside of it
+            document.addEventListener('click', (e) => {
+                if (nav.classList.contains('active') && !nav.contains(e.target as Node) && !btn.contains(e.target as Node)) {
+                    nav.classList.remove('active');
+                }
+            });
         }
 
         // --- Search Filtering Logic ---
