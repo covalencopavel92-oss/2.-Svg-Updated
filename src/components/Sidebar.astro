@@ -298,7 +298,7 @@ const navLinks = [
         if (searchInput && searchResults) {
             searchInput.addEventListener('input', (e) => {
                 const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
-                searchResults.innerHTML = '';
+                searchResults.replaceChildren();
                 
                 if (query.length > 0) {
                     const matches = siteIndex.filter(item => 
