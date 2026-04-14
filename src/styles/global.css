@@ -674,15 +674,16 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 }
 
 .service-card {
-    /* Glassmorphism styling pulled from your hero-description */
-    background: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.7)), rgba(0, 0, 0, 0.238), url('/b-marble.jpg');       
-    backdrop-filter: blur(1px); 
-    -webkit-backdrop-filter: blur(10px);
+    /* Fixed background syntax and removed the opaque-blocking blur */
+    background: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.7)), url('/b-marble.jpg');
+    background-size: cover;
+    background-position: center;
+    
+    /* Removed backdrop-filter as the JPEG makes it invisible and GPU-heavy */
     border: 1px solid rgba(0, 255, 208, 0.578);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     
-    /* Layout & dimensions preserved from your original card */
     min-height: 320px;
     display: flex;
     flex-direction: column;
@@ -691,6 +692,10 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
     text-align: center;
     padding: 2.5rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* Force GPU hardware acceleration for the card itself */
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
 }
 
 /* Added a subtle neon glow to the hover effect to match your branding */
