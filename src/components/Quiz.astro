@@ -58,7 +58,7 @@
             if (!questionEl || !optionsEl) return;
 
             questionEl.innerText = qData.question;
-            optionsEl.innerHTML = '';
+            optionsEl.replaceChildren();
 
             qData.options.forEach(opt => {
                 const btn = document.createElement('button');

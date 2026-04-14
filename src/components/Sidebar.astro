@@ -299,8 +299,13 @@ const navLinks = [
             let debounceTimer: number;
 
             searchInput.addEventListener('input', (e) => {
+<<<<<<< security-fix-innerHTML-xss-13380220532309199691
+                const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+                searchResults.replaceChildren();
+=======
                 // Clear the existing timer on every keystroke
                 clearTimeout(debounceTimer);
+>>>>>>> main
                 
                 // Set a new timer to execute search after 300ms of inactivity
                 debounceTimer = setTimeout(() => {
