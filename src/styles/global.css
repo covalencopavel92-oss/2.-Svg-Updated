@@ -1099,7 +1099,7 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
     /* NEW: Pin the icons perfectly to the left */
     .nav-icon {
         position: absolute !important;
-        left: 1.5rem; /* Adjust this value to push the icon closer or further from the left edge */
+        left: 0.5rem; /* Adjust this value to push the icon closer or further from the left edge */
         margin: 0 !important;
     }
     
