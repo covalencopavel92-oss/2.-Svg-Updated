@@ -296,34 +296,49 @@ const navLinks = [
         ];
 
         if (searchInput && searchResults) {
+            let debounceTimer: number;
+
             searchInput.addEventListener('input', (e) => {
+<<<<<<< security-fix-innerHTML-xss-13380220532309199691
                 const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
                 searchResults.replaceChildren();
+=======
+                // Clear the existing timer on every keystroke
+                clearTimeout(debounceTimer);
+>>>>>>> main
                 
-                if (query.length > 0) {
-                    const matches = siteIndex.filter(item => 
-                        item.title.toLowerCase().includes(query) || item.keywords.includes(query)
-                    );
+                // Set a new timer to execute search after 300ms of inactivity
+                debounceTimer = setTimeout(() => {
+                    const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+                    searchResults.innerHTML = '';
 
-                    if (matches.length > 0) {
-                        matches.forEach(match => {
-                            const a = document.createElement('a');
-                            a.href = match.url;
-                            a.className = 'search-result-item';
-                            a.textContent = match.title;
-                            searchResults.appendChild(a);
-                        });
-                        searchResults.style.display = 'flex';
+                    if (query.length > 0) {
+                        // ⚡ Bolt Optimization: Added debounce to reduce main thread blocking
+                        // This prevents filtering logic and DOM updates on every single keystroke
+                        const matches = siteIndex.filter(item =>
+                            item.title.toLowerCase().includes(query) || item.keywords.includes(query)
+                        );
+
+                        if (matches.length > 0) {
+                            matches.forEach(match => {
+                                const a = document.createElement('a');
+                                a.href = match.url;
+                                a.className = 'search-result-item';
+                                a.textContent = match.title;
+                                searchResults.appendChild(a);
+                            });
+                            searchResults.style.display = 'flex';
+                        } else {
+                            const div = document.createElement('div');
+                            div.className = 'search-result-none';
+                            div.textContent = 'No results found';
+                            searchResults.appendChild(div);
+                            searchResults.style.display = 'flex';
+                        }
                     } else {
-                        const div = document.createElement('div');
-                        div.className = 'search-result-none';
-                        div.textContent = 'No results found';
-                        searchResults.appendChild(div);
-                        searchResults.style.display = 'flex';
+                        searchResults.style.display = 'none';
                     }
-                } else {
-                    searchResults.style.display = 'none';
-                }
+                }, 300) as unknown as number;
             });
 
             document.addEventListener('click', (e) => {
