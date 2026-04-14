@@ -1,0 +1,3 @@
+## 2024-03-24 - [Sidebar Search Main Thread Block]
+**Learning:** Even with small client-side datasets, executing search filtering and DOM manipulation on every input keystroke (`input` event) can block the main thread and impact TTI, especially on lower-end devices. The DOM creation and appending operations inside the event listener compound the issue.
+**Action:** Always wrap frequent user input events (like search or scroll) that trigger DOM updates or array filtering in a debounce or throttle function. In this case, adding a simple 300ms debounce timeout to the search input dramatically reduces unnecessary execution.
