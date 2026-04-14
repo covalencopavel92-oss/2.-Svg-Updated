@@ -36,7 +36,6 @@ const metaDesc = description || t('home.desc').substring(0, 160);
     <noscript>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=swap">
     </noscript>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <ClientRouter />
 
@@ -54,6 +53,7 @@ const metaDesc = description || t('home.desc').substring(0, 160);
         document.addEventListener('astro:after-swap', initTheme); 
     </script>
 
+    <!-- Scripts loaded asynchronously to prevent render-blocking -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
 
@@ -115,18 +115,25 @@ const metaDesc = description || t('home.desc').substring(0, 160);
             quantity: 3.00
         });
 
-        const bgElement = document.getElementById('vanta-bg');
-        if (bgElement) {
-            bgElement.style.transition = 'filter 3s ease-in-out';
-        }
-
-        const hueRotations = [0, -65, 60];
-        let hueIndex = 0;
+        // Vanta.js native color transition to replace heavy CSS filters
+        const colors = [
+            { c1: 0x00f6ff, c2: 0x04fb01 }, // Original
+            { c1: 0xff00f6, c2: 0x0004fb }, // Approximating -65deg hue rotation
+            { c1: 0xf6ff00, c2: 0xfb0104 }  // Approximating 60deg hue rotation
+        ];
+        let colorIndex = 0;
 
         const changeColors = () => {
-            if (bgElement) {
-                hueIndex = (hueIndex + 1) % hueRotations.length;
-                bgElement.style.filter = `hue-rotate(${hueRotations[hueIndex]}deg)`;
+            if (window.vantaEffect) {
+                colorIndex = (colorIndex + 1) % colors.length;
+                const nextColors = colors[colorIndex];
+
+                // Vanta doesn't have built-in smooth tweening for setOptions,
+                // but setting options is much lighter than a full-canvas CSS filter.
+                window.vantaEffect.setOptions({
+                    color1: nextColors.c1,
+                    color2: nextColors.c2
+                });
             }
             const randomInterval = Math.floor(Math.random() * (20000 - 15000 + 1)) + 15000;
             clearTimeout(window.vantaColorTimer);

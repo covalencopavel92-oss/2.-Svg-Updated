@@ -372,6 +372,16 @@ const navLinks = [
     document.addEventListener('astro:page-load', () => {
         initSidebar();
 
+        // Re-evaluate physical hover state after page loads
+        const sidebar = document.getElementById('sidebar-nav');
+        if (sidebar && sidebar.matches(':hover')) {
+            isSidebarHovered = true;
+            sidebar.classList.add('force-expanded');
+            if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
+                localStorage.setItem(SIDEBAR_EXPANDED_KEY, 'true');
+            }
+        }
+
         // Highlight Active Link
         const currentPath = window.location.pathname;
         document.querySelectorAll('.nav-link').forEach(link => {
