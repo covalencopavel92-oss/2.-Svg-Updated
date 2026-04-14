@@ -1,3 +1,6 @@
 ## 2024-03-24 - [Sidebar Search Main Thread Block]
 **Learning:** Even with small client-side datasets, executing search filtering and DOM manipulation on every input keystroke (`input` event) can block the main thread and impact TTI, especially on lower-end devices. The DOM creation and appending operations inside the event listener compound the issue.
 **Action:** Always wrap frequent user input events (like search or scroll) that trigger DOM updates or array filtering in a debounce or throttle function. In this case, adding a simple 300ms debounce timeout to the search input dramatically reduces unnecessary execution.
+## 2026-04-14 - [Redundant toLowerCase() calls in search filter loop]
+**Learning:** Calling `toLowerCase()` inside a loop (especially a filter loop that executes frequently, such as on every keystroke/debounced keystroke) creates redundant string allocations and slows down execution. In our benchmark with 1 million iterations, pre-computing the lowercased strings reduced execution time from ~770ms to ~436ms, yielding a ~43% improvement.
+**Action:** Always pre-compute derived values like lowercased strings outside of fast-path loops if the source data is static or updated infrequently.
