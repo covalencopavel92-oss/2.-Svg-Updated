@@ -6,9 +6,15 @@ export function getLangFromUrl(url: URL) {
   return defaultLang;
 }
 
+const splitCache: Record<string, string[]> = {};
+
 export function useTranslations(lang: keyof typeof ui) {
   return function t(key: string) {
-      const keys = key.split('.');
+      let keys = splitCache[key];
+      if (!keys) {
+          keys = splitCache[key] = key.indexOf('.') === -1 ? [key] : key.split('.');
+      }
+
       let text: any = ui[lang];
       for (const k of keys) {
           if (text && typeof text === 'object' && k in text) {
