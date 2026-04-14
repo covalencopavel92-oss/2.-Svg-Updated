@@ -46,31 +46,3 @@ const t = useTranslations(lang as keyof typeof languages);
     </section>
 </Layout>
 
-<style>
-    /* Scoped styles specifically for the SEO & GEO glass panel text formatting */
-    .text-left-indented {
-        text-align: left;
-        padding: 3.5rem 4rem; /* Adds nice breathing room around the paragraphs */
-    }
-
-    .text-left-indented p {
-        text-indent: 2.5rem; /* Indents the first line of each paragraph */
-        margin-bottom: 1.5rem; /* Spaces out the paragraphs */
-        line-height: 1.8;
-    }
-
-    .text-left-indented p:last-child {
-        margin-bottom: 0; /* Prevents extra space at the bottom of the card */
-    }
-    
-    /* Ensures it still looks great on mobile phones */
-    @media (max-width: 768px) {
-        .text-left-indented {
-            padding: 2rem 1.5rem;
-        }
-        .text-left-indented p {
-            text-indent: 1.5rem;
-            margin-bottom: 1rem;
-        }
-    }
-</style>
