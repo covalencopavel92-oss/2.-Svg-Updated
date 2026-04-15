@@ -1,6 +1,7 @@
-import { describe, it } from 'node:test';
+import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { getLangFromUrl, useTranslations } from './utils';
+import { ui } from './ui';
 
 describe('getLangFromUrl', () => {
     it('should extract a valid language from the root path', () => {
@@ -39,6 +40,41 @@ describe('getLangFromUrl', () => {
     });
 });
 
+describe('useTranslations fallback logic', () => {
+    let addedRo = false;
+    before(() => {
+        // Inject test properties into the real `ui` object
+        // This ensures deterministic tests regardless of actual UI strings
+        (ui as any).en._test_missing = 'Fallback EN';
+        (ui as any).en._test_nested = { missing: 'Fallback nested' };
+
+        // Ensure language 'ro' exists for testing
+        if (!(ui as any).ro) {
+            (ui as any).ro = {};
+            addedRo = true;
+        }
+    });
+
+    after(() => {
+        // Clean up injected test properties
+        delete (ui as any).en._test_missing;
+        delete (ui as any).en._test_nested;
+        if (addedRo) delete (ui as any).ro;
+    });
+
+    it('should fall back to default language for a missing flat key', () => {
+        const t = useTranslations('ro' as any);
+        assert.equal(t('_test_missing'), 'Fallback EN');
+    });
+
+    it('should fall back to default language for a missing nested key', () => {
+        const t = useTranslations('ro' as any);
+        assert.equal(t('_test_nested.missing'), 'Fallback nested');
+    });
+
+    it('should return the original key if it is missing in both current and default languages', () => {
+        const t = useTranslations('ro' as any);
+        assert.equal(t('does.not.exist'), 'does.not.exist');
 describe('useTranslations', () => {
     it('should return a function that translates top-level and nested keys correctly', () => {
         const tEn = useTranslations('en');
@@ -56,16 +92,6 @@ describe('useTranslations', () => {
         const tEn = useTranslations('en');
         assert.equal(tEn('missing.key'), 'missing.key');
         assert.equal(tEn('does_not_exist'), 'does_not_exist');
-    });
-
-    it('should fallback to default language if key is missing in target language but exists in default', () => {
-        // Since all dictionaries have the same keys, we can temporarily modify the defaultLang fallback behavior
-        // But the easiest way is to test the fallback logic on the object itself if we can't mock.
-        // Actually, let's just make sure it returns the correct translation for now.
-        // The real fallback test would require a missing key in 'ro' that exists in 'en'.
-        // We will just verify it handles existing keys properly and missing keys return the key.
-        const tRo = useTranslations('ro');
-        assert.equal(tRo('missing.key'), 'missing.key');
     });
 
     it('should utilize the cache for split keys', () => {
