@@ -1,6 +1,7 @@
-import { describe, it } from 'node:test';
+import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { getLangFromUrl } from './utils';
+import { getLangFromUrl, useTranslations } from './utils';
+import { ui } from './ui';
 
 describe('getLangFromUrl', () => {
     it('should extract a valid language from the root path', () => {
@@ -36,5 +37,43 @@ describe('getLangFromUrl', () => {
     it('should fall back to the default language for invalid language and extra paths', () => {
         const url = new URL('http://localhost/fr/contact');
         assert.equal(getLangFromUrl(url), 'en');
+    });
+});
+
+describe('useTranslations fallback logic', () => {
+    let addedRo = false;
+    before(() => {
+        // Inject test properties into the real `ui` object
+        // This ensures deterministic tests regardless of actual UI strings
+        (ui as any).en._test_missing = 'Fallback EN';
+        (ui as any).en._test_nested = { missing: 'Fallback nested' };
+
+        // Ensure language 'ro' exists for testing
+        if (!(ui as any).ro) {
+            (ui as any).ro = {};
+            addedRo = true;
+        }
+    });
+
+    after(() => {
+        // Clean up injected test properties
+        delete (ui as any).en._test_missing;
+        delete (ui as any).en._test_nested;
+        if (addedRo) delete (ui as any).ro;
+    });
+
+    it('should fall back to default language for a missing flat key', () => {
+        const t = useTranslations('ro' as any);
+        assert.equal(t('_test_missing'), 'Fallback EN');
+    });
+
+    it('should fall back to default language for a missing nested key', () => {
+        const t = useTranslations('ro' as any);
+        assert.equal(t('_test_nested.missing'), 'Fallback nested');
+    });
+
+    it('should return the original key if it is missing in both current and default languages', () => {
+        const t = useTranslations('ro' as any);
+        assert.equal(t('does.not.exist'), 'does.not.exist');
     });
 });
