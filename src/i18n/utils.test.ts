@@ -75,5 +75,28 @@ describe('useTranslations fallback logic', () => {
     it('should return the original key if it is missing in both current and default languages', () => {
         const t = useTranslations('ro' as any);
         assert.equal(t('does.not.exist'), 'does.not.exist');
+describe('useTranslations', () => {
+    it('should return a function that translates top-level and nested keys correctly', () => {
+        const tEn = useTranslations('en');
+        assert.equal(tEn('nav.home'), 'Home');
+        assert.equal(tEn('home.explore'), 'Explore Services');
+    });
+
+    it('should return translation for a non-default language', () => {
+        const tRo = useTranslations('ro');
+        assert.equal(tRo('nav.home'), 'Acasă');
+        assert.equal(tRo('home.explore'), 'Explorează Serviciile');
+    });
+
+    it('should return the key itself if the key does not exist in any language', () => {
+        const tEn = useTranslations('en');
+        assert.equal(tEn('missing.key'), 'missing.key');
+        assert.equal(tEn('does_not_exist'), 'does_not_exist');
+    });
+
+    it('should utilize the cache for split keys', () => {
+        const tEn = useTranslations('en');
+        assert.equal(tEn('nav.home'), 'Home');
+        assert.equal(tEn('nav.home'), 'Home'); // Second time should hit splitCache
     });
 });
