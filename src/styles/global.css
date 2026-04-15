@@ -669,7 +669,24 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
     transform: scale(1.05)
 }
 
-/* --- Services Grid & Cards (Glassmorphism Update) --- */
+/* --- Light & Dark Mode Variables --- */
+:root {
+    --card-bg: #ffffff;
+    --card-text: #111111;
+    --card-border: rgba(0, 0, 0, 0.1);
+    --hover-glow: rgba(0, 247, 255, 0.15); /* The cyan glow */
+}
+
+/* If your site uses a .dark class on the body, change this to: .dark { ... } */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --card-bg: #111111;
+        --card-text: #ffffff;
+        --card-border: rgba(0, 255, 208, 0.2);
+    }
+}
+
+/* --- Services Grid & Cards --- */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -677,44 +694,84 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 }
 
 .service-card {
-    /* Fixed background syntax and removed the opaque-blocking blur */
-    background: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.7)), url('/b-marble.jpg');
-    background-size: cover;
-    background-position: center;
-    
-    /* Removed backdrop-filter as the JPEG makes it invisible and GPU-heavy */
-    border: 1px solid rgba(0, 255, 208, 0.578);
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    
     min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    padding: 2.5rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 2.5rem 1.5rem;
+    text-decoration: none;
+    overflow: hidden; /* Keeps the gradient glow inside the borders */
     
-    /* Force GPU hardware acceleration for the card itself */
+    /* Hardware acceleration for smooth hover */
     transform: translateZ(0);
-    will-change: transform, box-shadow;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    will-change: transform;
+
+    /* ALIGNMENT MAGIC: Internal Grid */
+    display: grid;
+    /* 1. Icon (80px fixed), 2. Title (takes remaining space), 3. Paragraph (auto height) */
+    grid-template-rows: 80px 1fr auto; 
+    gap: 1rem;
+    text-align: center;
 }
 
-/* Added a subtle neon glow to the hover effect to match your branding */
+/* The interactive radial gradient overlay */
+.service-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+    pointer-events: none;
+    /* Coordinates are injected via JavaScript */
+    background: radial-gradient(
+        600px circle at var(--mouse-x) var(--mouse-y), 
+        var(--hover-glow),
+        transparent 40%
+    );
+}
+
 .service-card:hover {
-    transform: translateY(-5x); 
-    box-shadow: 0 12px 40px rgba(0, 247, 255, 0.15);
+    transform: translateY(-5px); 
+    border-color: rgba(0, 247, 255, 0.5); /* Stronger border on hover */
 }
 
+.service-card:hover::before {
+    opacity: 1; /* Fade in the glow */
+}
+
+/* Bring content above the glow */
+.service-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.service-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Flexbox inside the title row pushes the text to the bottom */
 .service-card h3 {
-    margin-bottom: 1rem;
-    font-weight: 800; /* Keeps the title bolded */
+    color: #ffffff !important;
+    font-weight: 800;
+    margin: 0;
+    display: flex;
+    align-items: flex-end; /* Bottom-aligns single-line and multi-line titles */
+    justify-content: center;
+    line-height: 1.3;
 }
 
-/* Ensure the text inside the glass card stays legible in all themes */
-.service-card h3, .service-card p {
-    color: var(--text-dark) !important; 
+.service-card p {
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin: 0;
+    opacity: 0.8; /* Subtle contrast from the H3 */
+    align-self: start; /* Locks paragraph to the top of its row */
+    min-height: 3.5rem;
 }
 
 /* Consultancy & Quiz */
