@@ -992,10 +992,12 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
     .sidebar:not(:hover):not(.force-expanded) .slider:before { opacity: 0; transition-delay: 0s !important; }
     .slider svg { transition: opacity 0.3s ease, width 0.4s cubic-bezier(0.25, 1, 0.5, 1), margin 0.4s ease !important; opacity: 1; }
     
-    /* FIX: Freeze the theme slider during Astro View Transitions to prevent phantom movements */
+    /* FIX: Freeze the theme slider and search icon during Astro View Transitions to prevent phantom movements */
     html[data-astro-transition] .slider,
     html[data-astro-transition] .slider:before,
-    html[data-astro-transition] .slider svg {
+    html[data-astro-transition] .slider svg,
+    html[data-astro-transition] .search-wrapper,
+    html[data-astro-transition] .search-icon {
     transition: none !important;
     }
 
