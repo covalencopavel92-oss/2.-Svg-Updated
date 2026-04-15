@@ -1,29 +1,32 @@
 ---
+import { languages, defaultLang } from '../i18n/ui';
+
+const supportedLangs = Object.keys(languages);
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={defaultLang}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scale Automata | Select Language</title>
     <meta name="description" content="Scale Automata - Select your preferred language to continue.">
     
-    <link rel="alternate" hreflang="en" href="/en/" />
-    <link rel="alternate" hreflang="ro" href="/ro/" />
-    <link rel="alternate" hreflang="es" href="/es/" />
-    <link rel="alternate" hreflang="x-default" href="/en/" />
+    {supportedLangs.map((lang) => (
+        <link rel="alternate" hreflang={lang} href={`/${lang}/`} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={`/${defaultLang}/`} />
     
-    <meta http-equiv="refresh" content="0;url=/en/">
+    <meta http-equiv="refresh" content={`0;url=/${defaultLang}/`}>
     
-    <script>
-        const userLang = navigator.language || 'en';
+    <script define:vars={{ supportedLangs, defaultLang }}>
+        const userLang = navigator.language || defaultLang;
+        const langCode = userLang.split('-')[0];
+
         // Use replace() instead of href so we don't trap users in a back-button loop
-        if (userLang.startsWith('ro')) {
-            window.location.replace('/ro/');
-        } else if (userLang.startsWith('es')) {
-            window.location.replace('/es/');
+        if (supportedLangs.includes(langCode)) {
+            window.location.replace(`/${langCode}/`);
         } else {
-            window.location.replace('/en/');
+            window.location.replace(`/${defaultLang}/`);
         }
     </script>
 </head>
@@ -32,9 +35,9 @@
         <p>Redirecting to your language...</p>
         <noscript>
             <p>Please select your language:</p>
-            <a href="/en/" style="color: #00f6ff; margin: 0 10px; text-decoration: none; font-weight: 600;">English</a>
-            <a href="/ro/" style="color: #00f6ff; margin: 0 10px; text-decoration: none; font-weight: 600;">Română</a>
-            <a href="/es/" style="color: #00f6ff; margin: 0 10px; text-decoration: none; font-weight: 600;">Español</a>
+            {Object.entries(languages).map(([code, name]) => (
+                <a href={`/${code}/`} style="color: #00f6ff; margin: 0 10px; text-decoration: none; font-weight: 600;">{name}</a>
+            ))}
         </noscript>
     </div>
 </body>
