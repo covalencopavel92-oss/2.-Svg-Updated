@@ -1236,3 +1236,12 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
         margin-bottom: 1rem;
     }
 }
+
+/* Placeholder for 3D models/icons on service cards */
+.service-icon-placeholder {
+    height: 140px;
+    flex-shrink: 0;
+    width: 100%;
+    margin-bottom: 1rem;
+    pointer-events: none;
+}
