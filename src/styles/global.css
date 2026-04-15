@@ -389,6 +389,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0; /* FIX: Prevents icon from shifting left when text is hidden */
     background: rgba(0, 246, 255, 0.05);
     border-radius: 8px;
     padding: 0.8rem 0; /* Matches .nav-link padding */
@@ -411,6 +412,7 @@ body {
     justify-content: flex-start;
     padding: 0.8rem 1rem; /* Matches expanded .nav-link padding */
     border-color: var(--neon-blue-dim);
+    gap: 1rem; /* Restore gap when expanded */
 }
 
 .sidebar:hover .search-input,
@@ -944,6 +946,7 @@ textarea.floating-input {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0; /* FIX: Prevents icon from shifting left when text is hidden */
     padding-top: 1rem;
     border-top: 1px solid var(--card-border);
     width: 100%;
@@ -952,6 +955,7 @@ textarea.floating-input {
 .sidebar:hover .theme-switch-wrapper, .sidebar.force-expanded .theme-switch-wrapper {
     /* Locks text to the left and toggle to the right */
     justify-content: space-between; 
+    gap: 1rem; /* Restore gap when expanded */
     padding: 1rem 1rem 0 1rem; /* Aligns with expanded nav links */
 }
 
