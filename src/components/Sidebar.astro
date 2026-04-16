@@ -395,11 +395,19 @@ const navLinks = [
 
         // Re-evaluate physical hover state after page loads
         const sidebar = document.getElementById('sidebar-nav');
-        if (sidebar && sidebar.matches(':hover')) {
-            isSidebarHovered = true;
-            sidebar.classList.add('force-expanded');
-            if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
-                localStorage.setItem(SIDEBAR_EXPANDED_KEY, 'true');
+        if (sidebar) {
+            if (sidebar.matches(':hover')) {
+                isSidebarHovered = true;
+                sidebar.classList.add('force-expanded');
+                if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
+                    localStorage.setItem(SIDEBAR_EXPANDED_KEY, 'true');
+                }
+            } else {
+                isSidebarHovered = false;
+                if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
+                    sidebar.classList.remove('force-expanded');
+                    localStorage.removeItem(SIDEBAR_EXPANDED_KEY);
+                }
             }
         }
 

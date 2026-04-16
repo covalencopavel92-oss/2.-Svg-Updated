@@ -75,6 +75,9 @@ describe('useTranslations fallback logic', () => {
     it('should return the original key if it is missing in both current and default languages', () => {
         const t = useTranslations('ro' as any);
         assert.equal(t('does.not.exist'), 'does.not.exist');
+    });
+});
+
 describe('useTranslations', () => {
     it('should return a function that translates top-level and nested keys correctly', () => {
         const tEn = useTranslations('en');
