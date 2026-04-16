@@ -1194,7 +1194,7 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
     .sidebar:hover .search-wrapper,
     .sidebar.force-expanded .search-wrapper,
     .search-wrapper { 
-        width: 80%;
+        width: 95%;
         margin: 0 auto;
         justify-content: center !important; 
         padding: 1rem !important; 
