@@ -119,9 +119,7 @@ const t = useTranslations(lang as keyof typeof languages);
     </section>
     <script>
     document.addEventListener('astro:page-load', () => {
-        // Added ': MouseEvent' to tell TypeScript what 'e' is
-        const handleOnMouseMove = (e: MouseEvent) => {
-            // Cast currentTarget as HTMLElement so TS knows it has a .style property
+        const handlePointerMove = (e: PointerEvent) => {
             const target = e.currentTarget as HTMLElement;
             const rect = target.getBoundingClientRect();
 
@@ -130,12 +128,21 @@ const t = useTranslations(lang as keyof typeof languages);
 
             target.style.setProperty("--mouse-x", `${x}px`);
             target.style.setProperty("--mouse-y", `${y}px`);
+
+            // Explicitly add hover class on movement over the element
+            target.classList.add("is-hovered");
         };
 
-        // Using .forEach is a bit cleaner for NodeLists in TypeScript
+        const handlePointerLeave = (e: PointerEvent) => {
+            const target = e.currentTarget as HTMLElement;
+            target.classList.remove("is-hovered");
+        };
+
         document.querySelectorAll(".service-card").forEach((card) => {
-            // Cast card as HTMLElement so TS allows the .onmousemove assignment
-            (card as HTMLElement).onmousemove = handleOnMouseMove;
+            const el = card as HTMLElement;
+            el.addEventListener('pointermove', handlePointerMove);
+            el.addEventListener('pointerleave', handlePointerLeave);
+            el.addEventListener('pointercancel', handlePointerLeave); // Handle touch/pen disruptions
         });
     });
 </script>  

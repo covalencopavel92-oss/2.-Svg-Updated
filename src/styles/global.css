@@ -374,7 +374,12 @@ body {
 }
 
 .nav-icon { flex-shrink: 0; }
-.hamburger { display: none; }
+.hamburger {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
 
 /* --- Sidebar Bottom Section --- */
 .sidebar-bottom {
@@ -734,13 +739,36 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
     );
 }
 
-.service-card:hover {
+/* Only apply native CSS hover effects on devices that support true hover (like mice) */
+@media (hover: hover) {
+    .service-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(0, 247, 255, 0.5);
+    }
+    .service-card:hover::before {
+        opacity: 1;
+    }
+}
+
+/* Apply JS-driven hover state for touch and S Pen */
+.service-card.is-hovered {
     transform: translateY(-5px); 
     border-color: rgba(0, 247, 255, 0.5); /* Stronger border on hover */
 }
 
-.service-card:hover::before {
+.service-card.is-hovered::before {
     opacity: 1; /* Fade in the glow */
+}
+
+/* Explicitly disable effects when JS class is removed, unless native hover is active */
+@media (hover: none) {
+    .service-card:not(.is-hovered) {
+        transform: translateY(0);
+        border-color: var(--card-border);
+    }
+    .service-card:not(.is-hovered)::before {
+        opacity: 0;
+    }
 }
 
 /* Bring content above the glow */
@@ -1119,10 +1147,18 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
         overflow: visible !important;
     }
 
-    .sidebar-header-top { display: none; }
-    .brand-logo { margin-bottom: 0; width: auto; justify-content: flex-start; }
+    .sidebar-header-top {
+        display: flex;
+        margin-bottom: 0;
+        min-height: auto;
+        order: 2; /* Position after the logo */
+        margin-left: auto; /* Push hamburger to the right */
+        margin-right: 1rem;
+    }
+    .sidebar-lock-btn { display: none; } /* Hide lock button on mobile */
+    .brand-logo { margin-bottom: 0; width: auto; justify-content: flex-start; order: 1; }
     .brand-text { display: none; }
-    .hamburger { display: block; }
+    .hamburger { display: block; order: 3; }
 
     /* --- NEW: 70% Slide-in Mobile Drawer --- */
     .nav-links {
