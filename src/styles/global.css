@@ -777,6 +777,11 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
     border-color: rgba(0, 247, 255, 0.5); /* Stronger border on hover */
 }
 
+/* Fix mobile tap highlight across interactive elements */
+a, button, .star-btn, .rating-stars, .nav-link, .lang-collapsed, .lang-btn, .search-wrapper, .theme-switch, .call-us-btn, .sidebar-lock-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
 .service-card.is-hovered::before {
     opacity: 1; /* Fade in the glow */
 }
@@ -1356,6 +1361,14 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
     }
 
     .sidebar-lang { position: absolute; right: 4.5rem; top: 50%; transform: translateY(-50%); margin-bottom: 0; }
+
+    /* Fix language switcher expanded state on mobile */
+    .sidebar .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed {
+        display: none !important;
+    }
+    .sidebar .lang-switcher-container[data-lang-expanded="true"] .lang-expanded {
+        display: flex !important;
+    }
 
     /* Hero Mobile Fixes */
     .hero-section { height: auto; min-height: 80vh; padding-top: 2rem; }

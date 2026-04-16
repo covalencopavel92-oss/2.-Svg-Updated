@@ -64,6 +64,8 @@ const t = useTranslations(lang);
         padding: 0;
         cursor: pointer;
         transition: transform 0.2s ease;
+        -webkit-tap-highlight-color: transparent; /* Disable native tap glow on mobile */
+        outline: none;
     }
     .star-btn:hover {
         transform: scale(1.2);
