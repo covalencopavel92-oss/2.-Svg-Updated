@@ -1006,8 +1006,8 @@ p { margin-bottom: 1.5rem; font-size: 1.1rem; }
 .blog-content h3 { color: #ffffff !important; }
 .blog-content p { color: #ffffff !important; }
 .read-more {
-    color: #ffffff !important;
-    font-weight: 600;
+    color: #00f6ff !important;
+    font-weight: 650;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
