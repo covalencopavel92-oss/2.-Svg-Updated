@@ -118,23 +118,25 @@ const t = useTranslations(lang as keyof typeof languages);
         </div>
     </section>
     <script>
-    // Added ': MouseEvent' to tell TypeScript what 'e' is
-    const handleOnMouseMove = (e: MouseEvent) => {
-        // Cast currentTarget as HTMLElement so TS knows it has a .style property
-        const target = e.currentTarget as HTMLElement;
-        const rect = target.getBoundingClientRect();
-        
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        target.style.setProperty("--mouse-x", `${x}px`);
-        target.style.setProperty("--mouse-y", `${y}px`);
-    };
+    document.addEventListener('astro:page-load', () => {
+        // Added ': MouseEvent' to tell TypeScript what 'e' is
+        const handleOnMouseMove = (e: MouseEvent) => {
+            // Cast currentTarget as HTMLElement so TS knows it has a .style property
+            const target = e.currentTarget as HTMLElement;
+            const rect = target.getBoundingClientRect();
 
-    // Using .forEach is a bit cleaner for NodeLists in TypeScript
-    document.querySelectorAll(".service-card").forEach((card) => {
-        // Cast card as HTMLElement so TS allows the .onmousemove assignment
-        (card as HTMLElement).onmousemove = handleOnMouseMove;
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            target.style.setProperty("--mouse-x", `${x}px`);
+            target.style.setProperty("--mouse-y", `${y}px`);
+        };
+
+        // Using .forEach is a bit cleaner for NodeLists in TypeScript
+        document.querySelectorAll(".service-card").forEach((card) => {
+            // Cast card as HTMLElement so TS allows the .onmousemove assignment
+            (card as HTMLElement).onmousemove = handleOnMouseMove;
+        });
     });
 </script>  
 </Layout>
