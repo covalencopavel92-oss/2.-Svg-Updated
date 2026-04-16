@@ -20,6 +20,7 @@ export const ui = {
         reviews: { title: "Client Testimonials", subtitle: "See what businesses are saying about our transformative services." },
         blog: { title: "Insights & Strategy", subtitle: "Latest thoughts on digitalization, marketing trends, and business growth." },
         contact: { title: "Let's Talk Growth", subtitle: "Reach out to discuss how Scale Automata can transform your digital ecosystem.", name: "Full Name", email: "Email Address", subject: "Subject", message: "Your Message", send: "Send Message", success: "Message sent successfully! We will get back to you within 24 hours." },
+        contactDetails: { address: "Address", phone: "Phone number", whatsapp: "WhatsApp", email: "Email" },
         footer: { privacy: "Privacy Policy", terms: "Terms & Conditions" }
     },
     ro: {
@@ -35,6 +36,7 @@ export const ui = {
         reviews: { title: "Testimoniale Clienți", subtitle: "Vezi ce spun alte companii despre serviciile noastre transformatoare." },
         blog: { title: "Perspective și Strategie", subtitle: "Cele mai noi gânduri despre digitalizare, tendințe de marketing și creșterea afacerilor." },
         contact: { title: "Să Discutăm despre Creștere", subtitle: "Contactează-ne pentru a discuta cum Scale Automata îți poate transforma ecosistemul digital.", name: "Nume Complet", email: "Adresă de Email", subject: "Subiect", message: "Mesajul Tău", send: "Trimite Mesajul", success: "Mesajul a fost trimis cu succes! Vom reveni cu un răspuns în maxim 24 de ore." },
+        contactDetails: { address: "Adresă", phone: "Număr de telefon", whatsapp: "WhatsApp", email: "Email" },
         footer: { privacy: "Politica de Confidențialitate", terms: "Termeni și Condiții" }
     },
     es: {
@@ -50,6 +52,7 @@ export const ui = {
         reviews: { title: "Testimonios de Clientes", subtitle: "Mira lo que dicen las empresas sobre nuestros servicios transformadores." },
         blog: { title: "Perspectivas y Estrategia", subtitle: "Últimos pensamientos sobre digitalización, tendencias de marketing y crecimiento empresarial." },
         contact: { title: "Hablemos de Crecimiento", subtitle: "Comunícate para discutir cómo Scale Automata puede transformar tu ecosistema digital.", name: "Nombre Completo", email: "Correo Electrónico", subject: "Asunto", message: "Tu Mensaje", send: "Enviar Mensaje", success: "¡Mensaje enviado con éxito! Nos pondremos en contacto contigo en 24 horas." },
+        contactDetails: { address: "Dirección", phone: "Número de teléfono", whatsapp: "WhatsApp", email: "Correo electrónico" },
         footer: { privacy: "Política de Privacidad", terms: "Términos y Condiciones" }
     }
 } as const;

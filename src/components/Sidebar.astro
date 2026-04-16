@@ -64,6 +64,13 @@ const navLinks = [
         ))}
 
         <div class="sidebar-bottom">
+            <a class="nav-link call-us-btn" href="tel:0748198534">
+                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span class="nav-text">0748198534</span>
+            </a>
+
             <div class="search-wrapper">
                 <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
@@ -295,9 +302,18 @@ const navLinks = [
         const searchInput = document.getElementById('searchInput') as HTMLInputElement;
         const searchResults = document.getElementById('searchResults');
         const currentLang = document.documentElement.lang || 'en';
+
+        interface SearchIndexItem {
+            title: string;
+            titleLower: string;
+            url: string;
+            keywords: string;
+            content?: string;
+        }
+
         // ⚡ Bolt Optimization: Pre-computed lowercase titles to avoid redundant string allocations and toLowerCase calls
         // during the fast-path search filter loop. Measured ~43% performance improvement in filter execution time.
-        const siteIndex = [
+        const siteIndex: SearchIndexItem[] = [
             { title: 'Home', titleLower: 'home', url: `/${currentLang}/`, keywords: 'home strategy rank higher customers assessment agency' },
             { title: 'Consultancy', titleLower: 'consultancy', url: `/${currentLang}/consultancy/`, keywords: 'consultancy advice assessment audit strategy roadmap' },
             { title: 'Services', titleLower: 'services', url: `/${currentLang}/services/`, keywords: 'services web development marketing seo geo cro design online growth' },
@@ -306,10 +322,51 @@ const navLinks = [
             { title: 'Contact', titleLower: 'contact', url: `/${currentLang}/contact/`, keywords: 'contact message email reach us form help' }
         ];
 
+        let isIndexPopulated = false;
+
+        async function populateSearchIndex() {
+            if (isIndexPopulated) return;
+            isIndexPopulated = true;
+
+            // Background fetch page contents to build a full text search index without blocking the main thread
+            const fetchPromises = siteIndex.map(async (item) => {
+                try {
+                    const response = await fetch(item.url);
+                    if (response.ok) {
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        // Extract text from main-content only, to avoid indexing the sidebar itself
+                        const mainContent = doc.querySelector('.main-content');
+                        if (mainContent) {
+                            // Strip extra whitespace and convert to lowercase for fast searching
+                            item.content = mainContent.textContent?.toLowerCase().replace(/\s+/g, ' ') || '';
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Failed to fetch page for search index:', item.url);
+                }
+            });
+
+            // Fire and forget
+            Promise.allSettled(fetchPromises);
+        }
+
         if (searchInput && searchResults) {
             let debounceTimer: number;
 
+            // Lazily populate index on hover or focus of the search wrapper
+            const searchWrapper = searchInput.closest('.search-wrapper');
+            if (searchWrapper) {
+                searchWrapper.addEventListener('mouseenter', populateSearchIndex, { once: true });
+            }
+            searchInput.addEventListener('focus', populateSearchIndex, { once: true });
+
             searchInput.addEventListener('input', (e) => {
+                // Also trigger population here just in case they typed without focusing/hovering somehow
+                populateSearchIndex();
+
                 // Clear the existing timer on every keystroke
                 clearTimeout(debounceTimer);
                 
@@ -322,7 +379,9 @@ const navLinks = [
                         // ⚡ Bolt Optimization: Added debounce to reduce main thread blocking
                         // This prevents filtering logic and DOM updates on every single keystroke
                         const matches = siteIndex.filter(item =>
-                            item.titleLower.includes(query) || item.keywords.includes(query)
+                            item.titleLower.includes(query) ||
+                            item.keywords.includes(query) ||
+                            (item.content && item.content.includes(query))
                         );
 
                         if (matches.length > 0) {
