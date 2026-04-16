@@ -1178,8 +1178,10 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
     .nav-link::before { display: none; }
     
     .nav-links .nav-text, 
-    .nav-links .search-input {
-        opacity: 1 !important; width: auto !important; pointer-events: auto !important;
+    .nav-links .search-input,
+    .search-input {
+        opacity: 1 !important; width: 100% !important; pointer-events: auto !important;
+        position: relative !important; visibility: visible !important; padding-left: 0.8rem !important;
     }
 
     /* Fix Theme Switcher & Search Bar */
@@ -1192,7 +1194,8 @@ input:checked + .slider svg.fa-moon { stroke: #1a1a1a; color: #1a1a1a; }
     .sidebar:hover .search-wrapper,
     .sidebar.force-expanded .search-wrapper,
     .search-wrapper { 
-        width: 100%; 
+        width: 80%;
+        margin: 0 auto;
         justify-content: center !important; 
         padding: 1rem !important; 
         border-color: var(--neon-blue-dim); 
