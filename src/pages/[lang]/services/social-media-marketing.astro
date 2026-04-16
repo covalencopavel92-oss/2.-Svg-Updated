@@ -12,32 +12,32 @@ const { lang } = Astro.params;
 const t = useTranslations(lang as keyof typeof languages);
 ---
 
-<Layout title="Google & Social Ads | Scale Automata">
+<Layout title={`${t('services.social.hero.title')} | Scale Automata`}>
     <section class="page-view page-view-layout">
         
         <div class="hero-section hero-section-wrapper">
             <div class="reveal">
                 <h1 class="hero-title title-overflow">
                     <span class="pan-wrapper">
-                        Organic & Viral Growth
+                        {t('services.social.hero.title')}
                     </span>
                 </h1>
                 
                 <h2 class="hero-subtitle">
-                    Content calendars, community management, and trend-jacking strategies to amplify your brand voice and foster authentic connections with your audience across all major social platforms.
+                    {t('services.social.hero.subtitle')}
                 </h2>
                 
                 <div class="hero-description text-left-indented">
-                    <p>Building a loyal community takes time, but it is one of the most rewarding ways to expand business. We offer supportive digital marketing services designed to lift that burden and help you expand your business smoothly. If you want to get known on social media without the high cost of constant ads or paid media, a strong organic social media strategy is the most effective path. Our marketing services handle your complete profile administration, ensuring your voice is consistent and professional.</p>
+                    <p>{t('services.social.hero.desc1')}</p>
                     
-                    <p>We actively monitor current trends among potential customers through social listening on diverse media channels so you can meaningfully communicate with your audience. Whether we are designing visually creative posts for Instagram and Facebook, producing dynamic videos for TikTok, sparking professional dialogue on LinkedIn, or engaging directly on X, we create truly engaging content.</p>
+                    <p>{t('services.social.hero.desc2')}</p>
                     
-                    <p>While online advertising has its place to quickly reach customers, building trust organically is highly cost-effective. By managing your social media marketing with care, we give you the freedom to focus on your core business while your online community flourishes naturally. Growing your community shouldn't require an exorbitant cost, but rather a thoughtful, dedicated strategy that honors your business goals.</p>
+                    <p>{t('services.social.hero.desc3')}</p>
                 </div>
                 
                 <div class="action-buttons-wrapper">
                     <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
-                        Reach your Audience
+                        {t('services.social.hero.button')}
                     </a>
                 </div>
             </div>

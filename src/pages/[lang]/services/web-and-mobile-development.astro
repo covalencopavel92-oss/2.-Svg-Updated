@@ -12,32 +12,32 @@ const { lang } = Astro.params;
 const t = useTranslations(lang as keyof typeof languages);
 ---
 
-<Layout title="Technical & Content SEO & GEO | Scale Automata">
+<Layout title={`${t('services.web.hero.title')} | Scale Automata`}>
     <section class="page-view page-view-layout">
         
         <div class="hero-section hero-section-wrapper">
             <div class="reveal">
                 <h1 class="hero-title title-overflow">
                     <span class="pan-wrapper">
-                        Modern Web & Mobile Development
+                        {t('services.web.hero.title')}
                     </span>
                 </h1>
                 
                 <h2 class="hero-subtitle">
-                    Build high-performance, conversion-optimized websites and mobile applications.
+                    {t('services.web.hero.subtitle')}
                 </h2>
                 
                 <div class="hero-description text-left-indented">
-                    <p>Every business has a unique story, and sharing it clearly with your customers is essential. A thoughtfully crafted website acts as your most welcoming digital storefront. Investing in quality web development is indispensable because it creates a comfortable space where people can easily connect with the value you provide.</p>
+                    <p>{t('services.web.hero.desc1')}</p>
                     
-                    <p>When your audience clicks through from thoughtful ads or search results, they expect a smooth, fast loading journey. Partnering with an empathetic developer ensures your vision comes to life exactly as you imagine. Through careful website optimization and robust security, we protect your audience while helping you organically increase traffic and secure a valuable spot on the first page. A clean, modern looking digital presence builds immediate trust.</p>
+                    <p>{t('services.web.hero.desc2')}</p>
                     
-                    <p>Whether your brand calls for a minimalist, simple design to highlight your core message, or engaging, complicated designs, animations, and immersive layouts to captivate attention, we build exactly what you need. Every site is deeply interactive and entirely responsive, guaranteeing that every visitor feels valued.</p>
+                    <p>{t('services.web.hero.desc3')}</p>
                 </div>
                 
                 <div class="action-buttons-wrapper">
                     <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
-                        Build Your Story
+                        {t('services.web.hero.button')}
                     </a>
                 </div>
             </div>

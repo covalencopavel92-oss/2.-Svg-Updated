@@ -12,32 +12,32 @@ const { lang } = Astro.params;
 const t = useTranslations(lang as keyof typeof languages);
 ---
 
-<Layout title="Google & Social Ads | Scale Automata">
+<Layout title={`${t('services.email.hero.title')} | Scale Automata`}>
     <section class="page-view page-view-layout">
         
         <div class="hero-section hero-section-wrapper">
             <div class="reveal">
                 <h1 class="hero-title title-overflow">
                     <span class="pan-wrapper">
-                        KEEP YOUR CUSTOMERS COMING BACK WITH EMAIL MARKETING
+                        {t('services.email.hero.title')}
                     </span>
                 </h1>
                 
                 <h2 class="hero-subtitle">
-                    Advanced segmentation, drip campaigns, and engaging newsletters that turn subscribers into buyers and keep your audience connected to your brand. 
+                    {t('services.email.hero.subtitle')}
                 </h2>
                 
                 <div class="hero-description text-left-indented">
-                    <p>Sustainable growth comes from treating your audience with genuine respect and delivering consistent value. A thoughtfully managed email marketing campaign is an indispensable asset for nurturing those vital relationships safely. We empower you to deeply know your customers and serve them better through highly personalized email marketing. By implementing intelligent email automation, we ensure you reliably reach the right audience at the right time.</p>
+                    <p>{t('services.email.hero.desc1')}</p>
                     
-                    <p>Our team crafts compelling email marketing content, from informative, engaging newsletters that share your expertise, to tasteful promotional emails designed to naturally increase conversions. We also focus heavily on the post-purchase journey, utilizing targeted retention email strategies to solidify long-term customer loyalty. To keep your brand fresh, we carefully leverage the latest trends to create visually appealing and engaging content. </p>
+                    <p>{t('services.email.hero.desc2')} </p>
                     
-                    <p>Most importantly, we protect the trust you have built with your community by guaranteeing total data safety, strict GDPR standards, and absolute compliance in every send. Partner with us to comfortably reach your goals while respecting your subscribers.</p>
+                    <p>{t('services.email.hero.desc3')}</p>
                 </div>
                 
                 <div class="action-buttons-wrapper">
                     <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
-                        Personalyze Your Email Marketing Strategy Today!
+                        {t('services.email.hero.button')}
                     </a>
                 </div>
             </div>
