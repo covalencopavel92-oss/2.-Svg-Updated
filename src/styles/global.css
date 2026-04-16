@@ -507,11 +507,14 @@ body {
     padding: 4rem 6rem;
     display: flex;
     flex-direction: column;
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
-body:has(.sidebar.collapsed) .main-content {
-    margin-left: var(--sidebar-collapsed);
-    width: calc(100% - var(--sidebar-collapsed));
+@media (min-width: 769px) {
+    body:has(.sidebar[data-sidebar-locked="true"]) .main-content {
+        margin-left: var(--sidebar-expanded);
+        width: calc(100% - var(--sidebar-expanded));
+    }
 }
 
 /* === Typography & Global Elements === */

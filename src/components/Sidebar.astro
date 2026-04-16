@@ -140,8 +140,11 @@ const navLinks = [
                 // Mark the sidebar as locked so styles apply correctly
                 if (isLocked) {
                     incomingSidebar.dataset.sidebarLocked = 'true';
+                } else {
+                    incomingSidebar.dataset.sidebarLocked = 'false';
                 }
             }
+
         }
         
         // --- EXISTING: Language Switcher Logic ---
@@ -160,15 +163,18 @@ const navLinks = [
         const sidebar = document.getElementById('sidebar-nav');
         if (!sidebar || sidebar.dataset.initialized === 'true') return;
         sidebar.dataset.initialized = 'true';
-
         // Check if sidebar is locked and restore state
         const isLocked = localStorage.getItem(SIDEBAR_LOCKED_KEY) === 'true';
         if (isLocked) {
             sidebar.classList.add('force-expanded');
             sidebar.dataset.sidebarLocked = 'true';
-        } else if (localStorage.getItem(SIDEBAR_EXPANDED_KEY) === 'true') {
-            sidebar.classList.add('force-expanded');
+        } else {
+            sidebar.dataset.sidebarLocked = 'false';
+            if (localStorage.getItem(SIDEBAR_EXPANDED_KEY) === 'true') {
+                sidebar.classList.add('force-expanded');
+            }
         }
+
 
         // Update lock button visual state
         const lockBtn = document.getElementById('sidebarLockBtn');
