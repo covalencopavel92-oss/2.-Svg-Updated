@@ -19,5 +19,13 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         </div>
 
         <ContactForm />
+
+        <div class="contact-details reveal" style="margin-top: 3rem; text-align: center;">
+            <h3 style="margin-bottom: 1rem;">Scale Automata S.R.L.</h3>
+            <p><strong>{t('contactDetails.address')}:</strong> Iasi, str. Barbu nr. 14</p>
+            <p><strong>{t('contactDetails.phone')}:</strong> <a href="tel:0748198534" style="color: var(--neon-blue); text-decoration: none;">0748198534</a></p>
+            <p><strong>{t('contactDetails.whatsapp')}:</strong> <a href="https://wa.me/40748198534" target="_blank" rel="noopener noreferrer" style="color: var(--neon-blue); text-decoration: none;">+40748198534</a></p>
+            <p><strong>{t('contactDetails.email')}:</strong> <a href="mailto:Scaleautomata@gmail.com" style="color: var(--neon-blue); text-decoration: none;">Scaleautomata@gmail.com</a></p>
+        </div>
     </section>
 </Layout>
