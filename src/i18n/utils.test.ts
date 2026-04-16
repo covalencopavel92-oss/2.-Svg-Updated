@@ -45,8 +45,7 @@ describe('useTranslations fallback logic', () => {
     before(() => {
         // Inject test properties into the real `ui` object
         // This ensures deterministic tests regardless of actual UI strings
-        (ui as any).en._test_missing = 'Fallback EN';
-        (ui as any).en._test_nested = { missing: 'Fallback nested' };
+        (ui as any).en['_test_missing'] = 'Fallback EN';
 
         // Ensure language 'ro' exists for testing
         if (!(ui as any).ro) {
@@ -57,29 +56,23 @@ describe('useTranslations fallback logic', () => {
 
     after(() => {
         // Clean up injected test properties
-        delete (ui as any).en._test_missing;
-        delete (ui as any).en._test_nested;
+        delete (ui as any).en['_test_missing'];
         if (addedRo) delete (ui as any).ro;
     });
 
     it('should fall back to default language for a missing flat key', () => {
-        const t = useTranslations('ro' as any);
-        assert.equal(t('_test_missing'), 'Fallback EN');
-    });
-
-    it('should fall back to default language for a missing nested key', () => {
-        const t = useTranslations('ro' as any);
-        assert.equal(t('_test_nested.missing'), 'Fallback nested');
+        const t = useTranslations('ro');
+        assert.equal(t('_test_missing' as any), 'Fallback EN');
     });
 
     it('should return the original key if it is missing in both current and default languages', () => {
-        const t = useTranslations('ro' as any);
-        assert.equal(t('does.not.exist'), 'does.not.exist');
+        const t = useTranslations('ro');
+        assert.equal(t('does.not.exist' as any), 'does.not.exist');
     });
 });
 
 describe('useTranslations', () => {
-    it('should return a function that translates top-level and nested keys correctly', () => {
+    it('should return a function that translates top-level keys correctly', () => {
         const tEn = useTranslations('en');
         assert.equal(tEn('nav.home'), 'Home');
         assert.equal(tEn('home.explore'), 'Explore Services');
@@ -93,13 +86,7 @@ describe('useTranslations', () => {
 
     it('should return the key itself if the key does not exist in any language', () => {
         const tEn = useTranslations('en');
-        assert.equal(tEn('missing.key'), 'missing.key');
-        assert.equal(tEn('does_not_exist'), 'does_not_exist');
-    });
-
-    it('should utilize the cache for split keys', () => {
-        const tEn = useTranslations('en');
-        assert.equal(tEn('nav.home'), 'Home');
-        assert.equal(tEn('nav.home'), 'Home'); // Second time should hit splitCache
+        assert.equal(tEn('missing.key' as any), 'missing.key');
+        assert.equal(tEn('does_not_exist' as any), 'does_not_exist');
     });
 });

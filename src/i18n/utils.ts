@@ -1,4 +1,4 @@
-import { ui, defaultLang } from './ui';
+import { ui, defaultLang, type UIKeys } from './ui';
 
 export function getLangFromUrl(url: URL) {
   const [, lang] = url.pathname.split('/');
@@ -6,32 +6,11 @@ export function getLangFromUrl(url: URL) {
   return defaultLang;
 }
 
-const splitCache: Record<string, string[]> = {};
-
 export function useTranslations(lang: keyof typeof ui) {
-  return function t(key: string) {
-      let keys = splitCache[key];
-      if (!keys) {
-          keys = splitCache[key] = key.indexOf('.') === -1 ? [key] : key.split('.');
+  return function t(key: UIKeys) {
+      if (key in ui[lang]) {
+          return ui[lang][key];
       }
-
-      let text: any = ui[lang];
-      for (const k of keys) {
-          if (text && typeof text === 'object' && k in text) {
-              text = text[k as keyof typeof text];
-          } else {
-              // Fallback to default lang if key missing
-               let defaultText: any = ui[defaultLang];
-               for (const dk of keys) {
-                   if (defaultText && typeof defaultText === 'object' && dk in defaultText) {
-                       defaultText = defaultText[dk as keyof typeof defaultText];
-                   } else {
-                       return key;
-                   }
-               }
-               return defaultText;
-          }
-      }
-      return text;
+      return ui[defaultLang][key] || key;
   }
 }

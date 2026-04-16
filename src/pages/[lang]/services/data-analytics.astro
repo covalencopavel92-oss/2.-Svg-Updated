@@ -12,32 +12,32 @@ const { lang } = Astro.params;
 const t = useTranslations(lang as keyof typeof languages);
 ---
 
-<Layout title="Google & Social Ads | Scale Automata">
+<Layout title={`${t('services.data.hero.title')} | Scale Automata`}>
     <section class="page-view page-view-layout">
         
         <div class="hero-section hero-section-wrapper">
             <div class="reveal">
                 <h1 class="hero-title title-overflow">
                     <span class="pan-wrapper">
-                        Business Intelligence & Data Analytics
+                        {t('services.data.hero.title')}
                     </span>
                 </h1>
                 
                 <h2 class="hero-subtitle">
-                    Implementation of GA4, Tag Manager, and Looker Studio for real-time visibility into your KPIs. 
+                    {t('services.data.hero.subtitle')}
                 </h2>
                 
                 <div class="hero-description text-left-indented">
-                    <p>Why Data Analytics Matters?</p>
+                    <p>{t('services.data.hero.desc1')}</p>
                     
-                    <p>Behind every number is a real person interacting with your brand, and understanding data is simply learning how to serve them better. We use compassionate data analysis to help you listen to your community. By tracking your key performance indicators, we discover exactly what your audience values most. We implement secure G4A and Google Analytics to monitor performance metrics across all your touchpoints—from social media interactions and Google Ads to the engagement of your email list.</p>
+                    <p>{t('services.data.hero.desc2')}</p>
                     
-                    <p>Your community's trust is paramount, which is why we guarantee complete GDPR alignment and flawless data safety. Rather than obsessing over the competition, we use market research and thoughtful competition research to find unique ways your business can shine. We rely on authentic data storytelling to translate complex metrics and trends into actionable advice. By keeping a close eye on every vital KPI, we empower you to create performance-driven marketing campaign strategies that resonate deeply with your customers and foster sustainable, long-term success.</p>
+                    <p>{t('services.data.hero.desc3')}</p>
                 </div>
                 
                 <div class="action-buttons-wrapper">
                     <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
-                        Check new ways to grow your business with data analytics!
+                        {t('services.data.hero.button')}
                     </a>
                 </div>
             </div>

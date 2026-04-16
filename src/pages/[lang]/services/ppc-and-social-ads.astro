@@ -12,32 +12,32 @@ const { lang } = Astro.params;
 const t = useTranslations(lang as keyof typeof languages);
 ---
 
-<Layout title="Google & Social Ads | Scale Automata">
+<Layout title="{t('services.ppc.hero.title')} | Scale Automata">
     <section class="page-view page-view-layout">
         
         <div class="hero-section hero-section-wrapper">
             <div class="reveal">
                 <h1 class="hero-title title-overflow">
                     <span class="pan-wrapper">
-                        Google & Social Ads
+                        {t('services.ppc.hero.title')}
                     </span>
                 </h1>
                 
                 <h2 class="hero-subtitle">
-                    Data-backed campaign management across Google Ads, Meta, LinkedIn, and TikTok to acquire high-intent leads and maximize your return on ad spend.
+                    {t('services.ppc.hero.subtitle')}
                 </h2>
                 
                 <div class="hero-description text-left-indented">
-                    <p>Your business offers real value, and there are countless people out there looking for exactly what you provide. The true power of digital marketing is simply bridging that gap. We understand that navigating paid advertisement online can feel overwhelming, especially with a careful budget. That is where we step in as your respectful partner.</p>
+                    <p>{t('services.ppc.hero.desc1')}</p>
                     
-                    <p>Utilizing PPC (Pay per Click) is an indispensable tool to reach the right audience at the exact moment they need you. We focus on a pay-per-customer model that honors your investment, maximizing your Return on ad spend (ROAS). To truly elevate your online presence and increase sales, we strategically utilize social media. We connect you with your community through authentic Facebook ads and inspiring Instagram Ads. We also help you share your story through impactful video ads on platforms like TikTok and X.</p>
+                    <p>{t('services.ppc.hero.desc2')}</p>
                     
-                    <p>This isn't just about gaining more followers; it's about building meaningful relationships that sustain your business. By managing your campaigns with deep care, we ensure every euro helps you grow confidently.</p>
+                    <p>{t('services.ppc.hero.desc3')}</p>
                 </div>
                 
                 <div class="action-buttons-wrapper">
                     <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
-                        Ready to Grow?
+                        {t('services.ppc.hero.button')}
                     </a>
                 </div>
             </div>
