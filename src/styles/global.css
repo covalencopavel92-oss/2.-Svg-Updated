@@ -850,6 +850,11 @@ p {
 	border-color: rgba(0, 247, 255, 0.5); /* Stronger border on hover */
 }
 
+/* Fix mobile tap highlight across interactive elements */
+a, button, .star-btn, .rating-stars, .nav-link, .lang-collapsed, .lang-btn, .search-wrapper, .theme-switch, .call-us-btn, .sidebar-lock-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
 .service-card.is-hovered::before {
 	opacity: 1; /* Fade in the glow */
 }
@@ -1474,192 +1479,150 @@ input:checked + .slider svg.fa-moon {
 }
 
 @media (max-width: 768px) {
-	.app-container {
-		flex-direction: column;
-	}
+    .app-container { flex-direction: column; }
+    
+    /* Sidebar to Top Navbar */
+    .sidebar {
+        width: 100% !important;
+        height: 80px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+        border-right: none;
+        transition: none;
+        overflow: visible !important;
+    }
 
-	/* Sidebar to Top Navbar */
-	.sidebar {
-		width: 100% !important;
-		height: 80px;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1rem 2rem;
-		box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
-		border-right: none;
-		transition: none;
-		overflow: visible !important;
-	}
+    .sidebar-header-top {
+        display: flex;
+        margin-bottom: 0;
+        min-height: auto;
+        order: 2; /* Position after the logo */
+        margin-left: auto; /* Push hamburger to the right */
+        margin-right: 1rem;
+    }
+    .sidebar-lock-btn { display: none; } /* Hide lock button on mobile */
+    .brand-logo { margin-bottom: 0; width: auto; justify-content: flex-start; order: 1; }
+    .brand-text { display: none; }
+    .hamburger { display: block; order: 3; }
 
-	.sidebar-header-top {
-		display: flex;
-		margin-bottom: 0;
-		min-height: auto;
-		order: 2; /* Position after the logo */
-		margin-left: auto; /* Push hamburger to the right */
-		margin-right: 1rem;
-	}
-	.sidebar-lock-btn {
-		display: none;
-	} /* Hide lock button on mobile */
-	.brand-logo {
-		margin-bottom: 0;
-		width: auto;
-		justify-content: flex-start;
-		order: 1;
-	}
-	.brand-text {
-		display: none;
-	}
-	.hamburger {
-		display: block;
-		order: 3;
-	}
+    /* --- NEW: 70% Slide-in Mobile Drawer --- */
+    .nav-links {
+        position: fixed; /* Locks the menu to the viewport */
+        top: 80px; 
+        left: -100%; /* Start completely off-screen to the left */
+        width: 60% !important; /* Covers exactly 70% of the screen */
+        height: calc(100vh - 80px); /* Fills the vertical space */
+        background-color: var(--sidebar-bg);
+        padding: 2rem 1rem; 
+        flex-direction: column; 
+        align-items: center; 
+        gap: 1.5rem;
+        opacity: 1 !important; 
+        transform: none !important; /* Removes the old vertical dropdown */
+        transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        z-index: 999; 
+        border-top: 1px solid rgba(0, 246, 255, 0.1);
+        border-right: 1px solid rgba(0, 246, 255, 0.1); /* Adds a nice glowing edge */
+        box-shadow: 10px 0 30px rgba(0,0,0,0.6); /* Casts a shadow over the remaining 30% of the screen */
+        overflow-y: auto; /* Allows scrolling inside the menu if it gets too long */
+    }
 
-	/* --- NEW: 70% Slide-in Mobile Drawer --- */
-	.nav-links {
-		position: fixed; /* Locks the menu to the viewport */
-		top: 80px;
-		left: -100%; /* Start completely off-screen to the left */
-		width: 60% !important; /* Covers exactly 70% of the screen */
-		height: calc(100vh - 80px); /* Fills the vertical space */
-		background-color: var(--sidebar-bg);
-		padding: 2rem 1rem;
-		flex-direction: column;
-		align-items: center;
-		gap: 1.5rem;
-		opacity: 1 !important;
-		transform: none !important; /* Removes the old vertical dropdown */
-		transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-		z-index: 999;
-		border-top: 1px solid rgba(0, 246, 255, 0.1);
-		border-right: 1px solid rgba(0, 246, 255, 0.1); /* Adds a nice glowing edge */
-		box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6); /* Casts a shadow over the remaining 30% of the screen */
-		overflow-y: auto; /* Allows scrolling inside the menu if it gets too long */
-	}
+    .nav-links.active { 
+        left: 0; /* Smoothly slides the drawer in */
+    }
+    
+    /* --- NEW: Kill Desktop Hover Glitches & Force Centering --- */
+    .sidebar:hover .nav-link,
+    .sidebar.force-expanded .nav-link,
+    .nav-link { 
+        width: 100%; 
+        text-align: center; 
+        justify-content: center !important; /* Forces items to stay perfectly centered */
+        border-radius: 8px; 
+        font-size: 1.1rem; 
+        white-space: normal; 
+        padding: 1rem !important; /* Larger touch targets for mobile accessibility */
+        background-color: transparent;
+        transform: none !important; /* Stops hover shifting */
+        position: relative;
+    }
+    /* NEW: Pin the icons perfectly to the left */
+    .nav-icon {
+        position: absolute !important;
+        left: 0.5rem; /* Adjust this value to push the icon closer or further from the left edge */
+        margin: 0 !important;
+    }
+    
+    .nav-link:hover, .nav-link.active { 
+        background-color: rgba(0, 246, 255, 0.08); 
+    }
+    .nav-link::before { display: none; }
+    
+    .nav-links .nav-text, 
+    .nav-links .search-input,
+    .search-input {
+        opacity: 1 !important; width: 100% !important; pointer-events: auto !important;
+        position: relative !important; visibility: visible !important; padding-left: 0.8rem !important;
+    }
 
-	.nav-links.active {
-		left: 0; /* Smoothly slides the drawer in */
-	}
+    /* Fix Theme Switcher & Search Bar */
+    .sidebar:hover .theme-text,
+    .sidebar.force-expanded .theme-text,
+    .theme-text {
+        display: none !important; /* Kills the sticky "Theme" text completely on mobile */
+    }
 
-	/* --- NEW: Kill Desktop Hover Glitches & Force Centering --- */
-	.sidebar:hover .nav-link,
-	.sidebar.force-expanded .nav-link,
-	.nav-link {
-		width: 100%;
-		text-align: center;
-		justify-content: center !important; /* Forces items to stay perfectly centered */
-		border-radius: 8px;
-		font-size: 1.1rem;
-		white-space: normal;
-		padding: 1rem !important; /* Larger touch targets for mobile accessibility */
-		background-color: transparent;
-		transform: none !important; /* Stops hover shifting */
-		position: relative;
-	}
-	/* NEW: Pin the icons perfectly to the left */
-	.nav-icon {
-		position: absolute !important;
-		left: 0.5rem; /* Adjust this value to push the icon closer or further from the left edge */
-		margin: 0 !important;
-	}
+    .sidebar:hover .search-wrapper,
+    .sidebar.force-expanded .search-wrapper,
+    .search-wrapper { 
+        width: 95%;
+        margin: 0 auto;
+        justify-content: center !important; 
+        padding: 1rem !important; 
+        border-color: var(--neon-blue-dim); 
+    }
 
-	.nav-link:hover,
-	.nav-link.active {
-		background-color: rgba(0, 246, 255, 0.08);
-	}
-	.nav-link::before {
-		display: none;
-	}
+    .sidebar:hover .theme-switch-wrapper,
+    .sidebar.force-expanded .theme-switch-wrapper,
+    .theme-switch-wrapper {
+        justify-content: center !important;
+        padding: 1.5rem 0 !important;
+    }
+    
+    .sidebar:hover .theme-switch,
+    .sidebar.force-expanded .theme-switch,
+    .theme-switch {
+        justify-content: center !important;
+        width: 50px !important;
+    }
 
-	.nav-links .nav-text,
-	.nav-links .search-input,
-	.search-input {
-		opacity: 1 !important;
-		width: 100% !important;
-		pointer-events: auto !important;
-		position: relative !important;
-		visibility: visible !important;
-		padding-left: 0.8rem !important;
-	}
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 7rem 1.5rem 3rem 1.5rem;
+    }
 
-	/* Fix Theme Switcher & Search Bar */
-	.sidebar:hover .theme-text,
-	.sidebar.force-expanded .theme-text,
-	.theme-text {
-		display: none !important; /* Kills the sticky "Theme" text completely on mobile */
-	}
+    .sidebar-lang { position: absolute; right: 4.5rem; top: 50%; transform: translateY(-50%); margin-bottom: 0; }
 
-	.sidebar:hover .search-wrapper,
-	.sidebar.force-expanded .search-wrapper,
-	.search-wrapper {
-		width: 95%;
-		margin: 0 auto;
-		justify-content: center !important;
-		padding: 1rem !important;
-		border-color: var(--neon-blue-dim);
-	}
+    /* Fix language switcher expanded state on mobile */
+    .sidebar .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed {
+        display: none !important;
+    }
+    .sidebar .lang-switcher-container[data-lang-expanded="true"] .lang-expanded {
+        display: flex !important;
+    }
 
-	.sidebar:hover .theme-switch-wrapper,
-	.sidebar.force-expanded .theme-switch-wrapper,
-	.theme-switch-wrapper {
-		justify-content: center !important;
-		padding: 1.5rem 0 !important;
-	}
-
-	.sidebar:hover .theme-switch,
-	.sidebar.force-expanded .theme-switch,
-	.theme-switch {
-		justify-content: center !important;
-		width: 50px !important;
-	}
-
-	.main-content {
-		margin-left: 0 !important;
-		width: 100% !important;
-		padding: 7rem 1.5rem 3rem 1.5rem;
-	}
-
-	.sidebar-lang {
-		position: absolute;
-		right: 4.5rem;
-		top: 50%;
-		transform: translateY(-50%);
-		margin-bottom: 0;
-	}
-
-	/* Hero Mobile Fixes */
-	.hero-section {
-		height: auto;
-		min-height: 80vh;
-		padding-top: 2rem;
-	}
-	.hero-title {
-		margin-bottom: 1.5rem;
-		font-size: 2.2rem;
-		line-height: 1.3;
-		max-width: 100%;
-		word-wrap: break-word;
-	}
-	.hero-subtitle {
-		margin-bottom: 2rem;
-		font-size: 23px !important;
-		max-width: 100%;
-	}
-	.hero-description {
-		max-width: 95%;
-		margin-bottom: 2.5rem;
-		text-align: justify;
-		font-size: 18px !important;
-	}
-
-	.reviews-masonry {
-		column-count: 1;
-	}
-	.quiz-container {
-		padding: 2rem 1rem;
-	}
+    /* Hero Mobile Fixes */
+    .hero-section { height: auto; min-height: 80vh; padding-top: 2rem; }
+    .hero-title { margin-bottom: 1.5rem; font-size: 2.2rem; line-height: 1.3; max-width: 100%; word-wrap: break-word; }
+    .hero-subtitle { margin-bottom: 2rem; font-size: 23px !important; max-width: 100%; }
+    .hero-description { max-width: 95%; margin-bottom: 2.5rem; text-align: justify; font-size: 18px !important; }
+    
+    .reviews-masonry { column-count: 1; }
+    .quiz-container { padding: 2rem 1rem; }
 }
 /* ======================================================= */
 /* --- ACCESSIBILITY: REDUCED MOTION --- */
