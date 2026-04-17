@@ -12,6 +12,8 @@
 </div>
 
 <script>
+    import { actions } from 'astro:actions';
+
     // --- NEW: Wrap logic in astro:page-load to support View Transitions ---
     document.addEventListener('astro:page-load', () => {
         const quizApp = document.getElementById('quizApp');
@@ -50,6 +52,7 @@
 
         let currentQuizQuestion = 0;
         let quizScores = { seo: 0, web: 0, consult: 0 };
+        let answers: Record<string, string> = {};
 
         function renderQuiz() {
             const qData = quizData[currentQuizQuestion];
@@ -64,25 +67,26 @@
                 const btn = document.createElement('button');
                 btn.className = 'quiz-btn';
                 btn.innerText = opt.text;
-                btn.onclick = () => answerQuiz(opt.score);
+                btn.onclick = () => answerQuiz(opt.text, opt.score);
                 optionsEl.appendChild(btn);
             });
         }
 
-        function answerQuiz(scoreType) {
+        async function answerQuiz(text: string, scoreType: 'seo' | 'web' | 'consult') {
             if (quizScores[scoreType] !== undefined) {
                  quizScores[scoreType]++;
             }
+            answers[`Question ${currentQuizQuestion + 1}`] = text;
             currentQuizQuestion++;
 
             if(currentQuizQuestion < quizData.length) {
                 renderQuiz();
             } else {
-                showQuizResult();
+                await showQuizResult();
             }
         }
 
-        function showQuizResult() {
+        async function showQuizResult() {
             if(quizApp) quizApp.style.display = 'none';
 
             let maxCategory = 'seo';
@@ -94,7 +98,7 @@
                 }
             }
 
-            const resultsMap = {
+            const resultsMap: Record<string, {title: string, desc: string}> = {
                 'seo': { title: "SEO & Digital Marketing Push", desc: "Your primary bottleneck is visibility. We recommend our Organic SEO and Paid Media services to drive high-intent traffic to your business." },
                 'web': { title: "Web Development & CRO", desc: "Your current platform is holding you back. We recommend a full website redesign focusing on Conversion Rate Optimization (CRO) and modern web technologies." },
                 'consult': { title: "Growth Roadmap Consultancy", desc: "You need strategic alignment. We recommend our Growth Roadmap package to audit your current tech stack, streamline operations, and build a cohesive digital strategy." }
@@ -105,11 +109,22 @@
             if(recTitle) recTitle.innerText = resultsMap[maxCategory].title;
             if(recDesc) recDesc.innerText = resultsMap[maxCategory].desc;
             if(quizResult) quizResult.style.display = 'block';
+
+            // Submit result via Server Action
+            try {
+                await actions.submitQuiz({
+                    scoreType: maxCategory as 'seo' | 'web' | 'consult',
+                    answers
+                });
+            } catch (err) {
+                console.error('Failed to submit quiz to server:', err);
+            }
         }
 
         function resetQuiz() {
             currentQuizQuestion = 0;
             quizScores = { seo: 0, web: 0, consult: 0 };
+            answers = {};
             if(quizResult) quizResult.style.display = 'none';
             if(quizApp) quizApp.style.display = 'block';
             renderQuiz();

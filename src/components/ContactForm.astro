@@ -1,7 +1,8 @@
 ---
-import { useTranslations } from '../i18n/utils';
+import { actions } from "astro:actions";
+import { useTranslations } from "../i18n/utils";
 
-const lang = (Astro.params.lang || 'en') as 'en' | 'ro' | 'es';
+const lang = (Astro.params.lang || "en") as "en" | "ro" | "es";
 const t = useTranslations(lang);
 ---
 <div class="contact-wrapper reveal">
@@ -13,60 +14,78 @@ const t = useTranslations(lang);
         </div>
 
         <div class="floating-group">
-            <input type="text" class="floating-input" id="name" required>
+            <input type="text" class="floating-input" id="name" name="name" required>
             <label class="floating-label">{t('contact.name')}</label>
         </div>
         <div class="floating-group">
-            <input type="email" class="floating-input" id="email" required>
+            <input type="email" class="floating-input" id="email" name="email" required>
             <label class="floating-label">{t('contact.email')}</label>
         </div>
         <div class="floating-group">
-            <input type="text" class="floating-input" id="subject" required>
+            <input type="text" class="floating-input" id="subject" name="subject" required>
             <label class="floating-label">{t('contact.subject')}</label>
         </div>
         <div class="floating-group">
-            <textarea class="floating-input" id="message" required></textarea>
+            <textarea class="floating-input" id="message" name="message" required></textarea>
             <label class="floating-label">{t('contact.message')}</label>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%;">{t('contact.send')}</button>
         <div class="form-message" id="formMessage">{t('contact.success')}</div>
+        <div class="form-message" id="formError" style="display:none; color: #ff3333; border-color: #ff3333;">Failed to send. Please try again.</div>
     </form>
 </div>
 
 <script>
-    const form = document.getElementById('contactForm');
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+    import { actions } from 'astro:actions';
 
-            // Check honeypot
-            const honeypot = (document.getElementById('honeypot') as HTMLInputElement).value;
-            if (honeypot) {
-                console.log('Bot detected');
-                return; // Silently fail
-            }
+    document.addEventListener('astro:page-load', () => {
+        const form = document.getElementById('contactForm') as HTMLFormElement;
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-            const btn = form.querySelector('button');
-            if (!btn) return;
-            
-            const originalText = btn.innerText;
+                const btn = form.querySelector('button');
+                if (!btn) return;
 
-            btn.innerText = 'Sending...';
-            btn.style.opacity = '0.8';
-            btn.style.transform = 'scale(0.98)';
+                const originalText = btn.innerText;
+                btn.innerText = 'Sending...';
+                btn.style.opacity = '0.8';
+                btn.style.transform = 'scale(0.98)';
 
-            setTimeout(() => {
                 const msg = document.getElementById('formMessage');
-                if(msg) msg.style.display = 'block';
-                (form as HTMLFormElement).reset();
-                btn.innerText = originalText;
-                btn.style.opacity = '1';
-                btn.style.transform = 'none';
+                const errMsg = document.getElementById('formError');
+                if(msg) msg.style.display = 'none';
+                if(errMsg) errMsg.style.display = 'none';
 
-                setTimeout(() => {
-                    if(msg) msg.style.display = 'none';
-                }, 5000);
-            }, 1500);
-        });
-    }
+                const formData = new FormData(form);
+
+                try {
+                    const { data, error } = await actions.submitContactForm(formData);
+
+                    if (error || (data && !data.success)) {
+                        console.error('Submission failed:', error || data?.message);
+                        if(errMsg) {
+                            errMsg.innerText = error ? error.message : data?.message || 'Failed to send. Please try again.';
+                            errMsg.style.display = 'block';
+                        }
+                    } else {
+                        if(msg) msg.style.display = 'block';
+                        form.reset();
+                        setTimeout(() => {
+                            if(msg) msg.style.display = 'none';
+                        }, 5000);
+                    }
+                } catch (err) {
+                    console.error('Unexpected error:', err);
+                    if(errMsg) {
+                        errMsg.style.display = 'block';
+                    }
+                } finally {
+                    btn.innerText = originalText;
+                    btn.style.opacity = '1';
+                    btn.style.transform = 'none';
+                }
+            });
+        }
+    });
 </script>
