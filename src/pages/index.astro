@@ -1,5 +1,7 @@
 ---
-import { languages, defaultLang } from '../i18n/ui';
+import { defaultLang, languages } from "../i18n/ui";
+
+export const prerender = false;
 
 const supportedLangs = Object.keys(languages);
 ---
@@ -10,25 +12,6 @@ const supportedLangs = Object.keys(languages);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scale Automata | Select Language</title>
     <meta name="description" content="Scale Automata - Select your preferred language to continue.">
-    
-    {supportedLangs.map((lang) => (
-        <link rel="alternate" hreflang={lang} href={`/${lang}/`} />
-    ))}
-    <link rel="alternate" hreflang="x-default" href={`/${defaultLang}/`} />
-    
-    <meta http-equiv="refresh" content={`0;url=/${defaultLang}/`}>
-    
-    <script define:vars={{ supportedLangs, defaultLang }}>
-        const userLang = navigator.language || defaultLang;
-        const langCode = userLang.split('-')[0];
-
-        // Use replace() instead of href so we don't trap users in a back-button loop
-        if (supportedLangs.includes(langCode)) {
-            window.location.replace(`/${langCode}/`);
-        } else {
-            window.location.replace(`/${defaultLang}/`);
-        }
-    </script>
 </head>
 <body style="background-color: #000; color: #00f6ff; font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
     <div style="text-align: center;">
