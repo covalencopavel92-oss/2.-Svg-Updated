@@ -1,24 +1,18 @@
 {
-	"name": "proper-pulsar",
-	"type": "module",
-	"version": "0.0.1",
-	"scripts": {
-		"dev": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/db": "^0.20.1",
-		"@astrojs/node": "^9.1.2",
-		"astro": "^5.18.1"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.4.12",
-		"@types/accept-language-parser": "^1.5.8",
-		"accept-language-parser": "^1.5.0",
-		"esbuild": "^0.28.0",
-		"playwright": "^1.59.1",
-		"tsx": "^4.21.0"
-	}
+  "name": "proper-pulsar",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.18.1"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1",
+    "tsx": "^4.21.0"
+  }
 }

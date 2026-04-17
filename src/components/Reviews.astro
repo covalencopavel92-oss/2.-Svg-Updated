@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from "../i18n/utils";
+import { useTranslations } from '../i18n/utils';
 
-const lang = (Astro.params.lang || "en") as "en" | "ro" | "es";
+const lang = (Astro.params.lang || 'en') as 'en' | 'ro' | 'es';
 const t = useTranslations(lang);
 ---
 <div class="reviews-masonry reveal">
@@ -64,8 +64,6 @@ const t = useTranslations(lang);
         padding: 0;
         cursor: pointer;
         transition: transform 0.2s ease;
-        -webkit-tap-highlight-color: transparent; /* Disable native tap glow on mobile */
-        outline: none;
     }
     .star-btn:hover {
         transform: scale(1.2);
