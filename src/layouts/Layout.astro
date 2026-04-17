@@ -1,10 +1,10 @@
 ---
-import "../styles/global.css";
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+import Footer from '../components/Footer.astro';
+import { useTranslations } from '../i18n/utils';
 // --- NEW: Import the Astro Router ---
-import { ClientRouter } from "astro:transitions";
-import Footer from "../components/Footer.astro";
-import Sidebar from "../components/Sidebar.astro";
-import { useTranslations } from "../i18n/utils";
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title: string;
@@ -12,10 +12,10 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-// Use Astro.currentLocale which is provided by native astro:i18n
-const lang = (Astro.currentLocale || "en") as "en" | "ro" | "es";
+const validLanguages = ['en', 'ro', 'es'] as const;
+const lang = (validLanguages.includes(Astro.params.lang as never) ? Astro.params.lang : 'en') as 'en' | 'ro' | 'es';
 const t = useTranslations(lang);
-const metaDesc = description || t("home.desc").substring(0, 160);
+const metaDesc = description || t('home.desc').substring(0, 160);
 ---
 
 <!DOCTYPE html>
@@ -29,12 +29,9 @@ const metaDesc = description || t("home.desc").substring(0, 160);
     <link rel="icon" type="image/svg+xml" href=`/favicon.svg` />
     <link rel="apple-touch-icon" sizes="180x180" href=`/favicon.svg` />
 
-    <!-- External Resource Hints for Three.js/Vanta.js CDNs -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=swap" fetchpriority="high">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=swap" media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=swap">
