@@ -1,4 +1,4 @@
-import { column, defineDb, defineTable } from "@astrojs/db";
+import { column, defineDb, defineTable } from "astro:db";
 
 const ContactFormSubmissions = defineTable({
 	columns: {
