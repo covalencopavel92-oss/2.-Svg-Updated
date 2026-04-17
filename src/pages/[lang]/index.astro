@@ -1,10 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { languages } from '../../i18n/ui';
-import { useTranslations } from '../../i18n/utils';
+import { languages } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
+import Layout from "../../layouts/Layout.astro";
 
+export const prerender = true;
 export function getStaticPaths() {
-  return Object.keys(languages).map(lang => ({ params: { lang } }));
+	return Object.keys(languages).map((lang) => ({ params: { lang } }));
 }
 
 const { lang } = Astro.params;
@@ -17,26 +18,26 @@ const t = useTranslations(lang as "en" | "ro" | "es");
             <div class="reveal">            
                 <h1 class="hero-title title-overflow">
                     <span class="pan-wrapper">
-                        <span class="wave-word" style="--d:0.2s">Enhance </span>
-                        <span class="wave-word" style="--d:0.4s">your </span>
-                        <span class="wave-word" style="--d:0.6s">strategy.</span><br/>
-                        <span class="wave-word" style="--d:0.8s">Rank </span>
-                        <span class="wave-word" style="--d:1s">higher. </span>
-                        <span class="wave-word" style="--d:1.2s">Get </span>
-                        <span class="wave-word" style="--d:1.4s">more </span>
-                        <span class="wave-word" style="--d:1.6s">customers.</span>
+
+                        {t('index.hero.title').split(' ').map((word, index) => (
+                            <>
+                            <span class="wave-word" style={`--d:${0.2 + index * 0.2}s`}>{word} </span>
+                            {word.endsWith('.') && <br/>}
+                            </>
+                        ))}
+
                     </span>
                 </h1>
                 
                 <h2 class="hero-subtitle">
-                    We craft bespoke strategies designed to elevate your brand and drive measurable results. From innovative web design to comprehensive digital campaigns, we are dedicated to achieving your goals.
+                    {t('index.hero.subtitle')}
                 </h2>
                 
                 <div class="hero-description text-left-indented">
-                    <p>Unlock your business potential with our advanced digital marketing and web development services. We build custom website development solutions and budget-efficient marketing campaigns designed to generate real revenue, not just vanity metrics. To consistently rank higher and dominate online search, your marketing strategy needs more than basic SEO.</p>
-                    <p> We utilize advanced Generative Engine Optimization (GEO), targeted social media ads, and data-driven web design to maximize your brand visibility and website traffic. Every landing page, email marketing campaign, and SEO optimization tactic we deploy is engineered for maximum conversion rate optimization (CRO) and direct online growth.</p> 
-                    <p>Whether it's driving local SEO foot traffic or boosting ecommerce sales, our transparent performance tracking ensures you know exactly where your investment goes. We don't hide behind industry buzzwords; we deliver practical, results-oriented web development and search engine marketing that scales efficiently.</p>
-                    <p>Ready to stop losing customers to your competitors? Take Assessment to get a clear, no-nonsense roadmap for your success, or Explore Services to find the exact digital solutions you need to dominate your market.</p>
+                    <p>{t('index.hero.desc1')}</p>
+                    <p>{t('index.hero.desc2')}</p>
+                    <p>{t('index.hero.desc3')}</p>
+                    <p>{t('index.hero.desc4')}</p>
                 </div>
                 
                 <div class="action-buttons-wrapper">

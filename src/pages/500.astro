@@ -1,0 +1,31 @@
+---
+import { defaultLang } from "../i18n/ui";
+import { useTranslations } from "../i18n/utils";
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+	error: unknown;
+}
+
+const pathname = Astro.url.pathname;
+const urlLang = pathname.split("/")[1];
+const lang = (["en", "ro", "es"].includes(urlLang) ? urlLang : defaultLang) as
+	| "en"
+	| "ro"
+	| "es";
+const t = useTranslations(lang);
+---
+
+<Layout title="500 | Internal Server Error">
+    <section class="page-view flex flex-col justify-center items-center h-full text-center reveal">
+        <h1 class="hero-title" style="font-size: 8rem; margin-bottom: 1rem;">500</h1>
+        <h2 class="hero-subtitle">Something went wrong on our end.</h2>
+        <p class="hero-description" style="max-width: 600px; margin: 0 auto 2rem;">
+            An unexpected error occurred while trying to process your request. We've been notified and are looking into it. Please try again later.
+        </p>
+        <div class="action-buttons-wrapper" style="justify-content: center;">
+            <a href={`/${lang}/`} class="btn btn-primary">Return to Safety</a>
+            <a href={`/${lang}/contact/`} class="btn btn-neon">Contact Support</a>
+        </div>
+    </section>
+</Layout>

@@ -1,43 +1,44 @@
 ---
+import { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
 // Note the extra '../' in the import paths because we are one folder deeper now!
-import Layout from '../../../layouts/Layout.astro';
-import { languages } from '../../../i18n/ui';
-import { useTranslations } from '../../../i18n/utils';
+import Layout from "../../../layouts/Layout.astro";
 
+export const prerender = true;
 export function getStaticPaths() {
-  return Object.keys(languages).map(lang => ({ params: { lang } }));
+	return Object.keys(languages).map((lang) => ({ params: { lang } }));
 }
 
 const { lang } = Astro.params;
 const t = useTranslations(lang as keyof typeof languages);
 ---
 
-<Layout title="Technical & Content SEO & GEO | Scale Automata">
+<Layout title={`${t('services.seo.hero.title')} | Scale Automata`}>
     <section class="page-view page-view-layout">
         
         <div class="hero-section hero-section-wrapper">
             <div class="reveal">
                 <h1 class="hero-title title-overflow">
                     <span class="pan-wrapper">
-                        Technical & Content<br/>SEO & GEO
+                        {t('services.seo.hero.title')}
                     </span>
                 </h1>
                 
                 <h2 class="hero-subtitle">
-                    We execute deep technical audits, build high-authority backlinks, and craft optimized content that ranks.
+                    {t('services.seo.hero.subtitle')}
                 </h2>
                 
                 <div class="hero-description text-left-indented">
-                    <p>Right now, potential customers are searching for exactly what you offer. The question is: Are they finding you, or your competitors? We know you need rapid growth and a clear path to increase sales without paying an exorbitant price. Our unified approach to SEO and Geo ensures your brand is visible exactly where it matters most.</p>
+                    <p>{t('services.seo.hero.desc1')}</p>
                     
-                    <p>People don't scroll past the first page; they trust the top results. We get you there. By combining deep technical website audits with high-authority backlinking, we force the search engine to recognize your authority.</p>
+                    <p>{t('services.seo.hero.desc2')}</p>
                     
-                    <p>Whether a user is typing a query into Google Search or asking a generative AI on Bing Search, we ensure your business climbs the ranking. We don't just aim for traffic; we aim for the right page results that bring buyers directly to your site. Practical, transparent, and built for conversion.</p>
+                    <p>{t('services.seo.hero.desc3')}</p>
                 </div>
                 
                 <div class="action-buttons-wrapper">
                     <a href={`/${lang}/contact/`} class="btn btn-neon dark-bg reveal" style="transition-delay: 0.1s;">
-                        Start Growing
+                        {t('services.seo.hero.button')}
                     </a>
                 </div>
             </div>
