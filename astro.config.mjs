@@ -1,6 +1,5 @@
 import db from "@astrojs/db";
 import node from "@astrojs/node";
-import partytown from "@astrojs/partytown";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
@@ -21,14 +20,7 @@ export default defineConfig({
 		mode: "middleware",
 	}),
 
-	integrations: [
-		db(),
-		partytown({
-			config: {
-				forward: ["VANTA", "vantaEffect"],
-			},
-		}),
-	],
+	integrations: [db()],
 
 	i18n: {
 		defaultLocale: "en",
