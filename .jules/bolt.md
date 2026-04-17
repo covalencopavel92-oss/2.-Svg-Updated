@@ -14,3 +14,7 @@
 ## 2026-04-17 - GitHub Pages Astro DB Build Error
 **Learning:** Building an Astro site with `@astrojs/db` or `astro:db` on static hosts (like GitHub Pages CI environments) requires a database to connect to. The build will crash with `Attempting to build without the --remote flag or the ASTRO_DATABASE_FILE environment variable defined`.
 **Action:** When setting up GitHub Actions (e.g., `astro.yml`) for projects using Astro DB, inject `ASTRO_DATABASE_FILE: /tmp/db.sqlite` into the build step's environment variables to allow the local dummy database to fulfill the static generation requirements.
+
+## 2026-04-17 - SSR and Static Hosting Conflicts
+**Learning:** If a project relies heavily on Astro Server Actions (`astro:actions`) and backend databases (`astro:db`) for core functionality (like form submissions), it *must* use Server-Side Rendering (`output: "server"`) and an appropriate adapter (like `@astrojs/node` or `@astrojs/vercel`). Deploying such a project to a strictly static host like GitHub Pages via `output: "server"` will result in a 404 because the server bundle cannot be served statically, and forcing `output: "static"` will break the actions.
+**Action:** When diagnosing deployment issues, map out the required runtime environment for the project's features. If the features require a Node.js server, advise the user to switch to a compatible hosting provider (Vercel, Netlify) rather than neutering the app to fit a static host like GitHub Pages. Remove incompatible static CI workflows (like `.github/workflows/astro.yml`) to prevent confusion.
