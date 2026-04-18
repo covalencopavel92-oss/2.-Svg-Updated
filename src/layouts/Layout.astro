@@ -23,11 +23,13 @@ const metaDesc = description || t('home.desc').substring(0, 160);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Security Headers for Static Sites -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com blob:; connect-src 'self' https://cdnjs.cloudflare.com; worker-src 'self' blob:; base-uri 'self'; form-action 'self';">
     <title>{title} | Scale Automata</title>
     
     <meta name="description" content={metaDesc}>
-    <link rel="icon" type="image/svg+xml" href=`/favicon.svg` />
-    <link rel="apple-touch-icon" sizes="180x180" href=`/favicon.svg` />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -200,15 +202,18 @@ const metaDesc = description || t('home.desc').substring(0, 160);
     // Delay script loading to allow FCP/LCP to fire immediately
     const delayedInitVanta = () => {
         if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => setTimeout(initVantaScripts, 50));
+            requestIdleCallback(() => setTimeout(initVantaScripts, 2500));
         } else {
-            setTimeout(initVantaScripts, 50);
+            setTimeout(initVantaScripts, 2500);
         }
     };
 
-    // Wait until the main document finishes loading to trigger the scripts
-    window.addEventListener('load', delayedInitVanta);
-    document.addEventListener('astro:page-load', initApp);     // Every navigation afterwards
+    // Use Astro's page-load for initial and subsequent loads to ensure the document is ready
+    document.addEventListener('astro:page-load', () => {
+        initApp();
+        // Fire Vanta initialization heavily delayed to prioritize core metric scores.
+        delayedInitVanta();
+    });
 </script>
 
 </body>
