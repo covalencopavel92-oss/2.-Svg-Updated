@@ -13,20 +13,20 @@ const t = useTranslations(lang);
         </div>
 
         <div class="floating-group">
-            <input type="text" class="floating-input" id="name" required>
-            <label class="floating-label">{t('contact.name')}</label>
+            <input type="text" class="floating-input" id="name" name="name" required>
+            <label class="floating-label" for="name">{t('contact.name')}</label>
         </div>
         <div class="floating-group">
-            <input type="email" class="floating-input" id="email" required>
-            <label class="floating-label">{t('contact.email')}</label>
+            <input type="email" class="floating-input" id="email" name="email" required>
+            <label class="floating-label" for="email">{t('contact.email')}</label>
         </div>
         <div class="floating-group">
-            <input type="text" class="floating-input" id="subject" required>
-            <label class="floating-label">{t('contact.subject')}</label>
+            <input type="text" class="floating-input" id="subject" name="subject" required>
+            <label class="floating-label" for="subject">{t('contact.subject')}</label>
         </div>
         <div class="floating-group">
-            <textarea class="floating-input" id="message" required></textarea>
-            <label class="floating-label">{t('contact.message')}</label>
+            <textarea class="floating-input" id="message" name="message" required></textarea>
+            <label class="floating-label" for="message">{t('contact.message')}</label>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%;">{t('contact.send')}</button>
         <div class="form-message" id="formMessage">{t('contact.success')}</div>
@@ -54,6 +54,8 @@ const t = useTranslations(lang);
             btn.innerText = 'Sending...';
             btn.style.opacity = '0.8';
             btn.style.transform = 'scale(0.98)';
+            btn.disabled = true;
+            btn.style.cursor = 'not-allowed';
 
             setTimeout(() => {
                 const msg = document.getElementById('formMessage');
@@ -62,6 +64,8 @@ const t = useTranslations(lang);
                 btn.innerText = originalText;
                 btn.style.opacity = '1';
                 btn.style.transform = 'none';
+                btn.disabled = false;
+                btn.style.cursor = '';
 
                 setTimeout(() => {
                     if(msg) msg.style.display = 'none';
