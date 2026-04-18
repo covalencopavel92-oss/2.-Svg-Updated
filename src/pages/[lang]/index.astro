@@ -48,7 +48,11 @@ const t = useTranslations(lang as "en" | "ro" | "es");
 
         <div class="bottom-cta-wrapper reveal">
             <a href={`/${lang}/consultancy/`} class="hover-scale inline-block-transform">
-                <img src="/Logogif.gif" alt="Scale Automata Interactive Process" width="150" height="150" class="process-gif" loading="lazy" />
+                <video autoplay loop muted playsinline width="150" height="150" class="process-gif" aria-label="Scale Automata Interactive Process">
+                    <source src="/Logogif.webm" type="video/webm">
+                    <source src="/Logogif.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </a>
         </div>
 
