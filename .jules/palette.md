@@ -1,0 +1,3 @@
+## 2026-04-18 - [Contact Form Accessibility & Usability]
+**Learning:** Labels that have `pointer-events: none` configured in CSS cannot be interacted with by users (or automated tools like Playwright simulating clicks). Forms should also provide immediate feedback (like disabling buttons) to avoid double submission during simulated or slow network requests.
+**Action:** Always ensure labels mapped with `for` attributes do not have `pointer-events: none` applied globally, or override them if they are absolutely positioned but intended to be clicked. Remember to pair visual feedback ('Sending...') with physical constraints (`disabled=true`) on forms.
