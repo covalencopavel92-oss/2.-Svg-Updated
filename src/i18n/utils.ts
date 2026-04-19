@@ -1,7 +1,12 @@
 import { ui, defaultLang, type UIKeys } from './ui';
 
 export function getLangFromUrl(url: URL) {
-  const [, lang] = url.pathname.split('/');
+  // ⚡ Bolt Optimization: Replace slow split('/') with fast indexOf/substring
+  // Avoids array allocation and multiple string copies for paths like /en/about
+  const start = url.pathname.startsWith('/') ? 1 : 0;
+  const end = url.pathname.indexOf('/', start);
+  const lang = end === -1 ? url.pathname.substring(start) : url.pathname.substring(start, end);
+
   if (lang in ui) return lang as keyof typeof ui;
   return defaultLang;
 }
