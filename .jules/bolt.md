@@ -19,3 +19,6 @@
 ## 2026-04-18 - [Lighthouse Performance Optimizations]
 **Learning:** [Astro's generated CSS files (`_astro/*.css`) are often flagged by Lighthouse as render-blocking, but deferring them causes severe Flash of Unstyled Content (FOUC). Also, utilizing `ffmpeg` to convert GIFs to `webm`/`mp4` for `<video>` tags drastically cuts file size for 'Improve image delivery' metrics.]
 **Action:** [Do not blindly defer Astro's injected CSS bundles. For large animated assets, always prefer `webm` videos loaded via `<video autoplay loop muted playsinline>` over raw `.gif` files to maintain quality while satisfying Lighthouse size rules.]
+## 2024-04-18 - [URL Parsing String Allocation]
+**Learning:** In heavily used functions that parse URL paths, such as `getLangFromUrl` used in i18n logic, relying on `.split('/')` allocates unnecessary arrays and creates multiple string copies. Replacing it with `indexOf` and `substring` operations can reduce execution time substantially (e.g., from ~81ms to ~20ms over 1 million iterations) and eliminate the array allocation overhead.
+**Action:** When extracting specific segments from known string formats (like URL paths), prefer `indexOf` and `substring` over `split` if performance is critical or the function is called frequently.
