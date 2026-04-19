@@ -97,7 +97,7 @@ export const ui = {
         'services.web.hero.button': 'Build Your Story',
         'sidebar.lock': 'Lock/Unlock Sidebar',
         'sidebar.search': 'Search...',
-        'sidebar.phone': '0748198534',
+        'sidebar.phone': import.meta.env.PUBLIC_PHONE_NUMBER || '0748198534',
     },
     ro: {
         'nav.home': 'Acasă',
@@ -189,7 +189,7 @@ export const ui = {
         'services.web.hero.button': 'Construiește-ți povestea',
         'sidebar.lock': 'Blochează/Deblochează bara laterală',
         'sidebar.search': 'Caută...',
-        'sidebar.phone': '0748198534',
+        'sidebar.phone': import.meta.env.PUBLIC_PHONE_NUMBER || '0748198534',
     },
     es: {
         'nav.home': 'Inicio',
@@ -281,7 +281,7 @@ export const ui = {
         'services.web.hero.button': 'Construye tu historia',
         'sidebar.lock': 'Bloquear/Desbloquear barra lateral',
         'sidebar.search': 'Buscar...',
-        'sidebar.phone': '0748198534',
+        'sidebar.phone': import.meta.env.PUBLIC_PHONE_NUMBER || '0748198534',
     },
 } as const;
 
