@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { useTranslations } from '../i18n/utils';
 // --- NEW: Import the Astro Router ---
 import { ClientRouter } from 'astro:transitions';
@@ -70,6 +71,7 @@ const metaDesc = description || t('home.desc').substring(0, 160);
 <div class="app-container" id="app">
     <Sidebar transition:persist />
     <main class="main-content" id="main-content">
+        <Breadcrumbs />
         <slot />
         <Footer transition:persist />
     </main>
