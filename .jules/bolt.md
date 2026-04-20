@@ -22,3 +22,6 @@
 ## 2024-04-18 - [URL Parsing String Allocation]
 **Learning:** In heavily used functions that parse URL paths, such as `getLangFromUrl` used in i18n logic, relying on `.split('/')` allocates unnecessary arrays and creates multiple string copies. Replacing it with `indexOf` and `substring` operations can reduce execution time substantially (e.g., from ~81ms to ~20ms over 1 million iterations) and eliminate the array allocation overhead.
 **Action:** When extracting specific segments from known string formats (like URL paths), prefer `indexOf` and `substring` over `split` if performance is critical or the function is called frequently.
+## 2026-04-20 - [Optimize IntersectionObserver memory usage]
+**Learning:** Using IntersectionObserver for one-way scroll animations (like adding an `.active` class when an element scrolls into view) wastes CPU cycles if the elements continue to be observed after they've been animated.
+**Action:** When implementing one-way scroll reveal animations with `IntersectionObserver`, always call `observer.unobserve(entry.target)` immediately after the target element intersects and the animation class is applied. This removes it from the observer's list and improves scrolling performance.

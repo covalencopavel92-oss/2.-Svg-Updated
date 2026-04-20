@@ -158,7 +158,13 @@ const metaDesc = description || t('home.desc').substring(0, 160);
         const reveals = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) entry.target.classList.add('active');
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // ⚡ Bolt Optimization: Stop observing elements once they are revealed.
+                    // This prevents the IntersectionObserver from wasting CPU cycles evaluating
+                    // intersection state on scroll for elements that have already been animated.
+                    observer.unobserve(entry.target);
+                }
             });
         }, { threshold: 0.1 });
 
