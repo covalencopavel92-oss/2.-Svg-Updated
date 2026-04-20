@@ -1086,7 +1086,7 @@ textarea.floating-input {
 .legal-content {
     max-width: 800px;
     margin: 0 auto;
-    background: var(--card-bg);
+    background: #aeafb0;
     padding: 3rem;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.03);
