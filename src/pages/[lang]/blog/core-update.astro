@@ -1,0 +1,33 @@
+---
+import { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+import Layout from "../../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+	return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as "en" | "ro" | "es");
+---
+<Layout title={t('blog.core-update.title')}>
+    <section class="page-view" style="display: block; flex-grow: 1;">
+        <div class="section-header reveal">
+            <h2>{t('blog.core-update.title')}</h2>
+        </div>
+
+        <div class="blog-article reveal" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+            <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80'); height: 400px; background-size: cover; background-position: center; border-radius: 8px; margin-bottom: 2rem;"></div>
+
+            <p style="color: #ffffff; font-size: 1.1rem; line-height: 1.6; margin-bottom: 3rem;">
+                {t('blog.core-update.desc')}
+            </p>
+
+            <div style="text-align: center;">
+                <a href={`/${lang}/`} class="cta-button" style="display: inline-block; padding: 1rem 2rem; background: #0056b3; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; transition: background 0.3s ease;">
+                    {t('blog.cta.visit-us')}
+                </a>
+            </div>
+        </div>
+    </section>
+</Layout>
