@@ -4,3 +4,6 @@
 ## 2024-05-19 - Adding Focus Visible Styles
 **Learning:** Added global `:focus-visible` styles for `a`, `button`, `input`, `textarea`, `select`, and custom interactive elements using `[tabindex]:not([tabindex="-1"])`. This improves keyboard accessibility without cluttering mouse user experience.
 **Action:** Always add custom global `:focus-visible` styles if none exist, as browsers often have varied defaults or remove outlines universally by mistake.
+## $(date +%Y-%m-%d) - Adding ARIA Stateful Attributes to Interactive Elements
+**Learning:** When turning generic `div` elements into interactive elements (like the language switcher) or making existing buttons toggle states (like the hamburger menu or lock button) in Astro components with View Transitions, standard HTML roles and `tabindex` aren't enough. The ARIA state attributes (`aria-expanded`, `aria-pressed`) must be explicitly toggled in the vanilla JS `<script>` logic alongside the CSS classes. Keyboard event listeners (Space/Enter) must also be manually attached to custom elements to maintain accessibility.
+**Action:** When adding or fixing accessibility for interactive components, explicitly check the JavaScript to ensure ARIA states dynamically match the visual/functional state of the element during user interaction, and manually add keyboard handlers for non-native interactive elements.
