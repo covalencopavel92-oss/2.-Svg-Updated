@@ -1,6 +1,6 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
-import type { UIKeys } from '../i18n/ui';
+import type { UIKeys } from "../i18n/ui";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const currentPath = Astro.url.pathname;
 const lang = getLangFromUrl(Astro.url);
@@ -9,67 +9,79 @@ const t = useTranslations(lang);
 // Check if we are on the homepage (e.g. "/", "/en", "/en/")
 // Since valid languages are 'en', 'ro', 'es' and Astro handles routing,
 // the path for the home page will typically be `/${lang}` or `/${lang}/`
-const isHomePage = currentPath === `/${lang}` || currentPath === `/${lang}/` || currentPath === '/';
+const isHomePage =
+	currentPath === `/${lang}` ||
+	currentPath === `/${lang}/` ||
+	currentPath === "/";
 
 // Breadcrumb items logic
 let breadcrumbItems: { label: string; url: string }[] = [];
 
 if (!isHomePage) {
-  // Split the path and filter out empty segments
-  const pathSegments = currentPath.split('/').filter((segment) => segment.length > 0);
+	// Split the path and filter out empty segments
+	const pathSegments = currentPath
+		.split("/")
+		.filter((segment) => segment.length > 0);
 
-  // Create the Home breadcrumb item
-  breadcrumbItems.push({
-    label: t('nav.home'),
-    url: `/${lang}/`, // Ensure the user stays in their language when clicking Home
-  });
+	// Create the Home breadcrumb item
+	breadcrumbItems.push({
+		label: t("nav.home"),
+		url: `/${lang}/`, // Ensure the user stays in their language when clicking Home
+	});
 
-  // Build the rest of the breadcrumbs
-  let currentAccumulatedPath = `/${lang}`;
+	// Build the rest of the breadcrumbs
+	let currentAccumulatedPath = `/${lang}`;
 
-  // We skip the first segment since it is just the language code (e.g., 'en')
-  // We only start from index 1 (which would be 'services', 'blog', etc.)
-  for (let i = 1; i < pathSegments.length; i++) {
-    const segment = pathSegments[i];
-    currentAccumulatedPath += `/${segment}`;
+	// We skip the first segment since it is just the language code (e.g., 'en')
+	// We only start from index 1 (which would be 'services', 'blog', etc.)
+	for (let i = 1; i < pathSegments.length; i++) {
+		const segment = pathSegments[i];
+		currentAccumulatedPath += `/${segment}`;
 
-    // Attempt to translate the path segment
-    const translationKey = `nav.${segment}` as UIKeys;
-    const translatedLabel = t(translationKey);
+		// Attempt to translate the path segment
+		const translationKey = `nav.${segment}` as UIKeys;
+		const translatedLabel = t(translationKey);
 
-    // If a translation doesn't exist (returns undefined or the key itself), fallback to capitalizing the segment
-    const finalLabel = translatedLabel && translatedLabel !== translationKey ? translatedLabel : segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+		// If a translation doesn't exist (returns undefined or the key itself), fallback to capitalizing the segment
+		const finalLabel =
+			translatedLabel && translatedLabel !== translationKey
+				? translatedLabel
+				: segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ");
 
-    breadcrumbItems.push({
-      label: finalLabel,
-      url: currentAccumulatedPath,
-    });
-  }
+		breadcrumbItems.push({
+			label: finalLabel,
+			url: currentAccumulatedPath,
+		});
+	}
 
-  // Truncate logic
-  const MAX_ITEMS = 4;
-  if (breadcrumbItems.length > MAX_ITEMS) {
-    // If we have more than 4 items, we need to truncate
-    // E.g., [Home, Services, Category, Subcategory, Item] (5 items)
-    // Becomes: [Home, ..., Subcategory, Item]
+	// Truncate logic
+	const MAX_ITEMS = 4;
+	if (breadcrumbItems.length > MAX_ITEMS) {
+		// If we have more than 4 items, we need to truncate
+		// E.g., [Home, Services, Category, Subcategory, Item] (5 items)
+		// Becomes: [Home, ..., Subcategory, Item]
 
-    const numToRemove = breadcrumbItems.length - MAX_ITEMS + 1; // +1 to make room for the '...'
-    const truncatedItems = [];
+		const numToRemove = breadcrumbItems.length - MAX_ITEMS + 1; // +1 to make room for the '...'
+		const truncatedItems = [];
 
-    // Always keep Home
-    truncatedItems.push(breadcrumbItems[0]);
+		// Always keep Home
+		truncatedItems.push(breadcrumbItems[0]);
 
-    // Add '...'
-    truncatedItems.push({ label: '...', url: '' });
+		// Add '...'
+		truncatedItems.push({ label: "...", url: "" });
 
-    // Add the remaining items from the end
-    // E.g. if length is 5, MAX_ITEMS is 4, we want to keep index 0, '...', index 3, index 4
-    for (let i = breadcrumbItems.length - (MAX_ITEMS - 2); i < breadcrumbItems.length; i++) {
-        truncatedItems.push(breadcrumbItems[i]);
-    }
+		// Add the remaining items from the end
+		// E.g. if length is 5, MAX_ITEMS is 4, we want to keep index 0, '...', index 3, index 4
+		for (
+			let i = breadcrumbItems.length - (MAX_ITEMS - 2);
+			i < breadcrumbItems.length;
+			i++
+		) {
+			truncatedItems.push(breadcrumbItems[i]);
+		}
 
-    breadcrumbItems = truncatedItems;
-  }
+		breadcrumbItems = truncatedItems;
+	}
 }
 ---
 

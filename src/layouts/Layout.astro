@@ -1,11 +1,11 @@
 ---
-import '../styles/global.css';
-import Sidebar from '../components/Sidebar.astro';
-import Footer from '../components/Footer.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { useTranslations } from '../i18n/utils';
+import "../styles/global.css";
 // --- NEW: Import the Astro Router ---
-import { ClientRouter } from 'astro:transitions';
+import { ClientRouter } from "astro:transitions";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Footer from "../components/Footer.astro";
+import Sidebar from "../components/Sidebar.astro";
+import { useTranslations } from "../i18n/utils";
 
 interface Props {
 	title: string;
@@ -13,10 +13,12 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const validLanguages = ['en', 'ro', 'es'] as const;
-const lang = (validLanguages.includes(Astro.params.lang as never) ? Astro.params.lang : 'en') as 'en' | 'ro' | 'es';
+const validLanguages = ["en", "ro", "es"] as const;
+const lang = (
+	validLanguages.includes(Astro.params.lang as never) ? Astro.params.lang : "en"
+) as "en" | "ro" | "es";
 const t = useTranslations(lang);
-const metaDesc = description || t('home.desc').substring(0, 160);
+const metaDesc = description || t("home.desc").substring(0, 160);
 ---
 
 <!DOCTYPE html>
