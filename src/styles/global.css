@@ -683,27 +683,30 @@ p {
 }
 
 .hero-title {
+	min-height: 1.2em;
 	text-align: center;
 	max-width: 100%;
 	word-wrap: break-word;
 	margin-bottom: 7rem;
-	font-family: "Russo One", serif;
+	font-family: "Russo One", system-ui, sans-serif;
 	font-weight: 900;
 	color: var(--text-dark) !important;
 	transition: color 0.3s ease;
 }
 
 .hero-subtitle {
+	min-height: 1.4em;
 	font-size: 23px;
 	line-height: 1.4;
 	max-width: 70%;
 	margin: 0 auto 5.5rem auto;
 	text-align: center;
-	font-family: "Russo One", serif;
+	font-family: "Russo One", system-ui, sans-serif;
 	font-weight: 800;
 }
 
 .hero-description {
+	min-height: 300px;
 	background: rgba(10, 20, 45, 0.05);
 	backdrop-filter: blur(6px);
 	-webkit-backdrop-filter: blur(6px);
@@ -717,7 +720,7 @@ p {
 	font-size: 19px;
 	color: #ffffff !important;
 	line-height: 1.8;
-	font-family: "Russo One", serif;
+	font-family: "Russo One", system-ui, sans-serif;
 	font-weight: 550;
 	transition: all 0.3s ease;
 }
