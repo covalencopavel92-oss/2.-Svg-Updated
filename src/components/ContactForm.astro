@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from '../i18n/utils';
+import { useTranslations } from "../i18n/utils";
 
-const lang = (Astro.params.lang || 'en') as 'en' | 'ro' | 'es';
+const lang = (Astro.params.lang || "en") as "en" | "ro" | "es";
 const t = useTranslations(lang);
 ---
 <div class="contact-wrapper reveal">
@@ -42,7 +42,6 @@ const t = useTranslations(lang);
             // Check honeypot
             const honeypot = (document.getElementById('honeypot') as HTMLInputElement).value;
             if (honeypot) {
-                console.log('Bot detected');
                 return; // Silently fail
             }
 
