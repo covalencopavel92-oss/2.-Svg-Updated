@@ -152,7 +152,7 @@ export const ui = {
 		"services.web.hero.button": "Build Your Story",
 		"sidebar.lock": "Lock/Unlock Sidebar",
 		"sidebar.search": "Search...",
-		"sidebar.phone": import.meta.env.PUBLIC_PHONE_NUMBER || "0748198534",
+		"sidebar.phone": import.meta.env.CONTACT_PHONE || "0748198534",
 		"blog.legacy-systems.title": "Why Legacy Systems are Costing You Customers",
 		"blog.legacy-systems.desc":
 			"Maintaining outdated IT infrastructure and legacy systems is a silent drain on your company's resources, agility, and ultimately, your customer satisfaction. In today's fast-paced digital economy, consumers expect seamless, instant, and personalized experiences. Legacy systems, characterized by rigid architectures, data silos, and slow processing speeds, simply cannot keep up. These outdated systems lead to frequent downtimes, sluggish website performance, and frustratingly complex user interfaces, all of which directly contribute to higher bounce rates and customer churn. Furthermore, the hidden costs of maintaining legacy software—such as specialized IT support, expensive hardware maintenance, and inefficient manual workarounds—eat into profit margins that could be better spent on innovation. Migrating to modern, cloud-based architectures not only reduces these operational costs but also unlocks advanced capabilities like real-time analytics, AI integration, and agile feature deployment. By modernizing your digital infrastructure, you empower your team to respond swiftly to market changes, deliver superior customer experiences, and build a scalable foundation for sustainable, long-term growth. Don't let outdated technology hold your business back; investing in digital transformation is an investment in your company's future competitiveness.",
@@ -311,7 +311,7 @@ export const ui = {
 		"services.web.hero.button": "Construiește-ți povestea",
 		"sidebar.lock": "Blochează/Deblochează bara laterală",
 		"sidebar.search": "Caută...",
-		"sidebar.phone": import.meta.env.PUBLIC_PHONE_NUMBER || "0748198534",
+		"sidebar.phone": import.meta.env.CONTACT_PHONE || "0748198534",
 		"blog.legacy-systems.title": "De ce sistemele vechi vă costă clienți",
 		"blog.legacy-systems.desc":
 			"Menținerea unei infrastructuri IT învechite și a sistemelor vechi este o scurgere tăcută a resurselor companiei dvs., a agilității și, în cele din urmă, a satisfacției clienților dvs. În economia digitală rapidă de astăzi, consumatorii se așteaptă la experiențe fluide, instantanee și personalizate. Sistemele vechi, caracterizate de arhitecturi rigide, silozuri de date și viteze lente de procesare, pur și simplu nu pot ține pasul. Aceste sisteme învechite duc la perioade frecvente de nefuncționare, performanțe lente ale site-ului web și interfețe cu utilizatorul frustrant de complexe, toate acestea contribuind direct la rate mai mari de respingere și la pierderea clienților. Mai mult, costurile ascunse ale menținerii software-ului vechi — cum ar fi asistența IT specializată, întreținerea costisitoare a hardware-ului și soluțiile manuale ineficiente — mănâncă din marjele de profit care ar putea fi cheltuite mai bine pe inovație. Migrarea către arhitecturi moderne, bazate pe cloud, nu numai că reduce aceste costuri operaționale, ci deblochează și capabilități avansate, cum ar fi analiza în timp real, integrarea AI și implementarea agilă a funcțiilor. Modernizându-vă infrastructura digitală, vă împuterniciți echipa să răspundă rapid la schimbările de pe piață, să ofere experiențe superioare clienților și să construiască o bază scalabilă pentru o creștere durabilă, pe termen lung.",
@@ -470,7 +470,7 @@ export const ui = {
 		"services.web.hero.button": "Construye tu historia",
 		"sidebar.lock": "Bloquear/Desbloquear barra lateral",
 		"sidebar.search": "Buscar...",
-		"sidebar.phone": import.meta.env.PUBLIC_PHONE_NUMBER || "0748198534",
+		"sidebar.phone": import.meta.env.CONTACT_PHONE || "0748198534",
 		"blog.legacy-systems.title":
 			"Por qué los sistemas heredados le están costando clientes",
 		"blog.legacy-systems.desc":
