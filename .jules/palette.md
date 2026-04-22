@@ -7,3 +7,8 @@
 ## $(date +%Y-%m-%d) - Adding ARIA Stateful Attributes to Interactive Elements
 **Learning:** When turning generic `div` elements into interactive elements (like the language switcher) or making existing buttons toggle states (like the hamburger menu or lock button) in Astro components with View Transitions, standard HTML roles and `tabindex` aren't enough. The ARIA state attributes (`aria-expanded`, `aria-pressed`) must be explicitly toggled in the vanilla JS `<script>` logic alongside the CSS classes. Keyboard event listeners (Space/Enter) must also be manually attached to custom elements to maintain accessibility.
 **Action:** When adding or fixing accessibility for interactive components, explicitly check the JavaScript to ensure ARIA states dynamically match the visual/functional state of the element during user interaction, and manually add keyboard handlers for non-native interactive elements.
+## 2025-02-12 - Explicit focus styles for sidebar icons
+
+**Learning:** When using visually hidden text for icons in collapsed sidebar states, native focus indicators (like tab rings) often look misaligned or are completely missing because the width changes dramatically on hover/expand.
+
+**Action:** Ensure that buttons/interactive elements have explicit focus styles applied specifically for `focus-visible`.

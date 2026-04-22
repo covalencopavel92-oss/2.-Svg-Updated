@@ -442,7 +442,8 @@ body {
 .sidebar:not(:hover):not(.force-expanded) .search-input {
 	/* Absolute positioning removes it from the document flow, ensuring the icon perfectly centers */
 	position: absolute;
-	visibility: hidden;
+	opacity: 0;
+	height: 0;
 	width: 0;
 	padding: 0;
 }
@@ -460,6 +461,7 @@ body {
 	position: relative;
 	visibility: visible;
 	opacity: 1;
+	height: auto;
 	width: 100%;
 	pointer-events: auto;
 	padding-left: 0.8rem;
@@ -469,6 +471,11 @@ body {
 	color: var(--neon-blue);
 	flex-shrink: 0;
 	transition: color 0.3s;
+}
+
+.search-wrapper:focus-within {
+	outline: 2px solid var(--neon-blue);
+	outline-offset: 2px;
 }
 
 .search-wrapper:focus-within .search-icon {
@@ -1261,7 +1268,14 @@ textarea.floating-input {
 	width: 50px;
 }
 .theme-switch input {
-	display: none;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	position: absolute;
+}
+.theme-switch input:focus-visible + .slider {
+	outline: 2px solid var(--neon-blue);
+	outline-offset: 2px;
 }
 .slider {
 	background-color: #333;
