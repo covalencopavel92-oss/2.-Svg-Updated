@@ -548,7 +548,7 @@ body {
 	margin-left: var(--sidebar-collapsed);
 	width: calc(100% - var(--sidebar-collapsed));
 	min-height: 100vh;
-	padding: 4rem 6rem;
+	padding: 8rem 6rem 4rem 6rem; /* Added top padding for top nav */
 	display: flex;
 	flex-direction: column;
 	transition:
@@ -1496,6 +1496,7 @@ input:checked + .slider svg.fa-moon {
 	}
 
 	/* Sidebar to Top Navbar */
+
 	.sidebar {
 		width: 100% !important;
 		height: 80px;
@@ -1503,8 +1504,14 @@ input:checked + .slider svg.fa-moon {
 		justify-content: space-between;
 		align-items: center;
 		padding: 1rem 2rem;
-		box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+		box-shadow: 0 2px 15px rgba(0, 246, 255, 0.5); /* Cyan neon shadow */
+		border-bottom: 2px solid #00f6ff; /* Cyan neon border */
 		border-right: none;
+		background: linear-gradient(
+			145deg,
+			#1a1a1a,
+			#000000
+		); /* Glossy black metallic */
 		transition: none;
 		overflow: visible !important;
 	}
@@ -1541,7 +1548,11 @@ input:checked + .slider svg.fa-moon {
 		left: -100%; /* Start completely off-screen to the left */
 		width: 60% !important; /* Covers exactly 70% of the screen */
 		height: calc(100vh - 80px); /* Fills the vertical space */
-		background-color: var(--sidebar-bg);
+		background: linear-gradient(
+			145deg,
+			#1a1a1a,
+			#000000
+		); /* Glossy black metallic match */
 		padding: 2rem 1rem;
 		flex-direction: column;
 		align-items: center;
@@ -1550,8 +1561,8 @@ input:checked + .slider svg.fa-moon {
 		transform: none !important; /* Removes the old vertical dropdown */
 		transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 		z-index: 999;
-		border-top: 1px solid rgba(0, 246, 255, 0.1);
-		border-right: 1px solid rgba(0, 246, 255, 0.1); /* Adds a nice glowing edge */
+		border-top: 1px solid rgba(0, 246, 255, 0.5);
+		border-right: 1px solid rgba(0, 246, 255, 0.5); /* Adds a nice glowing edge */
 		box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6); /* Casts a shadow over the remaining 30% of the screen */
 		overflow-y: auto; /* Allows scrolling inside the menu if it gets too long */
 	}
@@ -1764,4 +1775,43 @@ select:focus-visible,
 [tabindex]:not([tabindex="-1"]):focus-visible {
 	outline: 2px solid var(--neon-blue);
 	outline-offset: 2px;
+}
+
+.breadcrumbs-wrapper {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	position: relative;
+	z-index: 10;
+}
+/* Adjust breadcrumbs component padding so it doesn't add too much space */
+.breadcrumbs-container {
+	padding: 0 0 1rem 0 !important;
+}
+
+.nav-item-wrapper {
+	width: 100%;
+}
+.submenu-chevron {
+	margin-left: auto;
+	transition: transform 0.3s ease;
+}
+.submenu-open .submenu-chevron {
+	transform: rotate(180deg);
+}
+.submenu-mobile {
+	display: none;
+	flex-direction: column;
+	padding-left: 2rem;
+	background: rgba(0, 246, 255, 0.03);
+	border-radius: 8px;
+	margin-top: 0.5rem;
+}
+.submenu-open .submenu-mobile {
+	display: flex;
+}
+.submenu-link-mobile {
+	padding: 0.8rem !important;
+	font-size: 0.95rem !important;
+	justify-content: flex-start !important;
 }

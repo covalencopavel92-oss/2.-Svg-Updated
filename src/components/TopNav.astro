@@ -1,0 +1,383 @@
+---
+import { useTranslations } from "../i18n/utils";
+
+const lang = (Astro.params.lang as "en" | "ro" | "es") || "en";
+const t = useTranslations(lang);
+
+// Dynamically fetch services and blog
+const servicesPages = Object.values(
+	import.meta.glob("../pages/[lang]/services/*.astro", { eager: true }),
+);
+const blogPages = Object.values(
+	import.meta.glob("../pages/[lang]/blog/*.astro", { eager: true }),
+);
+
+const servicesSubmenu = servicesPages
+	.filter((page) => !page.url?.endsWith("index"))
+	.map((page) => {
+		const url = page.url || "";
+		const slug = url.split("/").pop() || "";
+		const tLabel = t(`nav.${slug}` as any);
+		const label =
+			tLabel && tLabel !== `nav.${slug}`
+				? tLabel
+				: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+		return { href: `${url}/`, label };
+	});
+
+const blogSubmenu = blogPages.map((page) => {
+	const url = page.url || "";
+	const slug = url.split("/").pop() || "";
+	const tLabel = t(`nav.${slug}` as any);
+	const label =
+		tLabel && tLabel !== `nav.${slug}`
+			? tLabel
+			: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+	return { href: `${url}/`, label };
+});
+
+const navLinks = [
+	{
+		href: `/${lang}/`,
+		label: t("nav.home"),
+	},
+	{
+		href: `/${lang}/consultancy/`,
+		label: t("nav.consultancy"),
+	},
+	{
+		href: `/${lang}/services/`,
+		label: t("nav.services"),
+		submenu: servicesSubmenu,
+	},
+	{
+		href: `/${lang}/reviews/`,
+		label: t("nav.reviews"),
+	},
+	{
+		href: `/${lang}/blog/`,
+		label: t("nav.blog"),
+		submenu: blogSubmenu,
+	},
+	{
+		href: `/${lang}/contact/`,
+		label: t("nav.contact"),
+	},
+];
+---
+
+<div class="top-nav-wrapper">
+    <nav class="top-nav" aria-label="Desktop Top Navigation">
+        <ul class="top-nav-list">
+            {navLinks.map(link => (
+                <li class={`top-nav-item ${link.submenu ? 'has-submenu' : ''}`}>
+                    <a href={link.submenu ? '#' : link.href} class="top-nav-link">{link.label}</a>
+                    {link.submenu && (
+                        <div class="submenu">
+                            <ul class="submenu-list">
+                                {link.submenu.map(sublink => (
+                                    <li><a href={sublink.href} class="submenu-link">{sublink.label}</a></li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </li>
+            ))}
+
+            <li class="top-nav-item theme-item">
+                <div class="theme-switch-wrapper-top">
+                     <label class="theme-switch-top" for="themeToggleTop">
+                         <input type="checkbox" id="themeToggleTop" aria-label="Toggle Dark Mode" />
+                         <div class="slider-top round">
+                             <svg class="fas fa-sun" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                             <svg class="fas fa-moon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                         </div>
+                     </label>
+                 </div>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<style>
+    .top-nav-wrapper {
+        display: none;
+    }
+
+    @media (min-width: 769px) {
+        .top-nav-wrapper {
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            pointer-events: none; /* Let clicks pass through the wrapper */
+        }
+
+        .top-nav {
+            pointer-events: auto; /* Enable clicks on the nav itself */
+            background: linear-gradient(145deg, #1f1f1f, #000000);
+            border: 2px solid #00f6ff;
+            border-radius: 50px;
+            padding: 0 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 2px 10px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .top-nav-list {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-nav-item {
+            position: relative;
+        }
+
+        .top-nav-link {
+            display: block;
+            padding: 1rem 1.2rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .top-nav-link:hover, .top-nav-link.active {
+            color: #00f6ff;
+            text-shadow: 0 0 8px #00f6ff;
+        }
+
+        /* Submenu Styles */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: linear-gradient(145deg, #1a1a1a, #000000);
+            border: 1px solid #00f6ff;
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+        }
+
+        /* Arrow pointing up */
+        .submenu::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 10px;
+            height: 10px;
+            background: #1a1a1a;
+            border-top: 1px solid #00f6ff;
+            border-left: 1px solid #00f6ff;
+        }
+
+        .has-submenu.submenu-open .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(5px);
+        }
+
+        .submenu-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .submenu-link {
+            display: block;
+            padding: 0.7rem 1.5rem;
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .submenu-link:hover {
+            color: #00f6ff;
+            background: rgba(0, 246, 255, 0.1);
+        }
+
+        /* Theme Toggle Top */
+        .theme-item {
+            padding-left: 1rem;
+            margin-left: 0.5rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch-wrapper-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-switch-top {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 44px;
+        }
+
+        .theme-switch-top input {
+            display: none;
+        }
+
+        .slider-top {
+            background-color: #333;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: 0.4s;
+            border-radius: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+        }
+
+        .slider-top svg {
+            z-index: 1;
+            position: relative;
+            stroke: #f1c40f;
+            color: #f1c40f;
+            width: 12px;
+            height: 12px;
+        }
+
+        .slider-top svg.fa-moon {
+            stroke: #f39c12;
+            color: #f39c12;
+        }
+
+        .slider-top:before {
+            background-color: #fff;
+            bottom: 2px;
+            content: "";
+            height: 20px;
+            left: 2px;
+            position: absolute;
+            transition: 0.4s;
+            width: 20px;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        input:checked + .slider-top {
+            background-color: #00f6ff;
+        }
+
+        input:checked + .slider-top:before {
+            transform: translateX(20px);
+        }
+
+        input:checked + .slider-top svg.fa-sun {
+            stroke: #f1c40f;
+            color: #f1c40f;
+        }
+
+        input:checked + .slider-top svg.fa-moon {
+            stroke: #1a1a1a;
+            color: #1a1a1a;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        // Handle Theme Toggle for Top Nav
+        const toggleTop = document.getElementById('themeToggleTop') as HTMLInputElement;
+        const toggleSidebar = document.getElementById('themeToggle') as HTMLInputElement;
+
+        if (toggleTop) {
+            const savedTheme = localStorage.getItem('siteTheme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            toggleTop.checked = savedTheme === 'dark' || (!savedTheme && prefersDark);
+
+            toggleTop.addEventListener('change', (e) => {
+                const newTheme = (e.target as HTMLInputElement).checked ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('siteTheme', newTheme);
+
+                // Keep sidebar toggle in sync
+                if (toggleSidebar) {
+                    toggleSidebar.checked = (e.target as HTMLInputElement).checked;
+                }
+            });
+        }
+
+        // Sync Top Nav toggle when sidebar toggle changes
+        if (toggleSidebar && toggleTop) {
+            toggleSidebar.addEventListener('change', (e) => {
+                toggleTop.checked = (e.target as HTMLInputElement).checked;
+            });
+        }
+
+        // Handle Click to open Submenu
+        document.querySelectorAll('.has-submenu > .top-nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const parent = link.parentElement;
+
+                // Close other open submenus
+                document.querySelectorAll('.has-submenu.submenu-open').forEach(el => {
+                    if (el !== parent) el.classList.remove('submenu-open');
+                });
+
+                parent.classList.toggle('submenu-open');
+            });
+        });
+
+        // Close submenu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.top-nav-list')) {
+                document.querySelectorAll('.has-submenu.submenu-open').forEach(el => {
+                    el.classList.remove('submenu-open');
+                });
+            }
+        });
+
+        // Highlight Active Link
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.top-nav-link').forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href && (href === currentPath || href === currentPath + '/' || href + '/' === currentPath)) {
+                 link.classList.add('active');
+            }
+        });
+    });
+</script>
