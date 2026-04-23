@@ -100,7 +100,7 @@ body {
 	padding: 1.5rem 1rem;
 	z-index: 1000;
 	transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1) 0.3s;
-	border-right: 2px solid rgba(0, 246, 255, 0.5);
+	border-right: 2px solid #00f6ff;
 	box-shadow: 2px 0 20px rgba(0, 0, 0, 0.05);
 	overflow-x: hidden;
 }
@@ -1541,12 +1541,12 @@ input:checked + .slider svg.fa-moon {
 		order: 3;
 	}
 
-	/* --- NEW: Slide-down Mobile Drawer --- */
+	/* --- NEW: 70% Slide-in Mobile Drawer --- */
 	.nav-links {
 		position: fixed; /* Locks the menu to the viewport */
-		top: -100%; /* Start completely off-screen to the top */
-		left: 0;
-		width: 100% !important; /* Covers exactly 100% of the screen */
+		top: 80px;
+		left: -100%; /* Start completely off-screen to the left */
+		width: 60% !important; /* Covers exactly 70% of the screen */
 		height: calc(100vh - 80px); /* Fills the vertical space */
 		background: linear-gradient(
 			145deg,
@@ -1559,16 +1559,16 @@ input:checked + .slider svg.fa-moon {
 		gap: 1.5rem;
 		opacity: 1 !important;
 		transform: none !important; /* Removes the old vertical dropdown */
-		transition: top 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+		transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 		z-index: 999;
 		border-top: 1px solid rgba(0, 246, 255, 0.5);
-		border-right: none;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+		border-right: 1px solid rgba(0, 246, 255, 0.5); /* Adds a nice glowing edge */
+		box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6); /* Casts a shadow over the remaining 30% of the screen */
 		overflow-y: auto; /* Allows scrolling inside the menu if it gets too long */
 	}
 
 	.nav-links.active {
-		top: 80px; /* Smoothly slides the drawer down */
+		left: 0; /* Smoothly slides the drawer in */
 	}
 
 	/* --- NEW: Kill Desktop Hover Glitches & Force Centering --- */
@@ -1791,6 +1791,13 @@ select:focus-visible,
 
 .nav-item-wrapper {
 	width: 100%;
+}
+.submenu-chevron {
+	margin-left: auto;
+	transition: transform 0.3s ease;
+}
+.submenu-open .submenu-chevron {
+	transform: rotate(180deg);
 }
 .submenu-mobile {
 	display: none;

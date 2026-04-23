@@ -12,26 +12,9 @@ const blogPages = Object.values(
 	import.meta.glob("../pages/[lang]/blog/*.astro", { eager: true }),
 );
 
-const servicesSubmenu = [
-	{ href: `/${lang}/services/`, label: t("nav.services") + " (View All)" },
-	...servicesPages
-		.filter((page) => !page.url?.endsWith("index"))
-		.map((page) => {
-			const url = page.url || "";
-			const slug = url.split("/").pop() || "";
-			const tLabel = t(`nav.${slug}` as any);
-			const label =
-				tLabel && tLabel !== `nav.${slug}`
-					? tLabel
-					: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-			const finalUrl = url.replace("/[lang]/", `/${lang}/`);
-			return { href: `${finalUrl}/`, label };
-		})
-];
-
-const blogSubmenu = [
-	{ href: `/${lang}/blog/`, label: t("nav.blog") + " (View All)" },
-	...blogPages.map((page) => {
+const servicesSubmenu = servicesPages
+	.filter((page) => !page.url?.endsWith("index"))
+	.map((page) => {
 		const url = page.url || "";
 		const slug = url.split("/").pop() || "";
 		const tLabel = t(`nav.${slug}` as any);
@@ -39,10 +22,19 @@ const blogSubmenu = [
 			tLabel && tLabel !== `nav.${slug}`
 				? tLabel
 				: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-		const finalUrl = url.replace("/[lang]/", `/${lang}/`);
-		return { href: `${finalUrl}/`, label };
-	})
-];
+		return { href: `${url}/`, label };
+	});
+
+const blogSubmenu = blogPages.map((page) => {
+	const url = page.url || "";
+	const slug = url.split("/").pop() || "";
+	const tLabel = t(`nav.${slug}` as any);
+	const label =
+		tLabel && tLabel !== `nav.${slug}`
+			? tLabel
+			: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+	return { href: `${url}/`, label };
+});
 
 const navLinks = [
 	{
@@ -130,17 +122,10 @@ const navLinks = [
             justify-content: center;
             position: fixed;
             top: 20px;
-            left: var(--sidebar-collapsed);
+            left: 0;
             right: 0;
-            width: auto;
             z-index: 1000;
             pointer-events: none; /* Let clicks pass through the wrapper */
-            transition: left 0.3s ease-in-out;
-        }
-
-        :global(body:has(.sidebar[data-sidebar-locked="true"])) .top-nav-wrapper,
-        :global(body:has(.sidebar:hover)) .top-nav-wrapper {
-            left: var(--sidebar-expanded);
         }
 
         .top-nav {
@@ -215,8 +200,7 @@ const navLinks = [
             border-left: 1px solid #00f6ff;
         }
 
-        .has-submenu.submenu-open .submenu,
-        .has-submenu:hover .submenu {
+        .has-submenu.submenu-open .submenu {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(5px);
