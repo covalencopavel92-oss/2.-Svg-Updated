@@ -12,3 +12,7 @@
 **Learning:** When using visually hidden text for icons in collapsed sidebar states, native focus indicators (like tab rings) often look misaligned or are completely missing because the width changes dramatically on hover/expand.
 
 **Action:** Ensure that buttons/interactive elements have explicit focus styles applied specifically for `focus-visible`.
+
+## 2026-04-23 - Maximizing Search Input Hit Area
+**Learning:** Users often click around a search input (like its wrapper or search icon) rather than precisely on the input field. Using `type="search"` provides a native clear button (x), and delegating clicks from the wrapper to focus the inner input dramatically improves usability.
+**Action:** Always use `<input type="search">` instead of `type="text"` for search fields, and add a click event listener on any visual wrapper to focus the inner input to maximize the interactive hit area.
