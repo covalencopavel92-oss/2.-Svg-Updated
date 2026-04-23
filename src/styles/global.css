@@ -775,19 +775,12 @@ p {
 
 /* --- Light & Dark Mode Variables --- */
 :root {
-	--card-bg: #ffffff;
 	--card-text: #111111;
-	--card-border: rgba(0, 0, 0, 0.1);
 	--hover-glow: rgba(0, 247, 255, 0.15); /* The cyan glow */
 }
 
-/* If your site uses a .dark class on the body, change this to: .dark { ... } */
-@media (prefers-color-scheme: dark) {
-	:root {
-		--card-bg: #111111;
+	[data-theme="dark"] {
 		--card-text: #ffffff;
-		--card-border: rgba(0, 255, 208, 0.2);
-	}
 }
 
 /* --- Services Grid & Cards --- */
@@ -799,25 +792,17 @@ p {
 
 .service-card {
 	position: relative;
-	background: rgba(10, 20, 45, 0.1);
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
 	border: 1px solid var(--card-border);
 	border-radius: 16px;
 	min-height: 320px;
 	padding: 2.5rem 1.5rem;
 	text-decoration: none;
-	/* Removed overflow: hidden so vanilla-tilt 3D items aren't clipped, but keeping border-radius intact via inner container if needed,
-       actually vanilla-tilt often works with overflow visible for 3d depth, but let's test if we need to remove overflow hidden.
-       Let's keep it if possible, but 3D popout works better without overflow clipping.
-       The user wants them to 'pop out' so we must ensure they aren't hidden by overflow. */
-	/* overflow: hidden; */
 
 	/* 3D Depth effect */
 	transform-style: preserve-3d;
 
 	/* Hardware acceleration for smooth hover */
-	transform: translateZ(0);
+	transform: perspective(1000px);
 	transition:
 		transform 0.3s ease,
 		border-color 0.3s ease;
@@ -831,18 +816,27 @@ p {
 	text-align: center;
 }
 
-/* The interactive radial gradient overlay */
+/* The background glassmorphism effect (moved to ::before so it doesn't break preserve-3d) */
 .service-card::before {
 	content: "";
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	inset: 0;
+	border-radius: inherit;
+	background: rgba(10, 20, 45, 0.1);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	z-index: -2;
+	pointer-events: none;
+}
+
+/* The interactive radial gradient overlay */
+.service-card-glow {
+	position: absolute;
+	inset: 0;
 	border-radius: inherit;
 	opacity: 0;
 	transition: opacity 0.3s ease;
-	z-index: 0;
+	z-index: -1;
 	pointer-events: none;
 	/* Coordinates are injected via JavaScript */
 	background: radial-gradient(
@@ -852,14 +846,16 @@ p {
 	);
 }
 
+.service-card:hover .service-card-glow,
+.service-card.is-hovered .service-card-glow {
+	opacity: 1;
+}
+
 /* Only apply native CSS hover effects on devices that support true hover (like mice) */
 @media (hover: hover) {
 	.service-card:hover {
 		/* Removed transform: translateY(-5px) since vanilla-tilt takes over hover transform */
 		border-color: rgba(0, 247, 255, 0.5);
-	}
-	.service-card:hover::before {
-		opacity: 1;
 	}
 }
 
@@ -869,30 +865,28 @@ p {
 	border-color: rgba(0, 247, 255, 0.5); /* Stronger border on hover */
 }
 
-.service-card.is-hovered::before {
-	opacity: 1; /* Fade in the glow */
-}
-
 /* Explicitly disable effects when JS class is removed, unless native hover is active */
 @media (hover: none) {
 	.service-card:not(.is-hovered) {
 		/* Removed transform: translateY(0) since vanilla-tilt takes over hover transform */
 		border-color: var(--card-border);
 	}
-	.service-card:not(.is-hovered)::before {
-		opacity: 0;
-	}
 }
 
 /* Bring content above the glow and enable 3D transitions */
-.service-card > * {
+.service-card > .service-icon-wrapper,
+.service-card > h3,
+.service-card > p {
 	position: relative;
 	z-index: 1;
 	transition: transform 0.3s ease; /* For smooth pop in/out */
+	pointer-events: none; /* Let hover events pass through to the card */
 }
 
 /* 3D hover pop out effect */
-.service-card:hover > * {
+.service-card:hover > .service-icon-wrapper,
+.service-card:hover > h3,
+.service-card:hover > p {
 	transform: translateZ(50px);
 }
 
