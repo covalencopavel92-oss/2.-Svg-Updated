@@ -11,6 +11,9 @@ importers:
       astro:
         specifier: ^5.18.1
         version: 5.18.1(rollup@4.60.2)(tsx@4.21.0)(typescript@5.9.3)
+      vanilla-tilt:
+        specifier: ^1.8.1
+        version: 1.8.1
     devDependencies:
       playwright:
         specifier: ^1.59.1
@@ -1596,6 +1599,9 @@ packages:
         optional: true
       uploadthing:
         optional: true
+
+  vanilla-tilt@1.8.1:
+    resolution: {integrity: sha512-hPB1XUsnh+SIeVSW2beb5RnuFxz4ZNgxjGD78o52F49gS4xaoLeEMh9qrQnJrnEn/vjjBI7IlxrrXmz4tGV0Kw==}
 
   vfile-location@5.0.3:
     resolution: {integrity: sha512-5yXvWDEgqeiYiBe1lbxYF7UMAIm/IcopxMHrMQDq3nvKcjPKIhZklUKL+AE7J7uApI4kwe2snsK+eI6UTj9EHg==}
@@ -3425,6 +3431,8 @@ snapshots:
       node-fetch-native: 1.6.7
       ofetch: 1.5.1
       ufo: 1.6.3
+
+  vanilla-tilt@1.8.1: {}
 
   vfile-location@5.0.3:
     dependencies:
