@@ -805,7 +805,14 @@ p {
 	min-height: 320px;
 	padding: 2.5rem 1.5rem;
 	text-decoration: none;
-	overflow: hidden; /* Keeps the gradient glow inside the borders */
+	/* Removed overflow: hidden so vanilla-tilt 3D items aren't clipped, but keeping border-radius intact via inner container if needed,
+       actually vanilla-tilt often works with overflow visible for 3d depth, but let's test if we need to remove overflow hidden.
+       Let's keep it if possible, but 3D popout works better without overflow clipping.
+       The user wants them to 'pop out' so we must ensure they aren't hidden by overflow. */
+	/* overflow: hidden; */
+
+	/* 3D Depth effect */
+	transform-style: preserve-3d;
 
 	/* Hardware acceleration for smooth hover */
 	transform: translateZ(0);
@@ -846,7 +853,7 @@ p {
 /* Only apply native CSS hover effects on devices that support true hover (like mice) */
 @media (hover: hover) {
 	.service-card:hover {
-		transform: translateY(-5px);
+		/* Removed transform: translateY(-5px) since vanilla-tilt takes over hover transform */
 		border-color: rgba(0, 247, 255, 0.5);
 	}
 	.service-card:hover::before {
@@ -856,7 +863,7 @@ p {
 
 /* Apply JS-driven hover state for touch and S Pen */
 .service-card.is-hovered {
-	transform: translateY(-5px);
+	/* Removed transform: translateY(-5px) since vanilla-tilt takes over hover transform */
 	border-color: rgba(0, 247, 255, 0.5); /* Stronger border on hover */
 }
 
@@ -867,7 +874,7 @@ p {
 /* Explicitly disable effects when JS class is removed, unless native hover is active */
 @media (hover: none) {
 	.service-card:not(.is-hovered) {
-		transform: translateY(0);
+		/* Removed transform: translateY(0) since vanilla-tilt takes over hover transform */
 		border-color: var(--card-border);
 	}
 	.service-card:not(.is-hovered)::before {
@@ -875,10 +882,16 @@ p {
 	}
 }
 
-/* Bring content above the glow */
+/* Bring content above the glow and enable 3D transitions */
 .service-card > * {
 	position: relative;
 	z-index: 1;
+	transition: transform 0.3s ease; /* For smooth pop in/out */
+}
+
+/* 3D hover pop out effect */
+.service-card:hover > * {
+	transform: translateZ(50px);
 }
 
 .service-icon-wrapper {
@@ -1705,7 +1718,6 @@ input:checked + .slider svg.fa-moon {
 /* --- Card Particle Canvas Constraints --- */
 .service-card {
 	position: relative; /* Keeps the canvas trapped inside */
-	overflow: hidden; /* Chops off particles trying to leave the card */
 	z-index: 1; /* Establishes a 3D stacking context */
 }
 

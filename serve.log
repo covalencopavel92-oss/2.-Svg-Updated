@@ -1,0 +1,22 @@
+npm warn exec The following package was not found and will be installed: serve@14.2.6
+ INFO  Accepting connections at http://localhost:3000
+ HTTP  4/23/2026 3:58:11 PM ::1 GET /en/services/
+ HTTP  4/23/2026 3:58:11 PM ::1 Returned 200 in 29 ms
+ HTTP  4/23/2026 3:58:11 PM ::1 GET /_astro/ClientRouter.astro_astro_type_script_index_0_lang.NDgbMAqx.js
+ HTTP  4/23/2026 3:58:11 PM ::1 Returned 200 in 5 ms
+ HTTP  4/23/2026 3:58:11 PM ::1 GET /_astro/blog.Bzsz1MsI.css
+ HTTP  4/23/2026 3:58:11 PM ::1 GET /_astro/page.j6_Enh8j.js
+ HTTP  4/23/2026 3:58:11 PM ::1 Returned 200 in 7 ms
+ HTTP  4/23/2026 3:58:11 PM ::1 Returned 200 in 4 ms
+ HTTP  4/23/2026 3:58:11 PM ::1 GET /_astro/Sidebar.astro_astro_type_script_index_0_lang.DgZLkrz5.js
+ HTTP  4/23/2026 3:58:11 PM ::1 GET /_astro/index.astro_astro_type_script_index_0_lang.DGUnDs2-.js
+ HTTP  4/23/2026 3:58:11 PM ::1 GET /SAlogo.svg
+ HTTP  4/23/2026 3:58:11 PM ::1 GET /_astro/index.DoI3pyI0.js
+ HTTP  4/23/2026 3:58:11 PM ::1 Returned 200 in 12 ms
+ HTTP  4/23/2026 3:58:11 PM ::1 Returned 200 in 13 ms
+ HTTP  4/23/2026 3:58:11 PM ::1 Returned 200 in 12 ms
+ HTTP  4/23/2026 3:58:11 PM ::1 Returned 200 in 10 ms
+ HTTP  4/23/2026 3:58:14 PM ::1 GET /en/services/seo-geo/
+ HTTP  4/23/2026 3:58:14 PM ::1 Returned 200 in 4 ms
+ HTTP  4/23/2026 3:58:17 PM ::1 GET /en/services/ppc-and-social-ads/
+ HTTP  4/23/2026 3:58:17 PM ::1 Returned 200 in 2 ms
