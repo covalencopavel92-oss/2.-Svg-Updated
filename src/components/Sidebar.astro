@@ -99,7 +99,7 @@ const navLinks = [
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
-                <input type="text" id="searchInput" class="search-input" placeholder={t('sidebar.search')} autocomplete="off" aria-label="Search" />
+                <input type="search" id="searchInput" class="search-input" placeholder={t('sidebar.search')} autocomplete="off" aria-label="Search" />
                 <div id="searchResults" class="search-results"></div>
             </div>
 
@@ -398,6 +398,12 @@ const navLinks = [
             const searchWrapper = searchInput.closest('.search-wrapper');
             if (searchWrapper) {
                 searchWrapper.addEventListener('mouseenter', populateSearchIndex, { once: true });
+                // Maximize interactive hit area for search
+                searchWrapper.addEventListener('click', (e) => {
+                    if (e.target !== searchInput) {
+                        searchInput.focus();
+                    }
+                });
             }
             searchInput.addEventListener('focus', populateSearchIndex, { once: true });
 
