@@ -914,7 +914,7 @@ p {
 }
 
 .service-card p {
-	color: var(--card-text) !important;
+	color: var(--card-text);
 	margin: 0;
 	opacity: 0.8; /* Subtle contrast from the H3 */
 	align-self: start; /* Locks paragraph to the top of its row */
