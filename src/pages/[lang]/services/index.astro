@@ -118,6 +118,8 @@ const t = useTranslations(lang as keyof typeof languages);
         </div>
     </section>
     <script>
+    import VanillaTilt from 'vanilla-tilt';
+
     document.addEventListener('astro:page-load', () => {
         // ⚡ Bolt Optimization: Use requestAnimationFrame to throttle pointermove
         // calculations to match the display refresh rate, reducing main thread
@@ -153,12 +155,23 @@ const t = useTranslations(lang as keyof typeof languages);
             target.classList.remove("is-hovered");
         };
 
-        document.querySelectorAll(".service-card").forEach((card) => {
+        const serviceCards = document.querySelectorAll(".service-card");
+
+        serviceCards.forEach((card) => {
             const el = card as HTMLElement;
             el.addEventListener('pointermove', handlePointerMove);
             el.addEventListener('pointerleave', handlePointerLeave);
             el.addEventListener('pointercancel', handlePointerLeave); // Handle touch/pen disruptions
         });
+
+        // Initialize VanillaTilt on the cards
+        if (serviceCards.length > 0) {
+            VanillaTilt.init(Array.from(serviceCards) as HTMLElement[], {
+                max: 15,
+                speed: 400,
+                glare: false, // We already have custom glare via CSS variables and hover effect
+            });
+        }
     });
 </script>  
 </Layout>
