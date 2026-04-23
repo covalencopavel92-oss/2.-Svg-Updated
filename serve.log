@@ -1,0 +1,21 @@
+ INFO  Accepting connections at http://localhost:3000
+ HTTP  4/23/2026 6:23:57 AM ::1 GET /en/
+ HTTP  4/23/2026 6:23:57 AM ::1 Returned 200 in 23 ms
+ HTTP  4/23/2026 6:23:57 AM ::1 GET /_astro/ClientRouter.astro_astro_type_script_index_0_lang.NDgbMAqx.js
+ HTTP  4/23/2026 6:23:57 AM ::1 Returned 200 in 6 ms
+ HTTP  4/23/2026 6:23:57 AM ::1 GET /_astro/blog.BKHsQLTb.css
+ HTTP  4/23/2026 6:23:57 AM ::1 GET /_astro/page.j6_Enh8j.js
+ HTTP  4/23/2026 6:23:57 AM ::1 GET /_astro/Sidebar.astro_astro_type_script_index_0_lang.RSkn9nY3.js
+ HTTP  4/23/2026 6:23:57 AM ::1 GET /SAlogo.svg
+ HTTP  4/23/2026 6:23:57 AM ::1 GET /Logogif.webm
+ HTTP  4/23/2026 6:23:57 AM ::1 Returned 200 in 10 ms
+ HTTP  4/23/2026 6:23:57 AM ::1 Returned 200 in 10 ms
+ HTTP  4/23/2026 6:23:57 AM ::1 Returned 200 in 10 ms
+ HTTP  4/23/2026 6:23:57 AM ::1 Returned 200 in 9 ms
+ HTTP  4/23/2026 6:23:57 AM ::1 GET /_astro/index.DoI3pyI0.js
+ HTTP  4/23/2026 6:23:57 AM ::1 Returned 206 in 11 ms
+ HTTP  4/23/2026 6:23:57 AM ::1 Returned 200 in 4 ms
+ HTTP  4/23/2026 6:24:01 AM ::1 GET /en/reviews/
+ HTTP  4/23/2026 6:24:01 AM ::1 Returned 200 in 3 ms
+
+ INFO  Gracefully shutting down. Please wait...
