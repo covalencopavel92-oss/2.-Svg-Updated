@@ -904,7 +904,7 @@ p {
 
 /* Flexbox inside the title row pushes the text to the bottom */
 .service-card h3 {
-	color: var(--card-text) !important;
+	color: var(--card-text);
 	font-weight: 800;
 	margin: 0;
 	display: flex;
