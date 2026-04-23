@@ -12,6 +12,3 @@
 **Learning:** When using visually hidden text for icons in collapsed sidebar states, native focus indicators (like tab rings) often look misaligned or are completely missing because the width changes dramatically on hover/expand.
 
 **Action:** Ensure that buttons/interactive elements have explicit focus styles applied specifically for `focus-visible`.
-## $(date +%Y-%m-%d) - Interactive Labels and Hit Areas
-**Learning:** Applying `pointer-events: none` to `label` elements globally is detrimental to accessibility, as it prevents users from clicking the label to focus its associated input. Furthermore, using `type="search"` instead of `type="text"` provides built-in browser features like the clear (x) button.
-**Action:** Avoid `pointer-events: none` on `<label>` elements unless there is a specific, well-handled reason. Ensure visual wrappers for inputs delegate clicks to the actual input field to maximize the interactive hit area.
