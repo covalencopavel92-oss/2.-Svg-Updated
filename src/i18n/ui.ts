@@ -9,7 +9,7 @@ export const defaultLang = "en";
 export const ui = {
 	en: {
 		"nav.home": "Home",
-		"nav.consultancy": "Consultancy",
+		"nav.about": "About Us",
 		"nav.services": "Services",
 		"nav.reviews": "Reviews",
 		"nav.blog": "Blog",
@@ -166,7 +166,7 @@ export const ui = {
 	},
 	ro: {
 		"nav.home": "Acasă",
-		"nav.consultancy": "Consultanță",
+		"nav.about": "Despre noi",
 		"nav.services": "Servicii",
 		"nav.reviews": "Recenzii",
 		"nav.blog": "Blog",
@@ -326,7 +326,7 @@ export const ui = {
 	},
 	es: {
 		"nav.home": "Inicio",
-		"nav.consultancy": "Consultoría",
+		"nav.about": "Sobre nosotros",
 		"nav.services": "Servicios",
 		"nav.reviews": "Reseñas",
 		"nav.blog": "Blog",
