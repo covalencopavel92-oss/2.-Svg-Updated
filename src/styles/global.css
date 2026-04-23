@@ -799,7 +799,9 @@ p {
 
 .service-card {
 	position: relative;
-	background: var(--card-bg);
+	background: rgba(10, 20, 45, 0.1);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
 	border: 1px solid var(--card-border);
 	border-radius: 16px;
 	min-height: 320px;
@@ -902,7 +904,7 @@ p {
 
 /* Flexbox inside the title row pushes the text to the bottom */
 .service-card h3 {
-	color: #ffffff !important;
+	color: var(--card-text) !important;
 	font-weight: 800;
 	margin: 0;
 	display: flex;
@@ -912,7 +914,7 @@ p {
 }
 
 .service-card p {
-	color: rgba(255, 255, 255, 0.8) !important;
+	color: var(--card-text) !important;
 	margin: 0;
 	opacity: 0.8; /* Subtle contrast from the H3 */
 	align-self: start; /* Locks paragraph to the top of its row */
@@ -1719,6 +1721,17 @@ input:checked + .slider svg.fa-moon {
 .service-card {
 	position: relative; /* Keeps the canvas trapped inside */
 	z-index: 1; /* Establishes a 3D stacking context */
+}
+
+/* Creates a masking container to trap particles without affecting 3D pop-out */
+.service-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	overflow: hidden;
+	z-index: -1;
+	pointer-events: none;
 }
 
 .card-particle-canvas {
