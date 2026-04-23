@@ -779,8 +779,8 @@ p {
 	--hover-glow: rgba(0, 247, 255, 0.15); /* The cyan glow */
 }
 
-	[data-theme="dark"] {
-		--card-text: #ffffff;
+[data-theme="dark"] {
+	--card-text: #ffffff;
 }
 
 /* --- Services Grid & Cards --- */
