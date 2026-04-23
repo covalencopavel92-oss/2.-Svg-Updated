@@ -23,7 +23,7 @@ const servicesSubmenu = servicesPages
 			tLabel && tLabel !== `nav.${slug}`
 				? tLabel
 				: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-		const finalUrl = url.replace('/[lang]/', `/${lang}/`);
+		const finalUrl = url.replace("/[lang]/", `/${lang}/`);
 		return { href: `${finalUrl}/`, label };
 	});
 
@@ -35,8 +35,8 @@ const blogSubmenu = blogPages.map((page) => {
 		tLabel && tLabel !== `nav.${slug}`
 			? tLabel
 			: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-	const finalUrl = url.replace('/[lang]/', `/${lang}/`);
-		return { href: `${finalUrl}/`, label };
+	const finalUrl = url.replace("/[lang]/", `/${lang}/`);
+	return { href: `${finalUrl}/`, label };
 });
 
 const navLinks = [
@@ -151,7 +151,7 @@ const navLinks = [
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
-                <input type="text" id="searchInput" class="search-input" placeholder={t('sidebar.search')} autocomplete="off" aria-label="Search" />
+                <input type="search" id="searchInput" class="search-input" placeholder={t('sidebar.search')} autocomplete="off" aria-label="Search" />
                 <div id="searchResults" class="search-results"></div>
             </div>
 
@@ -397,7 +397,15 @@ const navLinks = [
         // --- Search Filtering Logic ---
         const searchInput = document.getElementById('searchInput') as HTMLInputElement;
         const searchResults = document.getElementById('searchResults');
+        const searchWrapper = document.querySelector('.search-wrapper') as HTMLElement;
         const currentLang = document.documentElement.lang || 'en';
+
+        // Focus search input when clicking anywhere within the search wrapper
+        if (searchWrapper && searchInput) {
+            searchWrapper.addEventListener('click', () => {
+                searchInput.focus();
+            });
+        }
 
         interface SearchIndexItem {
             title: string;

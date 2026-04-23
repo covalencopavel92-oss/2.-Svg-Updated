@@ -22,7 +22,7 @@ const servicesSubmenu = servicesPages
 			tLabel && tLabel !== `nav.${slug}`
 				? tLabel
 				: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-		const finalUrl = url.replace('/[lang]/', `/${lang}/`);
+		const finalUrl = url.replace("/[lang]/", `/${lang}/`);
 		return { href: `${finalUrl}/`, label };
 	});
 
@@ -34,8 +34,8 @@ const blogSubmenu = blogPages.map((page) => {
 		tLabel && tLabel !== `nav.${slug}`
 			? tLabel
 			: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-	const finalUrl = url.replace('/[lang]/', `/${lang}/`);
-		return { href: `${finalUrl}/`, label };
+	const finalUrl = url.replace("/[lang]/", `/${lang}/`);
+	return { href: `${finalUrl}/`, label };
 });
 
 const navLinks = [
