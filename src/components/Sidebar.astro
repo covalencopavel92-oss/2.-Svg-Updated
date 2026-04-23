@@ -13,9 +13,26 @@ const blogPages = Object.values(
 	import.meta.glob("../pages/[lang]/blog/*.astro", { eager: true }),
 );
 
-const servicesSubmenu = servicesPages
-	.filter((page) => !page.url?.endsWith("index"))
-	.map((page) => {
+const servicesSubmenu = [
+	{ href: `/${lang}/services/`, label: t("nav.services") + " (View All)" },
+	...servicesPages
+		.filter((page) => !page.url?.endsWith("index"))
+		.map((page) => {
+			const url = page.url || "";
+			const slug = url.split("/").pop() || "";
+			const tLabel = t(`nav.${slug}` as any);
+			const label =
+				tLabel && tLabel !== `nav.${slug}`
+					? tLabel
+					: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+			const finalUrl = url.replace("/[lang]/", `/${lang}/`);
+			return { href: `${finalUrl}/`, label };
+		})
+];
+
+const blogSubmenu = [
+	{ href: `/${lang}/blog/`, label: t("nav.blog") + " (View All)" },
+	...blogPages.map((page) => {
 		const url = page.url || "";
 		const slug = url.split("/").pop() || "";
 		const tLabel = t(`nav.${slug}` as any);
@@ -25,19 +42,8 @@ const servicesSubmenu = servicesPages
 				: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 		const finalUrl = url.replace("/[lang]/", `/${lang}/`);
 		return { href: `${finalUrl}/`, label };
-	});
-
-const blogSubmenu = blogPages.map((page) => {
-	const url = page.url || "";
-	const slug = url.split("/").pop() || "";
-	const tLabel = t(`nav.${slug}` as any);
-	const label =
-		tLabel && tLabel !== `nav.${slug}`
-			? tLabel
-			: slug.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-	const finalUrl = url.replace("/[lang]/", `/${lang}/`);
-	return { href: `${finalUrl}/`, label };
-});
+	})
+];
 
 const navLinks = [
 	{
@@ -120,11 +126,6 @@ const navLinks = [
                 <a class={`nav-link ${link.submenu ? 'has-submenu-mobile' : ''}`} href={link.submenu ? '#' : link.href} data-href={link.href}>
                     <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={link.icon}></svg>
                     <span class="nav-text">{link.label}</span>
-                    {link.submenu && (
-                        <svg class="submenu-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    )}
                 </a>
                 {link.submenu && (
                     <div class="submenu-mobile">
