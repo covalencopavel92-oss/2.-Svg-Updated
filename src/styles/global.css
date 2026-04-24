@@ -8,7 +8,9 @@ select,
 svg,
 .brand-logo,
 .star-btn,
-.lang-switcher-container {
+.lang-switcher-container,
+.interactive-rating,
+.rating-stars {
 	-webkit-tap-highlight-color: transparent;
 }
 
@@ -1559,10 +1561,12 @@ input:checked + .slider svg.fa-moon {
 	}
 
 	/* Language selector always expanded on mobile */
-	.lang-collapsed {
+	.sidebar .lang-collapsed,
+	.sidebar:not(:hover):not(.force-expanded) .lang-collapsed {
 		display: none !important;
 	}
-	.lang-expanded {
+	.sidebar .lang-expanded,
+	.sidebar:not(:hover):not(.force-expanded) .lang-expanded {
 		display: flex !important;
 	}
 
