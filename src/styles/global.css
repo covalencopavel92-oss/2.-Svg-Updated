@@ -979,18 +979,47 @@ p {
 	column-gap: 2rem;
 }
 .review-card {
-	background: #1e1e1e;
-	color: #ffffff !important;
+	position: relative;
+	border: 1px solid var(--card-border);
 	padding: 2rem;
-	border-radius: 8px;
+	border-radius: 16px;
 	margin-bottom: 2rem;
 	break-inside: avoid;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+	text-decoration: none;
+
+	/* 3D Depth effect */
+	transform-style: preserve-3d;
+	transform: perspective(1000px);
+	transition:
+		transform 0.3s ease,
+		border-color 0.3s ease;
+	will-change: transform;
+}
+
+.review-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	overflow: hidden;
+	z-index: -1;
+	pointer-events: none;
+}
+
+.review-card > * {
+	position: relative;
+	z-index: 1;
+	transition: transform 0.3s ease;
+}
+
+.review-card:hover > * {
+	transform: translateZ(20px);
 }
 
 .review-card p,
 .review-card div {
-	color: #ffffff !important;
+	color: var(--card-text);
 }
 .stars {
 	color: #ffd700;
@@ -1037,71 +1066,57 @@ p {
 	gap: 2.5rem;
 }
 .blog-card {
-	border-radius: 8px;
-	overflow: hidden;
+	border-radius: 16px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-	background: #1e1e1e !important;
 	position: relative;
 	text-decoration: none;
-	transform: translateZ(0);
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--card-border);
+
+	/* 3D Depth effect */
+	transform-style: preserve-3d;
+	transform: perspective(1000px);
 	transition:
 		transform 0.3s ease,
 		border-color 0.3s ease;
 	will-change: transform;
-	border: 1px solid var(--card-border);
 }
 
-.blog-card::before {
+.blog-card::after {
 	content: "";
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	inset: 0;
 	border-radius: inherit;
-	opacity: 0;
-	transition: opacity 0.3s ease;
-	z-index: 0;
+	overflow: hidden;
+	z-index: -1;
 	pointer-events: none;
-	background: radial-gradient(
-		600px circle at var(--mouse-x) var(--mouse-y),
-		var(--hover-glow),
-		transparent 40%
-	);
 }
 
 @media (hover: hover) {
 	.blog-card:hover {
-		transform: translateY(-5px);
 		border-color: rgba(0, 247, 255, 0.5);
-	}
-	.blog-card:hover::before {
-		opacity: 1;
 	}
 }
 
 .blog-card.is-hovered {
-	transform: translateY(-5px);
 	border-color: rgba(0, 247, 255, 0.5);
-}
-
-.blog-card.is-hovered::before {
-	opacity: 1;
 }
 
 @media (hover: none) {
 	.blog-card:not(.is-hovered) {
-		transform: translateY(0);
 		border-color: var(--card-border);
-	}
-	.blog-card:not(.is-hovered)::before {
-		opacity: 0;
 	}
 }
 
 .blog-card > * {
 	position: relative;
 	z-index: 1;
+	transition: transform 0.3s ease;
+}
+
+.blog-card:hover > * {
+	transform: translateZ(20px);
 }
 
 /* Ensure the image doesn't get covered by the gradient */
@@ -1112,6 +1127,8 @@ p {
 	background-size: cover;
 	background-position: center;
 	position: relative;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
 	z-index: 2; /* Keep above the glow */
 }
 
@@ -1121,10 +1138,10 @@ p {
 	z-index: 1;
 }
 .blog-content h3 {
-	color: #ffffff !important;
+	color: var(--card-text);
 }
 .blog-content p {
-	color: #ffffff !important;
+	color: var(--card-text);
 }
 .read-more {
 	color: #00f6ff !important;
