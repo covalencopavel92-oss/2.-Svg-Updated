@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import AboutUsIm from "../../assets/AboutUsIm.jpeg";
 import { languages } from "../../i18n/ui";
 import { useTranslations } from "../../i18n/utils";
 import Layout from "../../layouts/Layout.astro";
@@ -17,7 +19,7 @@ const t = useTranslations(lang as keyof typeof languages);
     </div>
 
     <div class="hero-image-wrapper reveal">
-        <img src="/AboutUsIm.jpeg" alt="About Us" class="hero-image-3d" />
+        <Image src={AboutUsIm} alt="About Us" class="hero-image-3d" fetchpriority="high" loading="eager" />
     </div>
 
     <div class="hero-description text-left-indented reveal">
