@@ -1,0 +1,18 @@
+--- src/styles/global.css
++++ src/styles/global.css
+@@ -29,6 +29,7 @@
+	--card-border: #eaeaea;
+	--highlight-bg: #e8fcfd;
+	--quiz-bg: #ffffff;
++	--scrollbar-track: rgb(255, 255, 255);
+	--font-main: "Inter", sans-serif;
+
+	/* Sidebar Variables */
+@@ -41,6 +42,7 @@
+	--text-light: #cccccc;
+	--card-bg: #1e1e1e;
+	--card-border: #333333;
++	--scrollbar-track: rgb(0, 0, 0);
+	--highlight-bg: rgba(0, 246, 255, 0.05);
+	--quiz-bg: #2a2a2a;
+ }

@@ -54,20 +54,6 @@ svg,
 	scrollbar-color: var(--neon-blue) var(--scrollbar-track);
 }
 
-/* WebKit Scrollbar Customization */
-::-webkit-scrollbar {
-	width: 12px;
-	height: 12px;
-}
-
-::-webkit-scrollbar-track {
-	background: var(--scrollbar-track);
-}
-
-::-webkit-scrollbar-thumb {
-	background-color: var(--neon-blue);
-}
-
 html,
 body {
 	background-color: transparent !important;

@@ -1,0 +1,45 @@
+npm warn exec The following package was not found and will be installed: serve@14.2.6
+ INFO  Accepting connections at http://localhost:3000
+ HTTP  4/24/2026 10:10:45 PM ::1 GET /en/
+ HTTP  4/24/2026 10:10:45 PM ::1 Returned 200 in 22 ms
+ HTTP  4/24/2026 10:10:45 PM ::1 GET /_astro/ClientRouter.astro_astro_type_script_index_0_lang.NDgbMAqx.js
+ HTTP  4/24/2026 10:10:45 PM ::1 Returned 200 in 7 ms
+ HTTP  4/24/2026 10:10:45 PM ::1 GET /_astro/about.7EQyhJxE.css
+ HTTP  4/24/2026 10:10:45 PM ::1 Returned 200 in 4 ms
+ HTTP  4/24/2026 10:10:45 PM ::1 GET /_astro/page.j6_Enh8j.js
+ HTTP  4/24/2026 10:10:45 PM ::1 GET /_astro/Sidebar.astro_astro_type_script_index_0_lang.CMLjWopT.js
+ HTTP  4/24/2026 10:10:45 PM ::1 GET /_astro/Heroimg.DppJGszP_ZY48S1.webp
+ HTTP  4/24/2026 10:10:45 PM ::1 GET /SAlogo.svg
+ HTTP  4/24/2026 10:10:45 PM ::1 Returned 200 in 11 ms
+ HTTP  4/24/2026 10:10:45 PM ::1 Returned 200 in 10 ms
+ HTTP  4/24/2026 10:10:45 PM ::1 Returned 200 in 10 ms
+ HTTP  4/24/2026 10:10:45 PM ::1 Returned 200 in 17 ms
+ HTTP  4/24/2026 10:10:45 PM ::1 GET /_astro/index.DoI3pyI0.js
+ HTTP  4/24/2026 10:10:45 PM ::1 Returned 200 in 8 ms
+ HTTP  4/24/2026 10:10:46 PM ::1 GET /Logogif.webm
+ HTTP  4/24/2026 10:10:46 PM ::1 Returned 206 in 8 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /en/
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 200 in 1 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /_astro/ClientRouter.astro_astro_type_script_index_0_lang.NDgbMAqx.js
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 200 in 3 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /_astro/about.7EQyhJxE.css
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 200 in 1 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /_astro/page.j6_Enh8j.js
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /_astro/Sidebar.astro_astro_type_script_index_0_lang.CMLjWopT.js
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /SAlogo.svg
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 200 in 2 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 200 in 2 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 200 in 2 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /_astro/Heroimg.DppJGszP_ZY48S1.webp
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 200 in 2 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /Logogif.webm
+ HTTP  4/24/2026 10:11:37 PM ::1 GET /_astro/index.DoI3pyI0.js
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 206 in 3 ms
+ HTTP  4/24/2026 10:11:37 PM ::1 Returned 200 in 2 ms
+
+ INFO  Gracefully shutting down. Please wait...
+npm notice
+npm notice New minor version of npm available! 11.11.0 -> 11.13.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.13.0
+npm notice To update run: npm install -g npm@11.13.0
+npm notice
