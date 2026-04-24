@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import Heroimg from "../../assets/Heroimg.jpeg";
 import Quiz from "../../components/Quiz.astro";
 import { languages } from "../../i18n/ui";
 import { useTranslations } from "../../i18n/utils";
@@ -34,7 +36,7 @@ const t = useTranslations(lang as "en" | "ro" | "es");
                 </h2>
 
                 <div class="hero-image-wrapper">
-                    <img src="/Heroimg.jpeg" alt="A man working on a laptop with a coffee mug" class="hero-image-3d" />
+                    <Image src={Heroimg} alt="A man working on a laptop with a coffee mug" class="hero-image-3d" fetchpriority="high" loading="eager" />
                 </div>
                 
                 <div class="hero-description text-left-indented">
