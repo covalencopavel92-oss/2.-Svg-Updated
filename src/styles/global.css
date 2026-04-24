@@ -1207,7 +1207,7 @@ textarea.floating-input {
 	color: var(--text-light);
 	font-size: 1.1rem;
 	transition: all 0.3s ease;
-	pointer-events: none;
+	cursor: text;
 }
 .floating-input:focus ~ .floating-label,
 .floating-input:valid ~ .floating-label {
@@ -1563,14 +1563,22 @@ input:checked + .slider svg.fa-moon {
 	/* Language selector always expanded on mobile */
 	.sidebar .lang-collapsed,
 	.sidebar:not(:hover):not(.force-expanded) .lang-collapsed,
-	.sidebar:hover .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed,
-	.sidebar.force-expanded .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed {
+	.sidebar:hover
+		.lang-switcher-container[data-lang-expanded="true"]
+		.lang-collapsed,
+	.sidebar.force-expanded
+		.lang-switcher-container[data-lang-expanded="true"]
+		.lang-collapsed {
 		display: none !important;
 	}
 	.sidebar .lang-expanded,
 	.sidebar:not(:hover):not(.force-expanded) .lang-expanded,
-	.sidebar:hover .lang-switcher-container[data-lang-expanded="true"] .lang-expanded,
-	.sidebar.force-expanded .lang-switcher-container[data-lang-expanded="true"] .lang-expanded {
+	.sidebar:hover
+		.lang-switcher-container[data-lang-expanded="true"]
+		.lang-expanded,
+	.sidebar.force-expanded
+		.lang-switcher-container[data-lang-expanded="true"]
+		.lang-expanded {
 		display: flex !important;
 	}
 	.sidebar-header-top .lang-switcher-container {
