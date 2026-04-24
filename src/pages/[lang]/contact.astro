@@ -33,10 +33,13 @@ const t = useTranslations(lang as "en" | "ro" | "es");
 <style>
     .contact-link {
         color: var(--text-dark);
-        text-decoration: none;
+        text-decoration: underline;
+        text-decoration-color: var(--neon-blue);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
         font-size: 1.25em;
         display: inline-block;
-        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s ease, text-decoration-color 0.3s ease;
     }
 
     .contact-link:hover {
