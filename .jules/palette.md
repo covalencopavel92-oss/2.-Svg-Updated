@@ -16,3 +16,6 @@
 ## 2026-04-23 - Maximizing Search Input Hit Area
 **Learning:** Users often click around a search input (like its wrapper or search icon) rather than precisely on the input field. Using `type="search"` provides a native clear button (x), and delegating clicks from the wrapper to focus the inner input dramatically improves usability.
 **Action:** Always use `<input type="search">` instead of `type="text"` for search fields, and add a click event listener on any visual wrapper to focus the inner input to maximize the interactive hit area.
+## 2023-10-27 - Removed pointer-events: none from floating labels
+**Learning:** Applying `pointer-events: none` to `<label>` elements positioned over inputs might seem like a smart way to let clicks pass through to the input, but it breaks the native accessibility feature where clicking a label focuses its associated input.
+**Action:** Removed `pointer-events: none` from `.floating-label` and replaced it with `cursor: text` to maintain the visual interaction style while relying on the native `for` attribute behavior to focus the input.

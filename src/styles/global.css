@@ -1207,7 +1207,7 @@ textarea.floating-input {
 	color: var(--text-light);
 	font-size: 1.1rem;
 	transition: all 0.3s ease;
-	pointer-events: none;
+	cursor: text;
 }
 .floating-input:focus ~ .floating-label,
 .floating-input:valid ~ .floating-label {
