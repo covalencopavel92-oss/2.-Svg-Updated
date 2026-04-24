@@ -1555,26 +1555,56 @@ input:checked + .slider svg.fa-moon {
 		display: flex;
 		margin-bottom: 0;
 		min-height: auto;
-		order: 2; /* Position after the logo */
-		margin-left: auto; /* Push hamburger to the right */
+		order: 2;
+		margin-left: auto;
 		margin-right: 1rem;
+		position: static !important; /* Ensure absolute children position relative to .sidebar */
 	}
 
 	/* Language selector always expanded on mobile */
 	.sidebar .lang-collapsed,
 	.sidebar:not(:hover):not(.force-expanded) .lang-collapsed,
-	.sidebar:hover .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed,
-	.sidebar.force-expanded .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed {
+	.sidebar:hover
+		.lang-switcher-container[data-lang-expanded="true"]
+		.lang-collapsed,
+	.sidebar.force-expanded
+		.lang-switcher-container[data-lang-expanded="true"]
+		.lang-collapsed {
 		display: none !important;
 	}
 	.sidebar .lang-expanded,
 	.sidebar:not(:hover):not(.force-expanded) .lang-expanded,
-	.sidebar:hover .lang-switcher-container[data-lang-expanded="true"] .lang-expanded,
-	.sidebar.force-expanded .lang-switcher-container[data-lang-expanded="true"] .lang-expanded {
+	.sidebar:hover
+		.lang-switcher-container[data-lang-expanded="true"]
+		.lang-expanded,
+	.sidebar.force-expanded
+		.lang-switcher-container[data-lang-expanded="true"]
+		.lang-expanded {
 		display: flex !important;
 	}
 	.sidebar-header-top .lang-switcher-container {
 		width: auto !important;
+		justify-content: center !important;
+		position: absolute !important;
+		left: 50% !important;
+		transform: translateX(-50%) !important;
+		margin: 0 !important;
+	}
+	/* Removed broken padding overrides on parent */
+
+	.sidebar:hover .sidebar-header-top .lang-switcher-container,
+	.sidebar.force-expanded .sidebar-header-top .lang-switcher-container {
+		justify-content: center !important;
+		position: absolute !important;
+		left: 50% !important;
+		transform: translateX(-50%) !important;
+		margin: 0 !important;
+	}
+
+	.lang-btn {
+		/* Increase hit area for mobile */
+		padding: 0.5rem;
+		margin: -0.5rem;
 	}
 
 	.sidebar-lock-btn {
@@ -1592,6 +1622,7 @@ input:checked + .slider svg.fa-moon {
 	.hamburger {
 		display: block;
 		order: 3;
+		margin-left: auto; /* Ensure hamburger is pushed to right if space allows */
 	}
 
 	/* --- NEW: 70% Slide-in Mobile Drawer --- */
