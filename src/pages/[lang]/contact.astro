@@ -23,9 +23,23 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         <div class="contact-details reveal" style="margin-top: 3rem; text-align: center;">
             <h3 style="margin-bottom: 1rem;">Scale Automata S.R.L.</h3>
             <p><strong>{t('contactDetails.address')}:</strong> {import.meta.env.CONTACT_ADDRESS || 'Iasi, str. Barbu nr. 14'}</p>
-            <p><strong>{t('contactDetails.phone')}:</strong> <a href={`tel:${import.meta.env.CONTACT_PHONE || '0748198534'}`} style="color: var(--neon-blue); text-decoration: none;">{import.meta.env.CONTACT_PHONE || '0748198534'}</a></p>
-            <p><strong>{t('contactDetails.whatsapp')}:</strong> <a href={`https://wa.me/${import.meta.env.CONTACT_WHATSAPP || '40748198534'}`} target="_blank" rel="noopener noreferrer" style="color: var(--neon-blue); text-decoration: none;">+{import.meta.env.CONTACT_WHATSAPP || '40748198534'}</a></p>
-            <p><strong>{t('contactDetails.email')}:</strong> <a href={`mailto:${import.meta.env.CONTACT_EMAIL || 'Scaleautomata@gmail.com'}`} style="color: var(--neon-blue); text-decoration: none;">{import.meta.env.CONTACT_EMAIL || 'Scaleautomata@gmail.com'}</a></p>
+            <p><strong>{t('contactDetails.phone')}:</strong> <a href={`tel:${import.meta.env.CONTACT_PHONE || '0748198534'}`} class="contact-link">{import.meta.env.CONTACT_PHONE || '0748198534'}</a></p>
+            <p><strong>{t('contactDetails.whatsapp')}:</strong> <a href={`https://wa.me/${import.meta.env.CONTACT_WHATSAPP || '40748198534'}`} target="_blank" rel="noopener noreferrer" class="contact-link">+{import.meta.env.CONTACT_WHATSAPP || '40748198534'}</a></p>
+            <p><strong>{t('contactDetails.email')}:</strong> <a href={`mailto:${import.meta.env.CONTACT_EMAIL || 'Scaleautomata@gmail.com'}`} class="contact-link">{import.meta.env.CONTACT_EMAIL || 'Scaleautomata@gmail.com'}</a></p>
         </div>
     </section>
 </Layout>
+
+<style>
+    .contact-link {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-size: 1.25em;
+        display: inline-block;
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s ease;
+    }
+
+    .contact-link:hover {
+        transform: scale(1.05);
+    }
+</style>
