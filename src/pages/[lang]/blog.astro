@@ -18,42 +18,47 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         </div>
 
         <div class="blog-grid reveal">
-            <article class="blog-card">
+            <article class="blog-card glass-panel">
+                <div class="card-glow"></div>
                 <a href={`/${lang}/blog/legacy-systems`} style="display: block;">
                     <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80');"></div>
                 </a>
                 <div class="blog-content">
-                    <span style="color: #0056b3; font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">Digital Transformation</span>
+                    <span style="color: var(--neon-blue); font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">Digital Transformation</span>
                     <h3 style="margin: 0.5rem 0;">Why Legacy Systems are Costing You Customers</h3>
-                    <p style="color: #ffffff; font-size: 0.95rem;">An analysis of hidden costs in maintaining outdated infrastructure versus migrating to modern cloud architectures.</p>
+                    <p style="font-size: 0.95rem;">An analysis of hidden costs in maintaining outdated infrastructure versus migrating to modern cloud architectures.</p>
                     <a href={`/${lang}/blog/legacy-systems`} class="read-more">Read Article <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                 </div>
             </article>
-            <article class="blog-card">
+            <article class="blog-card glass-panel">
+                <div class="card-glow"></div>
                 <a href={`/${lang}/blog/core-update`} style="display: block;">
                     <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80');"></div>
                 </a>
                 <div class="blog-content">
-                    <span style="color: #0056b3; font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">SEO</span>
+                    <span style="color: var(--neon-blue); font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">SEO</span>
                     <h3 style="margin: 0.5rem 0;">The 2024 Core Update: What You Need to Know</h3>
-                    <p style="color: #ffffff; font-size: 0.95rem;">Search intent is evolving. Learn how to adapt your content strategy to stay ahead of algorithm changes.</p>
+                    <p style="font-size: 0.95rem;">Search intent is evolving. Learn how to adapt your content strategy to stay ahead of algorithm changes.</p>
                     <a href={`/${lang}/blog/core-update`} class="read-more">Read Article <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                 </div>
             </article>
-            <article class="blog-card">
+            <article class="blog-card glass-panel">
+                <div class="card-glow"></div>
                 <a href={`/${lang}/blog/maximizing-roas`} style="display: block;">
                     <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=800&q=80');"></div>
                 </a>
                 <div class="blog-content">
-                    <span style="color: #0056b3; font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">Paid Media</span>
+                    <span style="color: var(--neon-blue); font-size: 0.85rem; font-weight: 600; text-transform: uppercase;">Paid Media</span>
                     <h3 style="margin: 0.5rem 0;">Maximizing ROAS with AI-Driven Campaigns</h3>
-                    <p style="color: #ffffff; font-size: 0.95rem;">How we utilize machine learning to predict customer lifetime value and optimize ad spend across platforms.</p>
+                    <p style="font-size: 0.95rem;">How we utilize machine learning to predict customer lifetime value and optimize ad spend across platforms.</p>
                     <a href={`/${lang}/blog/maximizing-roas`} class="read-more">Read Article <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                 </div>
             </article>
         </div>
     </section>
     <script>
+    import VanillaTilt from 'vanilla-tilt';
+
     document.addEventListener('astro:page-load', () => {
         // ⚡ Bolt Optimization: Use requestAnimationFrame to throttle pointermove
         // calculations to match the display refresh rate, reducing main thread
@@ -89,12 +94,22 @@ const t = useTranslations(lang as "en" | "ro" | "es");
             target.classList.remove("is-hovered");
         };
 
-        document.querySelectorAll(".blog-card").forEach((card) => {
+        const blogCards = document.querySelectorAll(".blog-card");
+
+        blogCards.forEach((card) => {
             const el = card as HTMLElement;
             el.addEventListener('pointermove', handlePointerMove);
             el.addEventListener('pointerleave', handlePointerLeave);
             el.addEventListener('pointercancel', handlePointerLeave);
         });
+
+        if (blogCards.length > 0) {
+            VanillaTilt.init(Array.from(blogCards) as HTMLElement[], {
+                max: 15,
+                speed: 400,
+                glare: false,
+            });
+        }
     });
     </script>
 </Layout>
