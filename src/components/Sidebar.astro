@@ -366,13 +366,17 @@ const navLinks = [
             if (isIndexPopulated) return;
             isIndexPopulated = true;
 
+            // ⚡ Bolt Optimization: Hoisted DOMParser instantiation outside the loop.
+            // Reusing a single DOMParser instance prevents redundant object allocations
+            // and reduces garbage collection pressure during the background fetch loop.
+            const parser = new DOMParser();
+
             // Background fetch page contents to build a full text search index without blocking the main thread
             const fetchPromises = siteIndex.map(async (item) => {
                 try {
                     const response = await fetch(item.url);
                     if (response.ok) {
                         const html = await response.text();
-                        const parser = new DOMParser();
                         const doc = parser.parseFromString(html, 'text/html');
 
                         // Extract text from main-content only, to avoid indexing the sidebar itself
