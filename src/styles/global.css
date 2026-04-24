@@ -1562,12 +1562,19 @@ input:checked + .slider svg.fa-moon {
 
 	/* Language selector always expanded on mobile */
 	.sidebar .lang-collapsed,
-	.sidebar:not(:hover):not(.force-expanded) .lang-collapsed {
+	.sidebar:not(:hover):not(.force-expanded) .lang-collapsed,
+	.sidebar:hover .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed,
+	.sidebar.force-expanded .lang-switcher-container[data-lang-expanded="true"] .lang-collapsed {
 		display: none !important;
 	}
 	.sidebar .lang-expanded,
-	.sidebar:not(:hover):not(.force-expanded) .lang-expanded {
+	.sidebar:not(:hover):not(.force-expanded) .lang-expanded,
+	.sidebar:hover .lang-switcher-container[data-lang-expanded="true"] .lang-expanded,
+	.sidebar.force-expanded .lang-switcher-container[data-lang-expanded="true"] .lang-expanded {
 		display: flex !important;
+	}
+	.sidebar-header-top .lang-switcher-container {
+		width: auto !important;
 	}
 
 	.sidebar-lock-btn {
