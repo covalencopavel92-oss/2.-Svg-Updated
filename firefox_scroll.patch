@@ -1,0 +1,11 @@
+--- src/styles/global.css
++++ src/styles/global.css
+@@ -52,6 +52,8 @@
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
++	scrollbar-width: thin;
++	scrollbar-color: var(--neon-blue) var(--scrollbar-track);
+ }
+
+ html {
