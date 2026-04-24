@@ -822,7 +822,7 @@ p {
 	position: absolute;
 	inset: 0;
 	border-radius: inherit;
-	background: rgba(10, 20, 45, 0.1);
+	background-color: rgba(10, 20, 45, 0.1);
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
 	z-index: -2;
@@ -839,7 +839,7 @@ p {
 	z-index: -1;
 	pointer-events: none;
 	/* Coordinates are injected via JavaScript */
-	background: radial-gradient(
+	background-image: radial-gradient(
 		600px circle at var(--mouse-x) var(--mouse-y),
 		var(--hover-glow),
 		transparent 40%
@@ -1013,8 +1013,8 @@ p {
 	transition: transform 0.3s ease;
 }
 
-.review-card:hover > * {
-	transform: translateZ(20px);
+.review-card:hover > *:not(.card-glow) {
+	transform: translateZ(50px);
 }
 
 .review-card p,
@@ -1115,8 +1115,8 @@ p {
 	transition: transform 0.3s ease;
 }
 
-.blog-card:hover > * {
-	transform: translateZ(20px);
+.blog-card:hover > *:not(.card-glow) {
+	transform: translateZ(50px);
 }
 
 /* Ensure the image doesn't get covered by the gradient */
@@ -1800,4 +1800,30 @@ select:focus-visible,
 [tabindex]:not([tabindex="-1"]):focus-visible {
 	outline: 2px solid var(--neon-blue);
 	outline-offset: 2px;
+}
+
+/* Unified Card Glow for Blog and Review Cards */
+.card-glow {
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background-color: rgba(10, 20, 45, 0.1);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	z-index: -1;
+	pointer-events: none;
+	background-image: radial-gradient(
+		600px circle at var(--mouse-x) var(--mouse-y),
+		var(--hover-glow),
+		transparent 40%
+	);
+}
+
+.blog-card:hover .card-glow,
+.blog-card.is-hovered .card-glow,
+.review-card:hover .card-glow,
+.review-card.is-hovered .card-glow {
+	opacity: 1;
 }
