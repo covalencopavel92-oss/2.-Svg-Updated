@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import BlogIm from "../../assets/BlogIm.jpeg";
 import { languages } from "../../i18n/ui";
 import { useTranslations } from "../../i18n/utils";
 import Layout from "../../layouts/Layout.astro";
@@ -15,6 +17,10 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         <div class="section-header reveal">
             <h2>{t('blog.title')}</h2>
             <p>{t('blog.subtitle')}</p>
+        </div>
+
+        <div class="hero-image-wrapper reveal">
+            <Image src={BlogIm} alt="Blog Hero Image" class="hero-image-3d" fetchpriority="high" loading="eager" />
         </div>
 
         <div class="blog-grid reveal">
@@ -112,4 +118,44 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         }
     });
     </script>
+
+    <style>
+        .hero-image-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            perspective: 1000px;
+        }
+
+        .hero-image-3d {
+            width: 95vw;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Subtle continuous floating animation */
+            animation: float-3d 6s ease-in-out infinite alternate;
+        }
+
+        .hero-image-wrapper:hover .hero-image-3d {
+            /* Enhance the 3D pop on hover */
+            transform: rotateX(5deg) rotateY(-5deg) translateZ(50px) scale(1.02);
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 255, 255, 0.2);
+            animation-play-state: paused;
+        }
+
+        @keyframes float-3d {
+            0% {
+                transform: rotateX(2deg) rotateY(-2deg) translateZ(10px);
+            }
+            100% {
+                transform: rotateX(-2deg) rotateY(2deg) translateZ(-10px);
+            }
+        }
+    </style>
 </Layout>
