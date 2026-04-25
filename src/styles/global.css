@@ -729,6 +729,8 @@ p {
 	max-width: 100%;
 	word-wrap: break-word;
 	margin-bottom: 7rem;
+	padding-top: 15px;
+	padding-bottom: 15px;
 	font-family: "Russo One", system-ui, sans-serif;
 	font-weight: 900;
 	color: var(--text-dark) !important;
