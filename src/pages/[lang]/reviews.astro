@@ -21,7 +21,7 @@ const t = useTranslations(lang as keyof typeof languages);
         </div>
 
         <div class="hero-image-wrapper reveal">
-            <Image src={ReviewIm} alt="Reviews Hero Image" class="hero-image-3d" fetchpriority="high" loading="eager" />
+            <Image src={ReviewIm} alt="Reviews Hero Image" class="hero-image-3d" fetchpriority="high" loading="eager" widths={[240, 540, 720, 1080, ReviewIm.width]} sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, (max-width: 1600px) 1080px, ${ReviewIm.width}px`} />
         </div>
 
         <ReviewsComponent />
