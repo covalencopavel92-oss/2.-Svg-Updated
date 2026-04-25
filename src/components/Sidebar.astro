@@ -433,13 +433,17 @@ const navLinks = [
                         );
 
                         if (matches.length > 0) {
+                            // ⚡ Bolt Optimization: Use DocumentFragment to batch DOM insertions
+                            // This prevents multiple reflows when rendering many search results
+                            const fragment = document.createDocumentFragment();
                             matches.forEach(match => {
                                 const a = document.createElement('a');
                                 a.href = match.url;
                                 a.className = 'search-result-item';
                                 a.textContent = match.title;
-                                searchResults.appendChild(a);
+                                fragment.appendChild(a);
                             });
+                            searchResults.appendChild(fragment);
                             searchResults.style.display = 'flex';
                         } else {
                             const div = document.createElement('div');
