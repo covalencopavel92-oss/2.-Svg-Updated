@@ -9,6 +9,9 @@
 		"astro": "astro"
 	},
 	"dependencies": {
+		"@fontsource/geostar-fill": "^5.2.7",
+		"@fontsource/inter": "^5.2.8",
+		"@fontsource/russo-one": "^5.2.7",
 		"astro": "^5.18.1",
 		"vanilla-tilt": "^1.8.1"
 	},
