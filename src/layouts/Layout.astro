@@ -1,5 +1,13 @@
 ---
 import "../styles/global.css";
+// --- FONTS ---
+import "@fontsource/geostar-fill";
+import "@fontsource/inter/latin-ext.css";
+import "@fontsource/inter/300.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/russo-one";
+
 // --- NEW: Import the Astro Router ---
 import { ClientRouter } from "astro:transitions";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
@@ -33,14 +41,6 @@ const metaDesc = description || t("home.desc").substring(0, 160);
     <meta name="description" content={metaDesc}>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=optional">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=optional" media="print" onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geostar+Fill&family=Inter:wght@300;400;600&family=Russo+One&display=optional">
-    </noscript>
 
     <ClientRouter />
 
