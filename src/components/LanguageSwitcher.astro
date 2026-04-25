@@ -11,8 +11,8 @@ const languages = ["en", "ro", "es"];
     <div class="lang-expanded">
         {languages.map((l, index) => (
             <>
-                <a href={`/${l}/`} class={`lang-btn ${currentLang === l ? 'active' : ''}`}>{l.toUpperCase()}</a>
-                {index < languages.length - 1 && <span class="lang-separator">|</span>}
+                <a href={`/${l}/`} class={`lang-btn ${currentLang === l ? 'active' : ''}`} aria-current={currentLang === l ? "true" : undefined}>{l.toUpperCase()}</a>
+                {index < languages.length - 1 && <span class="lang-separator" aria-hidden="true">|</span>}
             </>
         ))}
     </div>
