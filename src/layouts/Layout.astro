@@ -169,7 +169,9 @@ const metaDesc = description || t("home.desc").substring(0, 160);
                 }
             });
         });
-        themeObserver.observe(document.documentElement, { attributes: true });
+        // ⚡ Bolt Optimization: Added attributeFilter to prevent the observer from firing
+        // repeatedly on irrelevant attribute changes (e.g., class changes during View Transitions).
+        themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     };
 
     const initScrollReveal = () => {
