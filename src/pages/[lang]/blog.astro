@@ -63,9 +63,7 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         </div>
     </section>
     <script>
-    import VanillaTilt from 'vanilla-tilt';
-
-    document.addEventListener('astro:page-load', () => {
+    document.addEventListener('astro:page-load', async () => {
         // ⚡ Bolt Optimization: Use requestAnimationFrame to throttle pointermove
         // calculations to match the display refresh rate, reducing main thread
         // overhead during rapid pointer events, especially from high-polling mice.
@@ -110,6 +108,7 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         });
 
         if (blogCards.length > 0) {
+            const { default: VanillaTilt } = await import('vanilla-tilt');
             VanillaTilt.init(Array.from(blogCards) as HTMLElement[], {
                 max: 15,
                 speed: 400,

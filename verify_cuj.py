@@ -10,7 +10,7 @@ async def verify_glassmorphism():
         )
         page = await context.new_page()
 
-        await page.goto('http://localhost:3000/en/services/')
+        await page.goto('http://localhost:4321/en/services/')
         await asyncio.sleep(2)  # Wait for load and animations
 
         # 1. Take screenshot of light mode
