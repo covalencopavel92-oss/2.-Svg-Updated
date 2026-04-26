@@ -417,10 +417,14 @@ const navLinks = [
 
                 // Clear the existing timer on every keystroke
                 clearTimeout(debounceTimer);
+
+                // ⚡ Bolt Optimization: Extract the query value synchronously outside the debounce closure.
+                // This reduces memory overhead by not keeping the entire event object alive in the closure
+                // and prevents issues if the event object is pooled or mutated.
+                const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
                 
                 // Set a new timer to execute search after 300ms of inactivity
                 debounceTimer = setTimeout(() => {
-                    const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
                     searchResults.textContent = '';
 
                     if (query.length > 0) {
