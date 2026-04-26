@@ -83,9 +83,7 @@ const t = useTranslations(lang);
 </style>
 
 <script>
-    import VanillaTilt from 'vanilla-tilt';
-
-    document.addEventListener('astro:page-load', () => {
+    document.addEventListener('astro:page-load', async () => {
         // Star rating logic
         const ratingContainer = document.querySelector('.rating-stars');
         const stars = document.querySelectorAll('.star-btn');
@@ -175,6 +173,7 @@ const t = useTranslations(lang);
         });
 
         if (reviewCards.length > 0) {
+            const { default: VanillaTilt } = await import('vanilla-tilt');
             VanillaTilt.init(Array.from(reviewCards) as HTMLElement[], {
                 max: 15,
                 speed: 400,

@@ -8,6 +8,13 @@ import "@fontsource/inter/400.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/russo-one";
 
+import fontGeostar from "@fontsource/geostar-fill/files/geostar-fill-latin-400-normal.woff2?url";
+import fontInterExt from "@fontsource/inter/files/inter-latin-ext-400-normal.woff2?url";
+import fontInter300 from "@fontsource/inter/files/inter-latin-300-normal.woff2?url";
+import fontInter400 from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
+import fontInter600 from "@fontsource/inter/files/inter-latin-600-normal.woff2?url";
+import fontRusso from "@fontsource/russo-one/files/russo-one-latin-400-normal.woff2?url";
+
 // --- NEW: Import the Astro Router ---
 import { ClientRouter } from "astro:transitions";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
@@ -41,6 +48,13 @@ const metaDesc = description || t("home.desc").substring(0, 160);
     <meta name="description" content={metaDesc}>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+
+    <link rel="preload" href={fontInter400} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={fontInter300} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={fontInter600} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={fontInterExt} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={fontGeostar} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={fontRusso} as="font" type="font/woff2" crossorigin="anonymous" />
 
     <ClientRouter />
 
