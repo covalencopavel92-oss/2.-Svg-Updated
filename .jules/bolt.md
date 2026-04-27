@@ -31,3 +31,6 @@
 ## 2024-05-24 - [Avoid Redundant Object Allocation in Fast-Path/Loops]
 **Learning:** Instantiating heavy objects like `DOMParser` inside a map/loop function (e.g., during background indexing) leads to unnecessary memory allocation and increases garbage collection pressure, negatively impacting the main thread performance.
 **Action:** Always hoist reusable object instances like `DOMParser` outside of loops or map functions so that a single instance is reused across multiple iterations.
+## 2026-04-26 - [Prevent Redundant MutationObserver Callbacks During View Transitions]
+**Learning:** Astro View Transitions dynamically add and remove classes like `is-animating` on the `<html>` element during page navigation. If a `MutationObserver` on `document.documentElement` lacks an `attributeFilter`, it will fire unnecessarily for every single class mutation, reducing layout performance during animation.
+**Action:** Always apply an `attributeFilter` (e.g., `attributeFilter: ['data-theme']`) when using a `MutationObserver` on `document.documentElement` to track specific attributes like theme changes, preventing redundant execution.
