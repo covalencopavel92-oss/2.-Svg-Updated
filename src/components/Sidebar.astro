@@ -100,7 +100,7 @@ const navLinks = [
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
                 <input type="search" id="searchInput" class="search-input" placeholder={t('sidebar.search')} autocomplete="off" aria-label="Search" />
-                <div id="searchResults" class="search-results"></div>
+                <div id="searchResults" class="search-results" aria-live="polite" role="status"></div>
             </div>
 
             <div class="theme-switch-wrapper">
