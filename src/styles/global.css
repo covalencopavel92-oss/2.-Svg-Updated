@@ -140,7 +140,7 @@ body {
 }
 
 .sidebar:hover,
-.sidebar.force-expanded {
+.sidebar:has(#sidebar-toggle:checked) {
 	width: var(--sidebar-expanded);
 	transition: width 0.3s ease-in-out 0s;
 }
@@ -165,14 +165,14 @@ body {
 }
 
 .sidebar:hover .sidebar-header-top,
-.sidebar.force-expanded .sidebar-header-top {
+.sidebar:has(#sidebar-toggle:checked) .sidebar-header-top {
 	justify-content: flex-start; /* Pushes the lang switcher left */
 	padding-left: 1rem;
 	padding-right: 0.5rem;
 }
 
 .sidebar:hover .sidebar-header-top .lang-switcher-container,
-.sidebar.force-expanded .sidebar-header-top .lang-switcher-container {
+.sidebar:has(#sidebar-toggle:checked) .sidebar-header-top .lang-switcher-container {
 	width: auto;
 	justify-content: flex-start;
 }
@@ -195,7 +195,7 @@ body {
 }
 
 .sidebar:hover .sidebar-lock-btn,
-.sidebar.force-expanded .sidebar-lock-btn {
+.sidebar:has(#sidebar-toggle:checked) .sidebar-lock-btn {
 	opacity: 1;
 	visibility: visible;
 }
@@ -204,11 +204,11 @@ body {
 	background-color: rgba(0, 246, 255, 0.1);
 }
 
-.sidebar-lock-btn.locked {
+#sidebar-toggle:checked ~ .sidebar-header-top .sidebar-lock-btn {
 	color: var(--gif-green);
 }
 
-.sidebar-lock-btn.locked:hover {
+#sidebar-toggle:checked ~ .sidebar-header-top .sidebar-lock-btn:hover {
 	background-color: rgba(4, 251, 1, 0.1);
 }
 
@@ -244,18 +244,18 @@ body {
 }
 
 /* Only show expanded when data attribute is set AND sidebar is expanded */
-.sidebar:not(:hover):not(.force-expanded) .lang-expanded {
+.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .lang-expanded {
 	display: none !important;
 }
 
-.sidebar:not(:hover):not(.force-expanded) .lang-collapsed {
+.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .lang-collapsed {
 	display: flex !important;
 }
 
 /* When sidebar is expanded, use data attribute to control display */
 .sidebar:hover .lang-switcher-container[data-lang-expanded="true"]
 	.lang-collapsed,
-.sidebar.force-expanded
+.sidebar:has(#sidebar-toggle:checked)
 	.lang-switcher-container[data-lang-expanded="true"]
 	.lang-collapsed {
 	display: none;
@@ -264,7 +264,7 @@ body {
 .sidebar:hover
 	.lang-switcher-container[data-lang-expanded="true"]
 	.lang-expanded,
-.sidebar.force-expanded
+.sidebar:has(#sidebar-toggle:checked)
 	.lang-switcher-container[data-lang-expanded="true"]
 	.lang-expanded {
 	display: flex;
@@ -289,7 +289,7 @@ body {
 }
 
 .sidebar:hover .brand-logo,
-.sidebar.force-expanded .brand-logo {
+.sidebar:has(#sidebar-toggle:checked) .brand-logo {
 	justify-content: flex-start;
 	gap: 1rem; /* Restore gap when expanded */
 }
@@ -305,14 +305,14 @@ body {
 }
 
 @media (min-width: 769px) {
-	.sidebar:not(:hover):not(.force-expanded) .logo-svg {
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .logo-svg {
 		width: 20px !important;
 		height: 20px !important;
 		padding: 0;
 		border: 1px solid var(--neon-blue);
 	}
 
-	.sidebar.force-expanded .logo-svg {
+	.sidebar:has(#sidebar-toggle:checked) .logo-svg {
 		width: 48px !important;
 		height: 48px !important;
 		padding: 2px;
@@ -346,7 +346,7 @@ body {
 }
 
 .sidebar:hover .nav-link,
-.sidebar.force-expanded .nav-link {
+.sidebar:has(#sidebar-toggle:checked) .nav-link {
 	justify-content: flex-start;
 	padding: 0.8rem 1rem;
 	gap: 1rem; /* Restore gap when expanded */
@@ -369,9 +369,9 @@ body {
 .sidebar:hover .brand-text,
 .sidebar:hover .nav-text,
 .sidebar:hover .theme-text,
-.sidebar.force-expanded .brand-text,
-.sidebar.force-expanded .nav-text,
-.sidebar.force-expanded .theme-text {
+.sidebar:has(#sidebar-toggle:checked) .brand-text,
+.sidebar:has(#sidebar-toggle:checked) .nav-text,
+.sidebar:has(#sidebar-toggle:checked) .theme-text {
 	opacity: 1;
 	width: auto;
 	pointer-events: auto;
@@ -410,8 +410,8 @@ body {
 
 .sidebar:hover .nav-link:hover,
 .sidebar:hover .nav-link.active,
-.sidebar.force-expanded .nav-link:hover,
-.sidebar.force-expanded .nav-link.active {
+.sidebar:has(#sidebar-toggle:checked) .nav-link:hover,
+.sidebar:has(#sidebar-toggle:checked) .nav-link.active {
 	transform: translateX(5px);
 }
 
@@ -473,7 +473,7 @@ body {
 	position: relative;
 }
 
-.sidebar:not(:hover):not(.force-expanded) .search-input {
+.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .search-input {
 	/* Absolute positioning removes it from the document flow, ensuring the icon perfectly centers */
 	position: absolute;
 	opacity: 0;
@@ -483,7 +483,7 @@ body {
 }
 
 .sidebar:hover .search-wrapper,
-.sidebar.force-expanded .search-wrapper {
+.sidebar:has(#sidebar-toggle:checked) .search-wrapper {
 	justify-content: flex-start;
 	padding: 0.8rem 1rem; /* Matches expanded .nav-link padding */
 	border-color: var(--neon-blue-dim);
@@ -491,7 +491,7 @@ body {
 }
 
 .sidebar:hover .search-input,
-.sidebar.force-expanded .search-input {
+.sidebar:has(#sidebar-toggle:checked) .search-input {
 	position: relative;
 	visibility: visible;
 	opacity: 1;
@@ -530,7 +530,7 @@ body {
 }
 
 .sidebar:hover .search-input,
-.sidebar.force-expanded .search-input {
+.sidebar:has(#sidebar-toggle:checked) .search-input {
 	opacity: 1;
 	width: 100%;
 	pointer-events: auto;
@@ -591,7 +591,7 @@ body {
 }
 
 @media (min-width: 769px) {
-	body:has(.sidebar[data-sidebar-locked="true"]) .main-content {
+	body:has(#sidebar-toggle:checked) .main-content {
 		margin-left: var(--sidebar-expanded);
 		width: calc(100% - var(--sidebar-expanded));
 	}
@@ -1322,7 +1322,7 @@ textarea.floating-input {
 }
 
 .sidebar:hover .theme-switch-wrapper,
-.sidebar.force-expanded .theme-switch-wrapper {
+.sidebar:has(#sidebar-toggle:checked) .theme-switch-wrapper {
 	/* Locks text to the left and toggle to the right */
 	justify-content: space-between;
 	gap: 1rem; /* Restore gap when expanded */
@@ -1404,19 +1404,19 @@ input:checked + .slider svg.fa-moon {
 			padding 0.4s cubic-bezier(0.25, 1, 0.5, 1),
 			border-color 0.4s ease;
 	}
-	.sidebar:not(:hover):not(.force-expanded) .theme-switch-wrapper {
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .theme-switch-wrapper {
 		border-top-color: transparent;
 		padding-top: 0.5rem;
 	}
 
 	/* FIX: Prevents 100% width from squishing text on hover */
-	.sidebar:not(:hover):not(.force-expanded) .theme-switch {
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .theme-switch {
 		display: flex;
 		justify-content: center;
 		width: 100%;
 	}
 	.sidebar:hover .theme-switch,
-	.sidebar.force-expanded .theme-switch {
+	.sidebar:has(#sidebar-toggle:checked) .theme-switch {
 		display: flex;
 		justify-content: flex-end;
 		width: 50px;
@@ -1431,7 +1431,7 @@ input:checked + .slider svg.fa-moon {
 		width: 50px;
 		overflow: hidden;
 	}
-	.sidebar:not(:hover):not(.force-expanded) .slider {
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .slider {
 		background-color: transparent !important;
 		width: 20px;
 		padding: 0;
@@ -1444,7 +1444,7 @@ input:checked + .slider svg.fa-moon {
 			background-color 0.4s ease !important;
 		opacity: 1;
 	}
-	.sidebar:not(:hover):not(.force-expanded) .slider:before {
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .slider:before {
 		opacity: 0;
 		transition-delay: 0s !important;
 	}
@@ -1466,11 +1466,11 @@ input:checked + .slider svg.fa-moon {
 	}
 
 	html[data-theme="light"]
-		.sidebar:not(:hover):not(.force-expanded)
+		.sidebar:not(:hover):not(:has(#sidebar-toggle:checked))
 		.slider
 		svg.fa-moon,
 	html[data-theme="dark"]
-		.sidebar:not(:hover):not(.force-expanded)
+		.sidebar:not(:hover):not(:has(#sidebar-toggle:checked))
 		.slider
 		svg.fa-sun {
 		opacity: 0;
@@ -1478,7 +1478,7 @@ input:checked + .slider svg.fa-moon {
 		margin: 0;
 		pointer-events: none;
 	}
-	.sidebar:not(:hover):not(.force-expanded) .slider svg {
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .slider svg {
 		width: 18px;
 		height: 18px;
 		margin: auto;
@@ -1589,21 +1589,21 @@ input:checked + .slider svg.fa-moon {
 
 	/* Language selector always expanded on mobile */
 	.sidebar .lang-collapsed,
-	.sidebar:not(:hover):not(.force-expanded) .lang-collapsed,
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .lang-collapsed,
 	.sidebar:hover
 		.lang-switcher-container[data-lang-expanded="true"]
 		.lang-collapsed,
-	.sidebar.force-expanded
+	.sidebar:has(#sidebar-toggle:checked)
 		.lang-switcher-container[data-lang-expanded="true"]
 		.lang-collapsed {
 		display: none !important;
 	}
 	.sidebar .lang-expanded,
-	.sidebar:not(:hover):not(.force-expanded) .lang-expanded,
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .lang-expanded,
 	.sidebar:hover
 		.lang-switcher-container[data-lang-expanded="true"]
 		.lang-expanded,
-	.sidebar.force-expanded
+	.sidebar:has(#sidebar-toggle:checked)
 		.lang-switcher-container[data-lang-expanded="true"]
 		.lang-expanded {
 		display: flex !important;
@@ -1619,7 +1619,7 @@ input:checked + .slider svg.fa-moon {
 	/* Removed broken padding overrides on parent */
 
 	.sidebar:hover .sidebar-header-top .lang-switcher-container,
-	.sidebar.force-expanded .sidebar-header-top .lang-switcher-container {
+	.sidebar:has(#sidebar-toggle:checked) .sidebar-header-top .lang-switcher-container {
 		justify-content: center !important;
 		position: absolute !important;
 		left: 50% !important;
@@ -1673,13 +1673,13 @@ input:checked + .slider svg.fa-moon {
 		overflow-y: auto; /* Allows scrolling inside the menu if it gets too long */
 	}
 
-	.nav-links.active {
+	#mobile-menu-toggle:checked ~ .nav-links {
 		left: 0; /* Smoothly slides the drawer in */
 	}
 
 	/* --- NEW: Kill Desktop Hover Glitches & Force Centering --- */
 	.sidebar:hover .nav-link,
-	.sidebar.force-expanded .nav-link,
+	.sidebar:has(#sidebar-toggle:checked) .nav-link,
 	.nav-link {
 		width: 100%;
 		text-align: center;
@@ -1720,13 +1720,13 @@ input:checked + .slider svg.fa-moon {
 
 	/* Fix Theme Switcher & Search Bar */
 	.sidebar:hover .theme-text,
-	.sidebar.force-expanded .theme-text,
+	.sidebar:has(#sidebar-toggle:checked) .theme-text,
 	.theme-text {
 		display: none !important; /* Kills the sticky "Theme" text completely on mobile */
 	}
 
 	.sidebar:hover .search-wrapper,
-	.sidebar.force-expanded .search-wrapper,
+	.sidebar:has(#sidebar-toggle:checked) .search-wrapper,
 	.search-wrapper {
 		width: 95%;
 		margin: 0 auto;
@@ -1736,14 +1736,14 @@ input:checked + .slider svg.fa-moon {
 	}
 
 	.sidebar:hover .theme-switch-wrapper,
-	.sidebar.force-expanded .theme-switch-wrapper,
+	.sidebar:has(#sidebar-toggle:checked) .theme-switch-wrapper,
 	.theme-switch-wrapper {
 		justify-content: center !important;
 		padding: 1.5rem 0 !important;
 	}
 
 	.sidebar:hover .theme-switch,
-	.sidebar.force-expanded .theme-switch,
+	.sidebar:has(#sidebar-toggle:checked) .theme-switch,
 	.theme-switch {
 		justify-content: center !important;
 		width: 50px !important;
@@ -1917,4 +1917,33 @@ select:focus-visible,
 .review-card:hover .card-glow,
 .review-card.is-hovered .card-glow {
 	opacity: 1;
+}
+
+
+/* Desktop Sidebar Lock Toggle Icons */
+.sidebar-lock-btn .lock-icon {
+    display: block;
+}
+.sidebar-lock-btn .unlock-icon {
+    display: none;
+}
+#sidebar-toggle:checked ~ .sidebar-header-top .sidebar-lock-btn .lock-icon {
+    display: none;
+}
+#sidebar-toggle:checked ~ .sidebar-header-top .sidebar-lock-btn .unlock-icon {
+    display: block;
+}
+#sidebar-toggle:checked ~ .sidebar-header-top .sidebar-lock-btn {
+    color: var(--gif-green);
+}
+
+
+/* Accessibility: Focus rings for the hidden checkboxes applied to their visible labels */
+#sidebar-toggle:focus-visible ~ .sidebar-header-top .sidebar-lock-btn {
+    outline: 2px solid var(--neon-blue);
+    outline-offset: 2px;
+}
+#mobile-menu-toggle:focus-visible ~ .hamburger {
+    outline: 2px solid var(--neon-blue);
+    outline-offset: 2px;
 }
