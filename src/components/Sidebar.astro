@@ -40,7 +40,7 @@ const navLinks = [
 ---
 
 <nav class="sidebar" id="sidebar-nav">
-    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle-checkbox sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" />
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle-checkbox sr-only" aria-label="Toggle Sidebar" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" />
     <div class="sidebar-header-top">
         <LanguageSwitcher />
         <label class="sidebar-lock-btn" for="sidebar-toggle" id="sidebarLockBtn" aria-label={t('sidebar.lock')}  title="Lock sidebar to keep expanded">
@@ -68,7 +68,7 @@ const navLinks = [
         <span class="brand-text">Scale<br>Automata</span>
     </a>
 
-    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" />
+    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox sr-only" aria-label="Toggle Mobile Menu" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" />
     <label class="hamburger" for="mobile-menu-toggle" aria-label="Toggle Menu" id="hamburgerBtn" >
         <svg aria-hidden="true" width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 17H21M3 12H21M3 7H21" 
