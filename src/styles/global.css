@@ -96,7 +96,7 @@ body {
 	margin-bottom: auto;
 }
 .title-overflow {
-	overflow: hidden;
+	overflow: visible; /* Changed from hidden to prevent clipping of 3D ztext */
 }
 .action-buttons-wrapper {
 	display: flex;
