@@ -1,11 +1,11 @@
 <div class="quiz-container reveal" id="quizApp">
     <h3>Digital Needs Assessment</h3>
     <p>Answer 3 quick questions to get a personalized service recommendation.</p>
-    <div id="quizQuestion" aria-live="polite" style="font-size: 1.4rem; font-weight: 600; margin-bottom: 2rem; min-height: 80px;"></div>
+    <div id="quizQuestion" aria-live="polite" role="status" style="font-size: 1.4rem; font-weight: 600; margin-bottom: 2rem; min-height: 80px;"></div>
     <div class="quiz-options" id="quizOptions"></div>
 </div>
 
-<div class="ai-tool-container reveal" id="quizResult" style="display: none;">
+<div class="ai-tool-container reveal" id="quizResult" aria-live="polite" role="status" style="display: none;">
     <h3 id="recTitle">Recommendation</h3>
     <div class="ai-result-box" id="recDesc"></div>
     <button class="btn btn-primary" id="retakeQuiz" style="margin-top: 2rem;">Retake Assessment</button>
