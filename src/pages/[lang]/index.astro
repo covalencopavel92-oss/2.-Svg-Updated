@@ -18,7 +18,7 @@ const t = useTranslations(lang as "en" | "ro" | "es");
         
         <div class="hero-section hero-section-wrapper">
             <div class="reveal">            
-                <h1 class="hero-title title-overflow">
+                <h1 class="hero-title title-overflow" style="padding-left: 20px; padding-right: 20px;" data-z data-z-layers="5" data-z-depth="15px" data-z-event="pointer" data-z-eventrotation="15deg">
                     <span class="pan-wrapper">
 
                         {t('index.hero.title').split(' ').map((word, index) => (
@@ -68,7 +68,44 @@ const t = useTranslations(lang as "en" | "ro" | "es");
     </section>
 </Layout>
 
+<script is:inline>
+    // Initialize ztext on page load for view transitions
+    document.addEventListener('astro:page-load', () => {
+        if (!window.Ztextify && !document.querySelector('script[src="/ztext.min.js"]')) {
+            const script = document.createElement('script');
+            script.src = "/ztext.min.js";
+            script.async = true;
+            document.body.appendChild(script);
+        } else if (window.Ztextify && document.querySelector('[data-z]')) {
+            // Re-initialize if already loaded. Use the same options as data attributes.
+            const zElements = document.querySelectorAll('[data-z]');
+            zElements.forEach(el => {
+                new Ztextify(el, {
+                    depth: el.getAttribute('data-z-depth') || "15px",
+                    layers: parseInt(el.getAttribute('data-z-layers') || "5"),
+                    fade: false,
+                    direction: "both",
+                    event: el.getAttribute('data-z-event') || "pointer",
+                    eventRotation: el.getAttribute('data-z-eventrotation') || "15deg"
+                });
+            });
+        }
+    });
+</script>
+
 <style>
+    /* 3D typography style for ztext */
+    .hero-title .z-text {
+        transform: rotateX(5deg) rotateY(-5deg);
+        transform-origin: center center;
+        transition: transform 0.1s;
+    }
+    .hero-title .z-layer:not(:first-child) {
+        /* Add a subtle shadow/darken effect to deeper layers */
+        color: var(--neon-blue);
+        filter: brightness(0.5);
+    }
+
     .hero-image-wrapper {
         width: 100%;
         display: flex;
