@@ -68,7 +68,7 @@ const navLinks = [
         <span class="brand-text">Scale<br>Automata</span>
     </a>
 
-    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox sr-only" aria-label="Toggle Mobile Menu" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" />
+    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox sr-only" aria-label="Toggle Menu" aria-expanded="false" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" />
     <label class="hamburger" for="mobile-menu-toggle" aria-label="Toggle Menu" id="hamburgerBtn" >
         <svg aria-hidden="true" width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 17H21M3 12H21M3 7H21" 
@@ -223,21 +223,23 @@ const navLinks = [
 
         if (mobileToggle && hamburgerBtn && nav) {
             // Update aria-expanded when checkbox changes
-
+            mobileToggle.addEventListener('change', () => {
+                mobileToggle.setAttribute('aria-expanded', mobileToggle.checked.toString());
+            });
 
             // Automatically close the menu when a link is tapped
             nav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     mobileToggle.checked = false;
-
+                    mobileToggle.setAttribute('aria-expanded', 'false');
                 });
             });
 
             // Automatically close the menu if the user taps outside of it
             document.addEventListener('click', (e) => {
-                if (mobileToggle.checked && !nav.contains(e.target) && !hamburgerBtn.contains(e.target) && e.target !== mobileToggle) {
+                if (mobileToggle.checked && !nav.contains(e.target as Node) && !hamburgerBtn.contains(e.target as Node) && e.target !== mobileToggle) {
                     mobileToggle.checked = false;
-
+                    mobileToggle.setAttribute('aria-expanded', 'false');
                 }
             });
         }
