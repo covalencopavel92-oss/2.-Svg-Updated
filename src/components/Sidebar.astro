@@ -40,18 +40,19 @@ const navLinks = [
 ---
 
 <nav class="sidebar" id="sidebar-nav">
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle-checkbox sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" />
     <div class="sidebar-header-top">
         <LanguageSwitcher />
-        <button class="sidebar-lock-btn" id="sidebarLockBtn" aria-label={t('sidebar.lock')} aria-pressed="false" title="Lock sidebar to keep expanded">
+        <label class="sidebar-lock-btn" for="sidebar-toggle" id="sidebarLockBtn" aria-label={t('sidebar.lock')}  title="Lock sidebar to keep expanded">
             <svg class="lock-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
-            <svg class="unlock-icon" aria-hidden="true" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="unlock-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 9.2 1"></path>
             </svg>
-        </button>
+        </label>
     </div>
 
     <a class="brand-logo" href={`/${lang}/`} aria-label="Scale Automata Homepage">
@@ -67,7 +68,8 @@ const navLinks = [
         <span class="brand-text">Scale<br>Automata</span>
     </a>
 
-    <button class="hamburger" aria-label="Toggle Menu" id="hamburgerBtn" aria-expanded="false">
+    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;" />
+    <label class="hamburger" for="mobile-menu-toggle" aria-label="Toggle Menu" id="hamburgerBtn" >
         <svg aria-hidden="true" width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 17H21M3 12H21M3 7H21" 
               stroke="#00f6ff" 
@@ -76,7 +78,7 @@ const navLinks = [
               stroke-linejoin="round">
             </path>
         </svg>
-    </button>
+    </label>
 
     <div class="nav-links" id="navLinks">
         {navLinks.map((link) => (
@@ -132,12 +134,11 @@ const navLinks = [
 
 <script>
     // 1. Global tracker for physical hover state and lock state
-    let isSidebarHovered = false;
-    const SIDEBAR_EXPANDED_KEY = 'sidebarExpanded';
     const SIDEBAR_LOCKED_KEY = 'sidebarLocked';
     const LANG_EXPANDED_KEY = 'langSwitcherExpanded';
 
-   // 2. Intercept Astro's DOM swap BEFORE it happens
+
+    // 2. Intercept Astro's DOM swap BEFORE it happens
     document.addEventListener('astro:before-swap', (e) => {
         // --- NEW: Preserve Theme Attribute to prevent background flashes ---
         const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -156,84 +157,93 @@ const navLinks = [
             }
         }
 
-        // --- EXISTING: Sidebar Lock Logic ---
-        // Check if sidebar is locked (always expand) or hover state (expand when hovered)
-        const isLocked = localStorage.getItem(SIDEBAR_LOCKED_KEY) === 'true';
-        const shouldExpand = isLocked || isSidebarHovered;
-        
-        if (shouldExpand) {
-            // Find the sidebar in the incoming HTML from the next page
-            const incomingSidebar = e.newDocument.getElementById('sidebar-nav');
-            if (incomingSidebar) {
-                // Add the class to the incoming HTML so Astro doesn't strip it during the morph
-                incomingSidebar.classList.add('force-expanded');
-                // Mark the sidebar as locked so styles apply correctly
-                if (isLocked) {
-                    incomingSidebar.dataset.sidebarLocked = 'true';
-                } else {
-                    incomingSidebar.dataset.sidebarLocked = 'false';
-                }
-            }
+        // --- Preserve Sidebar Checkbox State ---
+        const incomingSidebarToggle = e.newDocument.getElementById('sidebar-toggle') as HTMLInputElement;
+        const currentSidebarToggle = document.getElementById('sidebar-toggle') as HTMLInputElement;
+        if (incomingSidebarToggle && currentSidebarToggle) {
+            incomingSidebarToggle.checked = currentSidebarToggle.checked;
+        }
 
+        // --- Preserve Mobile Menu Checkbox State ---
+        const incomingMobileToggle = e.newDocument.getElementById('mobile-menu-toggle') as HTMLInputElement;
+        const currentMobileToggle = document.getElementById('mobile-menu-toggle') as HTMLInputElement;
+        if (incomingMobileToggle && currentMobileToggle) {
+            incomingMobileToggle.checked = currentMobileToggle.checked;
         }
         
         // --- EXISTING: Language Switcher Logic ---
         // Preserve language switcher expanded state during page transitions
         const isLangExpanded = localStorage.getItem(LANG_EXPANDED_KEY) === 'true';
         if (isLangExpanded) {
-            const incomingLangSwitcher = e.newDocument.querySelector('.lang-switcher-container') as HTMLElement;
+            const incomingLangSwitcher = e.newDocument.querySelector('.lang-switcher-container');
             if (incomingLangSwitcher) {
                 incomingLangSwitcher.dataset.langExpanded = 'true';
             }
         }
     });
 
+
     // 3. Initialize Sidebar Logic
     function initSidebar() {
         const sidebar = document.getElementById('sidebar-nav');
         if (!sidebar || sidebar.dataset.initialized === 'true') return;
         sidebar.dataset.initialized = 'true';
-        // Check if sidebar is locked and restore state
-        const isLocked = localStorage.getItem(SIDEBAR_LOCKED_KEY) === 'true';
-        if (isLocked) {
-            sidebar.classList.add('force-expanded');
-            sidebar.dataset.sidebarLocked = 'true';
-        } else {
-            sidebar.dataset.sidebarLocked = 'false';
-            if (localStorage.getItem(SIDEBAR_EXPANDED_KEY) === 'true') {
-                sidebar.classList.add('force-expanded');
+
+        // --- Sidebar Lock Logic ---
+        const sidebarToggle = document.getElementById('sidebar-toggle') as HTMLInputElement;
+        const lockBtn = document.getElementById('sidebarLockBtn');
+
+        if (sidebarToggle) {
+            // Restore from localStorage if present
+            const isLocked = localStorage.getItem(SIDEBAR_LOCKED_KEY) === 'true';
+            sidebarToggle.checked = isLocked;
+            if (lockBtn) {
+                
+                lockBtn.title = isLocked ? 'Unlock sidebar to use hover-based expansion' : 'Lock sidebar to keep expanded';
             }
+
+            sidebarToggle.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                if (isChecked) {
+                    localStorage.setItem(SIDEBAR_LOCKED_KEY, 'true');
+                } else {
+                    localStorage.removeItem(SIDEBAR_LOCKED_KEY);
+                }
+                if (lockBtn) {
+
+                    lockBtn.title = isChecked ? 'Unlock sidebar to use hover-based expansion' : 'Lock sidebar to keep expanded';
+                }
+            });
         }
 
+        // --- Mobile Menu Logic ---
+        const mobileToggle = document.getElementById('mobile-menu-toggle') as HTMLInputElement;
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const nav = document.getElementById('navLinks');
 
-        // Update lock button visual state
-        const lockBtn = document.getElementById('sidebarLockBtn');
-        if (lockBtn) {
-            updateLockButtonState(lockBtn, isLocked);
-            
-            // --- Lock/Unlock Button Logic ---
-            lockBtn.addEventListener('click', () => {
-                const isCurrentlyLocked = localStorage.getItem(SIDEBAR_LOCKED_KEY) === 'true';
-                const newLockedState = !isCurrentlyLocked;
-                
-                if (newLockedState) {
-                    // Lock the sidebar
-                    localStorage.setItem(SIDEBAR_LOCKED_KEY, 'true');
-                    sidebar.classList.add('force-expanded');
-                    sidebar.dataset.sidebarLocked = 'true';
-                } else {
-                    // Unlock the sidebar
-                    localStorage.removeItem(SIDEBAR_LOCKED_KEY);
-                    localStorage.removeItem(SIDEBAR_EXPANDED_KEY);
-                    sidebar.classList.remove('force-expanded');
-                    sidebar.dataset.sidebarLocked = 'false';
+        if (mobileToggle && hamburgerBtn && nav) {
+            // Update aria-expanded when checkbox changes
+
+
+            // Automatically close the menu when a link is tapped
+            nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileToggle.checked = false;
+
+                });
+            });
+
+            // Automatically close the menu if the user taps outside of it
+            document.addEventListener('click', (e) => {
+                if (mobileToggle.checked && !nav.contains(e.target) && !hamburgerBtn.contains(e.target) && e.target !== mobileToggle) {
+                    mobileToggle.checked = false;
+
                 }
-                
-                updateLockButtonState(lockBtn, newLockedState);
             });
         }
 
         // --- Language Switcher State Persistence ---
+
         const langSwitcher = document.querySelector('.lang-switcher-container') as HTMLElement;
         if (langSwitcher) {
             const langCollapsed = langSwitcher.querySelector('.lang-collapsed') as HTMLElement;
@@ -286,54 +296,6 @@ const navLinks = [
                 langSwitcher.dataset.langExpanded = 'false';
                 if (langCollapsed) langCollapsed.setAttribute('aria-expanded', 'false');
             }
-        }
-
-        // Track real mouse presence
-        sidebar.addEventListener('mouseenter', () => {
-            isSidebarHovered = true;
-            sidebar.classList.add('force-expanded');
-            // Only persist hover if NOT locked
-            if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
-                localStorage.setItem(SIDEBAR_EXPANDED_KEY, 'true');
-            }
-        });
-        
-        sidebar.addEventListener('mouseleave', () => {
-            isSidebarHovered = false;
-            // Only collapse if NOT locked
-            if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
-                sidebar.classList.remove('force-expanded');
-                localStorage.removeItem(SIDEBAR_EXPANDED_KEY);
-            }
-        });
-
-        // --- Mobile Menu Logic ---
-        const btn = document.getElementById('hamburgerBtn');
-        const nav = document.getElementById('navLinks');
-        
-        if (btn && nav) {
-            // 1. Toggle menu on button tap
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevents the click from immediately triggering the document listener below
-                nav.classList.toggle('active');
-                btn.setAttribute('aria-expanded', nav.classList.contains('active').toString());
-            });
-
-            // 2. Automatically close the menu when a link is tapped
-            nav.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    nav.classList.remove('active');
-                    btn.setAttribute('aria-expanded', 'false');
-                });
-            });
-
-            // 3. Automatically close the menu if the user taps outside of it
-            document.addEventListener('click', (e) => {
-                if (nav.classList.contains('active') && !nav.contains(e.target as Node) && !btn.contains(e.target as Node)) {
-                    nav.classList.remove('active');
-                    btn.setAttribute('aria-expanded', 'false');
-                }
-            });
         }
 
         // --- Search Filtering Logic ---
@@ -484,49 +446,9 @@ const navLinks = [
         }
     }
 
-    // Update lock button visual state (locked vs unlocked icons)
-    function updateLockButtonState(btn: HTMLElement, isLocked: boolean) {
-        const lockIcon = btn.querySelector('.lock-icon') as SVGSVGElement;
-        const unlockIcon = btn.querySelector('.unlock-icon') as SVGSVGElement;
-        
-        if (lockIcon && unlockIcon) {
-            if (isLocked) {
-                lockIcon.style.display = 'none';
-                unlockIcon.style.display = 'block';
-                btn.classList.add('locked');
-                btn.title = 'Unlock sidebar to use hover-based expansion';
-                btn.setAttribute('aria-pressed', 'true');
-            } else {
-                lockIcon.style.display = 'block';
-                unlockIcon.style.display = 'none';
-                btn.classList.remove('locked');
-                btn.title = 'Lock sidebar to keep expanded';
-                btn.setAttribute('aria-pressed', 'false');
-            }
-        }
-    }
-
     // 4. Run on every page load
     document.addEventListener('astro:page-load', () => {
         initSidebar();
-
-        // Re-evaluate physical hover state after page loads
-        const sidebar = document.getElementById('sidebar-nav');
-        if (sidebar) {
-            if (sidebar.matches(':hover')) {
-                isSidebarHovered = true;
-                sidebar.classList.add('force-expanded');
-                if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
-                    localStorage.setItem(SIDEBAR_EXPANDED_KEY, 'true');
-                }
-            } else {
-                isSidebarHovered = false;
-                if (localStorage.getItem(SIDEBAR_LOCKED_KEY) !== 'true') {
-                    sidebar.classList.remove('force-expanded');
-                    localStorage.removeItem(SIDEBAR_EXPANDED_KEY);
-                }
-            }
-        }
 
         // Highlight Active Link
         const currentPath = window.location.pathname;
