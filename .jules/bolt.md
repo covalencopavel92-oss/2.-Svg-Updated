@@ -34,3 +34,10 @@
 ## 2026-04-26 - [Prevent Redundant MutationObserver Callbacks During View Transitions]
 **Learning:** Astro View Transitions dynamically add and remove classes like `is-animating` on the `<html>` element during page navigation. If a `MutationObserver` on `document.documentElement` lacks an `attributeFilter`, it will fire unnecessarily for every single class mutation, reducing layout performance during animation.
 **Action:** Always apply an `attributeFilter` (e.g., `attributeFilter: ['data-theme']`) when using a `MutationObserver` on `document.documentElement` to track specific attributes like theme changes, preventing redundant execution.
+## 2026-05-18 - [Optimize URL path parsing]
+**Learning:** In frequently executed string parsing logic (like URL path resolution for breadcrumbs), relying on `.split('/').filter(...)` creates unnecessary intermediate arrays and multiple string copies. Replacing it with a loop using `indexOf()` and `substring()` reduces memory allocation overhead and improves execution time.
+**Action:** When extracting specific segments from known string formats, prefer `indexOf` and `substring` over `split` if performance is critical or the logic is executed frequently.
+
+## 2026-05-18 - [Test environment import.meta.env]
+**Learning:** In Astro projects, `import.meta.env` is undefined in Node.js test environments (e.g., using `tsx --test`). Accessing properties like `import.meta.env.CONTACT_PHONE` directly will throw a 'Cannot read properties of undefined' error.
+**Action:** Guard environment variable access with `typeof import.meta !== 'undefined' && import.meta.env` to ensure it is safe to evaluate during tests.
