@@ -507,6 +507,21 @@ body {
 	transition: color 0.3s;
 }
 
+.search-spinner {
+	color: var(--neon-blue);
+	flex-shrink: 0;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 .search-wrapper:focus-within {
 	outline: 2px solid var(--neon-blue);
 	outline-offset: 2px;

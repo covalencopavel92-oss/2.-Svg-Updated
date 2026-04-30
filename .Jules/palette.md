@@ -1,3 +1,3 @@
-## 2023-10-27 - Dynamic Content Announcement in Quizzes and Forms
-**Learning:** Screen readers miss dynamic state changes like new quiz questions replacing old ones, or success messages appearing after async form submissions, unless explicitly told to announce them.
-**Action:** Always add `aria-live="polite"` (and `role="status"` where appropriate) to containers where text content is dynamically replaced via JavaScript, ensuring screen reader users are informed of the updates.
+## 2024-04-30 - Search Loading Indicator
+**Learning:** Adding immediate visual feedback to debounced input fields (like the sidebar search) drastically improves perceived performance and clarifies to the user that their input is being processed, rather than ignored. The sidebar search input lacked any loading state while waiting for the 300ms debounce to resolve.
+**Action:** Always include a visual loading indicator (e.g., an inline SVG spinner) for debounced or asynchronous input operations. Toggle the indicator on during the `input` event and turn it off when the async operation or debounce timer completes.
