@@ -172,7 +172,9 @@ body {
 }
 
 .sidebar:hover .sidebar-header-top .lang-switcher-container,
-.sidebar:has(#sidebar-toggle:checked) .sidebar-header-top .lang-switcher-container {
+.sidebar:has(#sidebar-toggle:checked)
+	.sidebar-header-top
+	.lang-switcher-container {
 	width: auto;
 	justify-content: flex-start;
 }
@@ -1419,7 +1421,8 @@ input:checked + .slider svg.fa-moon {
 			padding 0.4s cubic-bezier(0.25, 1, 0.5, 1),
 			border-color 0.4s ease;
 	}
-	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked)) .theme-switch-wrapper {
+	.sidebar:not(:hover):not(:has(#sidebar-toggle:checked))
+		.theme-switch-wrapper {
 		border-top-color: transparent;
 		padding-top: 0.5rem;
 	}
@@ -1574,8 +1577,15 @@ input:checked + .slider svg.fa-moon {
 }
 
 @media (max-width: 768px) {
+	body {
+		overflow-x: hidden;
+		max-width: 100vw;
+	}
+
 	.app-container {
 		flex-direction: column;
+		overflow-x: hidden;
+		max-width: 100vw;
 	}
 
 	/* Sidebar to Top Navbar */
@@ -1634,7 +1644,9 @@ input:checked + .slider svg.fa-moon {
 	/* Removed broken padding overrides on parent */
 
 	.sidebar:hover .sidebar-header-top .lang-switcher-container,
-	.sidebar:has(#sidebar-toggle:checked) .sidebar-header-top .lang-switcher-container {
+	.sidebar:has(#sidebar-toggle:checked)
+		.sidebar-header-top
+		.lang-switcher-container {
 		justify-content: center !important;
 		position: absolute !important;
 		left: 50% !important;
@@ -1643,9 +1655,9 @@ input:checked + .slider svg.fa-moon {
 	}
 
 	.lang-btn {
-		/* Increase hit area for mobile */
+		/* Increase hit area for mobile without causing overflow */
 		padding: 0.5rem;
-		margin: -0.5rem;
+		margin: 0;
 	}
 
 	.sidebar-lock-btn {
@@ -1934,31 +1946,29 @@ select:focus-visible,
 	opacity: 1;
 }
 
-
 /* Desktop Sidebar Lock Toggle Icons */
 .sidebar-lock-btn .lock-icon {
-    display: block;
+	display: block;
 }
 .sidebar-lock-btn .unlock-icon {
-    display: none;
+	display: none;
 }
 #sidebar-toggle:checked ~ .sidebar-header-top .sidebar-lock-btn .lock-icon {
-    display: none;
+	display: none;
 }
 #sidebar-toggle:checked ~ .sidebar-header-top .sidebar-lock-btn .unlock-icon {
-    display: block;
+	display: block;
 }
 #sidebar-toggle:checked ~ .sidebar-header-top .sidebar-lock-btn {
-    color: var(--gif-green);
+	color: var(--gif-green);
 }
-
 
 /* Accessibility: Focus rings for the hidden checkboxes applied to their visible labels */
 #sidebar-toggle:focus-visible ~ .sidebar-header-top .sidebar-lock-btn {
-    outline: 2px solid var(--neon-blue);
-    outline-offset: 2px;
+	outline: 2px solid var(--neon-blue);
+	outline-offset: 2px;
 }
 #mobile-menu-toggle:focus-visible ~ .hamburger {
-    outline: 2px solid var(--neon-blue);
-    outline-offset: 2px;
+	outline: 2px solid var(--neon-blue);
+	outline-offset: 2px;
 }
