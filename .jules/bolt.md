@@ -41,3 +41,6 @@
 ## 2026-05-18 - [Test environment import.meta.env]
 **Learning:** In Astro projects, `import.meta.env` is undefined in Node.js test environments (e.g., using `tsx --test`). Accessing properties like `import.meta.env.CONTACT_PHONE` directly will throw a 'Cannot read properties of undefined' error.
 **Action:** Guard environment variable access with `typeof import.meta !== 'undefined' && import.meta.env` to ensure it is safe to evaluate during tests.
+## 2026-05-18 - [Optimize Network Dependency Tree via Preconnect]
+**Learning:** When client-side scripts (like Vanta.js from cdnjs) or images (like those from Unsplash) are loaded dynamically or via CSS background images, the browser cannot begin downloading them until the DOM/CSS is fully parsed or the delaying script executes. This delays DNS, TCP, and TLS handshakes, further slowing down load times.
+**Action:** Always add `<link rel="preconnect">` tags for critical external domains (like `cdnjs.cloudflare.com` and `images.unsplash.com`) in the `<head>` of the application. This ensures the browser establishes the connection early, reducing the overall latency when the actual resource is requested.
