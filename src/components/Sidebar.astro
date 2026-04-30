@@ -97,9 +97,12 @@ const navLinks = [
             </a>
 
             <div class="search-wrapper">
-                <svg class="search-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg id="searchIcon" class="search-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <svg id="searchSpinner" class="search-spinner" style="display: none;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
                 </svg>
                 <input type="search" id="searchInput" class="search-input" placeholder={t('sidebar.search')} autocomplete="off" aria-label="Search" />
                 <div id="searchResults" class="search-results" aria-live="polite" role="status"></div>
@@ -303,6 +306,8 @@ const navLinks = [
         // --- Search Filtering Logic ---
         const searchInput = document.getElementById('searchInput') as HTMLInputElement;
         const searchResults = document.getElementById('searchResults');
+        const searchIcon = document.getElementById('searchIcon');
+        const searchSpinner = document.getElementById('searchSpinner');
         const currentLang = document.documentElement.lang || 'en';
 
         interface SearchIndexItem {
@@ -387,8 +392,21 @@ const navLinks = [
                 // and prevents issues if the event object is pooled or mutated.
                 const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
                 
+                // Show spinner while typing
+                if (query.length > 0) {
+                    if (searchIcon) searchIcon.style.display = 'none';
+                    if (searchSpinner) searchSpinner.style.display = 'block';
+                } else {
+                    if (searchIcon) searchIcon.style.display = 'block';
+                    if (searchSpinner) searchSpinner.style.display = 'none';
+                }
+
                 // Set a new timer to execute search after 300ms of inactivity
                 debounceTimer = setTimeout(() => {
+                    // Hide spinner when done
+                    if (searchIcon) searchIcon.style.display = 'block';
+                    if (searchSpinner) searchSpinner.style.display = 'none';
+
                     searchResults.textContent = '';
 
                     if (query.length > 0) {
